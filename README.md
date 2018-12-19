@@ -20,4 +20,10 @@ npm run build
 
 ---
 
+#登录测试
+> 1. 服务器IP:101.200.151.183,在登录界面右下角有设置的地址，默认的是本地，请知晓。
+> 2. 服务端在整理中，后续开源。
+> 3. 自己可以注册个用户进行测试，默认。
+> 4. 没有提供在线添加好友和管理群组的功能，后续开发，好友关系维护都在后台服务里。
+
 This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
