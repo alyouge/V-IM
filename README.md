@@ -26,4 +26,7 @@ npm run build
 > 3. 自己可以注册个用户进行测试，默认。
 > 4. 没有提供在线添加好友和管理群组的功能，后续开发，好友关系维护都在后台服务里。
 
+#交流QQ群
+> QQ群：617853658（新）
+
 This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
