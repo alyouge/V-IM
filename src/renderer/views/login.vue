@@ -6,7 +6,7 @@
             <Alert v-if="showErr" type="error">{{err}}</Alert>
             <div class="item">
                 <label>手机：</label>
-                <Input prefix="ios-contact-outline" v-model="username" placeholder="用户名" class="item-input"/>
+                <Input prefix="ios-contact-outline" v-model="username" placeholder="手机" class="item-input"/>
             </div>
             <div class="item">
                 <label>密码：</label>
