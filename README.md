@@ -39,6 +39,7 @@ npm run build
 > 8. 离线消息（单聊）
 > 9. 聊天记录（单聊、群聊）
 > 10. 支持心跳检测，断线重连
+> 11. 使用SpringBoot security oauth2.0 支持单点登录。
 
 
 ##登录测试
@@ -48,12 +49,14 @@ npm run build
 > 4. 没有提供在线添加好友和管理群组的功能，后续开发，好友关系维护都在后台服务里。
 > 5. [下载exe安装文件 64位](https://gitee.com/lele-666/V-IM/blob/master/v-im%20Setup%200.3.8.exe)
 
+
 ##参考项目及技术
 > 1. layIM（主要是聊天表情，文件处理方面）
 > 2. 使用SpringBoot、oauth2.0、t-io 开发后端服务
 > 3. vue、iview 开发前端
 > 4. 界面高仿微信，不知道是否侵权？
 > 5. 其他：使用 fetch 发送ajax 请求，支持跨域，electron 支持打包成为exe，也支持linux 和 mac 目前还没测试，有条件的同学可以测试。
+
 
 ##后续目标
 > 1. 开发基于websocket 的安卓和IOS 版本。
@@ -63,7 +66,9 @@ npm run build
 > 5. 优化稳定性，包括 token 刷新机制调整，目前还没好的方案控制同一用户下的并发问题（出问题几率很低，但是不代表不会出问题）。
 > 6. 支持https 本身t-io是支持的，目前还没测试，后续会测试。
 
+
 ##交流QQ群
 > QQ群：617853658（新）验证请说明是 V-IM 用户
+> 如果您觉得好用，可以给点个star!!!，或者给个捐赠。
 
 This project was generated with [electron-vue](https://gitee.com/lele-666/V-IM/blob/master/v-im%20Setup%200.3.8.exe) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
