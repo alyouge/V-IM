@@ -19,6 +19,17 @@ npm run build
 ```
 
 ---
+#功能点
+> 1. 文本聊天
+> 2. 聊天表情
+> 3. 发送图片（http）
+> 4. 发送文件（http）
+> 5. 单聊
+> 6. 群聊
+> 7. 用户分组（后端支持）
+> 8. 离线消息（单聊）
+> 9. 聊天记录（单聊、群聊）
+
 
 #登录测试
 > 1. 测试服务器IP:101.200.151.183,在登录界面右下角有设置的地址，默认的是本地（没有服务不好用），请知晓。
@@ -27,7 +38,21 @@ npm run build
 > 4. 没有提供在线添加好友和管理群组的功能，后续开发，好友关系维护都在后台服务里。
 > 5. [下载exe安装文件 64位](https://gitee.com/lele-666/V-IM/blob/master/v-im%20Setup%200.3.8.exe)
 
+#参考项目及技术
+> 1. layIM（主要是聊天表情，文件处理方面）
+> 2. 使用SpringBoot、oauth2.0、tio 开发后端服务
+> 3. vue、iview 开发前端
+> 4. 界面高仿微信，不知道是否侵权？
+> 5. 其他：使用 fetch 发送ajax 请求，支持跨域。
+
+#后续目标
+> 1. 开发基于websocket 的安卓和IOS 版本。
+> 2. 打包命令调整，支持自动打包不通的版本（现在打包web 和 exe 方式需要调整代码,主要是 webpack 不是很熟）
+> 3. 后端项目做成SpringBoot启动方式（方便集成），后端提供 restful 方式API，支持数据库分库、分表，支持分布式部署。
+> 4. 需要高手加入项目，现在只有一个人维护前后端实在是吃力。
+> 5. 优化稳定性，包括 token 刷新机制调整，目前还没好的方案控制同一用户下的并发问题（出问题几率很低，但是不代表不会出问题）。
+
 #交流QQ群
-> QQ群：617853658（新）
+> QQ群：617853658（新）验证请说明是 V-IM 用户
 
 This project was generated with [electron-vue](https://gitee.com/lele-666/V-IM/blob/master/v-im%20Setup%200.3.8.exe) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
