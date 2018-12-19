@@ -55,7 +55,7 @@
                                 :on-error="handleError">
                             <Icon type="ios-folder-open-outline"></Icon>
                         </Upload>
-                        <Faces v-show="showFace" class="faces-box" @insertFace="insertFace"></Faces>
+                        <Faces v-show="showFace"  @click="showFace = true" class="faces-box" @insertFace="insertFace"></Faces>
                         <Button class="history-message-btn" @click="getHistoryMessage()">聊天记录</Button>
                     </div>
                     <textarea v-model="messageContent" @keyup.enter="mineSend()"></textarea>
@@ -228,7 +228,7 @@ export default {
       this.$Message.error(error);
     },
     showFaceBox: function() {
-      this.showFace != this.showFace;
+      this.showFace = (!this.showFace);
     },
     insertFace: function(item) {
       this.messageContent = this.messageContent + 'face' + item;
