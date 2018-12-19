@@ -38,6 +38,7 @@ npm run build
 > 7. 用户分组（后端支持）
 > 8. 离线消息（单聊）
 > 9. 聊天记录（单聊、群聊）
+> 10. 支持心跳检测，断线重连
 
 
 ##登录测试
@@ -49,7 +50,7 @@ npm run build
 
 ##参考项目及技术
 > 1. layIM（主要是聊天表情，文件处理方面）
-> 2. 使用SpringBoot、oauth2.0、tio 开发后端服务
+> 2. 使用SpringBoot、oauth2.0、t-io 开发后端服务
 > 3. vue、iview 开发前端
 > 4. 界面高仿微信，不知道是否侵权？
 > 5. 其他：使用 fetch 发送ajax 请求，支持跨域，electron 支持打包成为exe，也支持linux 和 mac 目前还没测试，有条件的同学可以测试。
