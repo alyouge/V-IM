@@ -25,7 +25,7 @@ npm run build
 > 2. 服务端在整理中，后续开源。
 > 3. 自己可以注册个用户进行测试，默认。
 > 4. 没有提供在线添加好友和管理群组的功能，后续开发，好友关系维护都在后台服务里。
-> 5. [下载exe安装文件 64位](https://github.com/SimulatedGREG/electron-vue)
+> 5. [下载exe安装文件 64位](https://gitee.com/lele-666/V-IM/blob/master/v-im%20Setup%200.3.8.exe)
 
 #交流QQ群
 > QQ群：617853658（新）
