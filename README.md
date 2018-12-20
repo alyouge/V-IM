@@ -1,6 +1,6 @@
 ### 服务端代码在此
-    https://gitee.com/alyouge/V-IM-Server 
-    测试账号：zhangsan/123456  lisi/123456  wangwu/123456
+>   1. https://gitee.com/lele-666/V-IM-Server
+>   2. 测试账号：zhangsan/123456  lisi/123456  wangwu/123456
 ### 注意事项
 
 > 1. 打包时候项目路径不能有中文，包括你 windows 用户都不能有中文字符，因为npm 缓存都是在用户目录下（如果原先的用户名是中文，再修改成英文也不好用，因为原先的npm包都还在中文目录下，可以新建个window 英文账号，登录新账号打包）。
