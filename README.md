@@ -1,3 +1,4 @@
+### 在做一个大的改动，主要处理各种非正常错误，请持续关注。
 ### 服务端代码在此
 >   1. https://gitee.com/lele-666/V-IM-Server
 >   2. 测试账号：zhangsan/123456  lisi/123456  wangwu/123456
