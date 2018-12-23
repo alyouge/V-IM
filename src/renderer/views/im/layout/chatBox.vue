@@ -24,18 +24,13 @@
     </div>
 </template>
 <script>
-import Search from "../components/search.vue";
-import Top from "../components/top.vue";
-import UserChat from "../components/chat.vue";
-import WebsocketHeartbeatJs from "../utils/WebsocketHeartbeatJs.js";
-import conf from "../conf";
-import winControl from "../../../../main/windowControl.js";
-import {
-  ChatListUtils,
-  imageLoad,
-  MessageInfoType,
-  MessageTargetType
-} from "../utils/chatUtils";
+import Search from '../components/search.vue';
+import Top from '../components/top.vue';
+import UserChat from '../components/chat.vue';
+import WebsocketHeartbeatJs from '../utils/WebsocketHeartbeatJs.js';
+import conf from '../conf';
+import winControl from '../../../../main/windowControl.js';
+import { ChatListUtils, imageLoad, MessageInfoType, MessageTargetType } from '../utils/chatUtils';
 
 export default {
   components: {
@@ -52,7 +47,7 @@ export default {
         return this.$store.state.currentChat;
       },
       set: function(currentChat) {
-        this.$store.commit("setCurrentChat", currentChat);
+        this.$store.commit('setCurrentChat', currentChat);
       }
     },
     chatList: {
@@ -60,7 +55,7 @@ export default {
         return this.$store.state.chatList;
       },
       set: function(chatList) {
-        this.$store.commit("setChatList", chatList);
+        this.$store.commit('setChatList', chatList);
       }
     }
   },
@@ -70,37 +65,35 @@ export default {
       this.currentChat = chat;
       // 每次滚动到最底部
       this.$nextTick(() => {
-        imageLoad("message-box");
+        imageLoad('message-box');
       });
     },
     delChat(chat) {
-      this.$store.commit("delChat", chat);
+      this.$store.commit('delChat', chat);
     }
   },
   activated: function() {
     let self = this;
     // 当前聊天室
     if (self.$route.query.chat) {
-      self.$store.commit("setCurrentChat", this.$route.query.chat);
+      self.$store.commit('setCurrentChat', this.$route.query.chat);
     }
     // 重新设置chatList
-    self.$store.commit(
-      "setChatList",
-      ChatListUtils.getChatList(self.$store.state.user.id)
-    );
+    self.$store.commit('setChatList', ChatListUtils.getChatList(self.$store.state.user.id));
     // 每次滚动到最底部
     this.$nextTick(() => {
-      imageLoad("message-box");
+      imageLoad('message-box');
     });
   },
   mounted: function() {
     let self = this;
     let websocketHeartbeatJs = new WebsocketHeartbeatJs({
-      url: conf.getWsUrl() + "?token=" + sessionStorage.getItem("token")
+      vue: self,
+      url: conf.getWsUrl()
     });
     websocketHeartbeatJs.onopen = function() {
-      console.log("connect success");
-      websocketHeartbeatJs.send('{"code":' + MessageInfoType.MSG_READY + "}");
+      console.log('connect success');
+      websocketHeartbeatJs.send('{"code":' + MessageInfoType.MSG_READY + '}');
     };
     websocketHeartbeatJs.onmessage = function(event) {
       let data = event.data;
@@ -109,47 +102,45 @@ export default {
       if (sendInfo.code === MessageInfoType.MSG_MESSAGE) {
         winControl.flashIcon();
         let message = sendInfo.message;
-        if (message.avatar && message.avatar.indexOf("http") === -1) {
+        if (message.avatar && message.avatar.indexOf('http') === -1) {
           message.avatar = conf.getHostUrl() + message.avatar;
         }
         message.timestamp = self.formatDateTime(new Date(message.timestamp));
         // 发送给个人
         if (message.type === MessageTargetType.FRIEND) {
           // 接受人是当前的聊天窗口
-          if (
-            String(message.fromid) === String(self.$store.state.currentChat.id)
-          ) {
-            self.$store.commit("addMessage", message);
+          if (String(message.fromid) === String(self.$store.state.currentChat.id)) {
+            self.$store.commit('addMessage', message);
           } else {
-            self.$store.commit("setUnReadCount", message);
-            self.$store.commit("addUnreadMessage", message);
+            self.$store.commit('setUnReadCount', message);
+            self.$store.commit('addUnreadMessage', message);
           }
         } else if (message.type === MessageTargetType.CHAT_GROUP) {
           // message.avatar = self.$store.state.chatMap.get(message.id);
           // 接受人是当前的聊天窗口
           if (String(message.id) === String(self.$store.state.currentChat.id)) {
             if (String(message.fromid) !== self.$store.state.user.id) {
-              self.$store.commit("addMessage", message);
+              self.$store.commit('addMessage', message);
             }
           } else {
-            self.$store.commit("setUnReadCount", message);
-            self.$store.commit("addUnreadMessage", message);
+            self.$store.commit('setUnReadCount', message);
+            self.$store.commit('addUnreadMessage', message);
           }
         }
         winControl.flashFrame();
-        self.$store.commit("setLastMessage", message);
+        self.$store.commit('setLastMessage', message);
         // 每次滚动到最底部
         self.$nextTick(() => {
-          imageLoad("message-box");
+          imageLoad('message-box');
         });
       }
     };
 
     websocketHeartbeatJs.onreconnect = function() {
-      console.log("reconnecting...");
+      console.log('reconnecting...');
     };
 
-    self.$store.commit("setWebsocket", websocketHeartbeatJs);
+    self.$store.commit('setWebsocket', websocketHeartbeatJs);
   }
 };
 </script>

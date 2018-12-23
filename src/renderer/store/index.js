@@ -16,6 +16,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     token: {},
+    //token 是否有效
+    tokenStatus: false,
     // 当前的用户
     user: {},
     flushLocalStore: false,
@@ -37,6 +39,10 @@ export default new Vuex.Store({
     setToken: function(state, token) {
       sessionStorage.setItem("token", token.access_token);
       sessionStorage.setItem("refresh_token", token.refresh_token);
+    },
+    //token 是否有效
+    setTokenStatus: function(state, tokenStatus) {
+      state.tokenStatus = tokenStatus;
     },
     setUser: function(state, user) {
       state.user = user;

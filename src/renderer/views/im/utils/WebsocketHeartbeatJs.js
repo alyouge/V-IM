@@ -8,57 +8,59 @@
     pongTimeout  发送ping之后，未收到消息超时时间，默认10000毫秒
     reconnectTimeout
     pingMsg ping 消息值
+    reconnectCount 重连次数，超出后退出，回到登录界面
  * }
  * @api public
  */
 const { MessageInfoType } = require('./chatUtils');
 
-function WebsocketHeartbeatJs({
-  url,
-  pingTimeout = 15000,
-  pongTimeout = 10000,
-  reconnectTimeout = 2000,
-  pingMsg = '{"code":' + MessageInfoType.MSG_PING + '}'
-}) {
+function WebsocketHeartbeatJs({ self, url, pingTimeout = 15000, pongTimeout = 10000, reconnectTimeout = 4000, pingMsg = '{"code":' + MessageInfoType.MSG_PING + '}', reconnectCount = 15 }) {
   this.opts = {
+    vue: self,
     url: url,
     pingTimeout: pingTimeout,
     pongTimeout: pongTimeout,
     reconnectTimeout: reconnectTimeout,
-    pingMsg: pingMsg
+    pingMsg: pingMsg,
+    reconnectCount: reconnectCount
   };
   this.ws = null; // websocket实例
 
   // override hook function
-  this.onclose = () => {};
-  this.onerror = () => {};
-  this.onopen = () => {};
-  this.onmessage = () => {};
-  this.onreconnect = () => {};
+  this.onclose = () => {
+  };
+  this.onerror = () => {
+  };
+  this.onopen = () => {
+  };
+  this.onmessage = () => {
+  };
+  this.onreconnect = () => {
+  };
 
   this.createWebSocket();
 }
 
 WebsocketHeartbeatJs.prototype.createWebSocket = function() {
-  try {
-    this.ws = new WebSocket(this.opts.url);
-    this.initEventHandle();
-  } catch (e) {
-    this.reconnect();
-    throw e;
-  }
+  this.ws = new WebSocket(this.opts.url + '?token=' + sessionStorage.getItem('token'));
+  this.initEventHandle();
 };
 
 WebsocketHeartbeatJs.prototype.initEventHandle = function() {
-  this.ws.onclose = () => {
+  this.ws.onclose = (e) => {
+    console.log('onclose');
+    console.log(e);
     this.onclose();
     this.reconnect();
   };
-  this.ws.onerror = () => {
+  this.ws.onerror = (e) => {
+    console.log('onerror');
+    console.log(this.ws.state);
     this.onerror();
     this.reconnect();
   };
   this.ws.onopen = () => {
+    console.log('onopen');
     this.onopen();
     // 心跳检测重置
     this.heartCheck();

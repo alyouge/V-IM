@@ -40,7 +40,7 @@
 <script>
 import Top from "./im/components/top.vue";
 import conf from "./im/conf";
-import { timeoutFetch, fetchPost, tokenFetch } from "./im/utils/chatUtils";
+import { timeoutFetch, fetchPost, tokenFetch, flushToken } from './im/utils/chatUtils';
 
 export default {
   name: "login",
@@ -157,7 +157,12 @@ export default {
           });
         })
         .then(token => {
+          //提前10秒刷新 token
+         let flushTokenTimerId = setTimeout(function() {
+           flushToken(self.$store,flushTokenTimerId);
+          },token.expires_in - 10);
           self.$store.commit("setToken", token);
+          self.$store.commit("setTokenStatus", true);
           // 获取当前登录的用户，存入store
           self.storeLoginUser();
           //获取用户好友
