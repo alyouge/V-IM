@@ -88,7 +88,6 @@ export default {
   mounted: function() {
     let self = this;
     let websocketHeartbeatJs = new WebsocketHeartbeatJs({
-      vue: self,
       url: conf.getWsUrl()
     });
     websocketHeartbeatJs.onopen = function() {

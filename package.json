@@ -1,7 +1,7 @@
 {
   "name": "V-IM",
-  "version": "0.3.8",
-  "author": "乐乐",
+  "version": "0.3.9",
+  "author": "乐乐（乐天）",
   "description": "一款基于JS的聊天工具",
   "license": "LGPL V3",
   "main": "./dist/electron/main.js",

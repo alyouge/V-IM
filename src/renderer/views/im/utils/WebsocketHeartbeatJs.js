@@ -8,28 +8,27 @@
     pongTimeout  发送ping之后，未收到消息超时时间，默认10000毫秒
     reconnectTimeout
     pingMsg ping 消息值
-    reconnectCount 重连次数，超出后退出，回到登录界面
  * }
  * @api public
  */
-import HttpApiUtils from './HttpApiUtils';
-import { logout } from './chatUtils';
-
 const { MessageInfoType } = require('./chatUtils');
 
-function WebsocketHeartbeatJs({ self, url, pingTimeout = 15000, pongTimeout = 10000, reconnectTimeout = 4000, pingMsg = '{"code":' + MessageInfoType.MSG_PING + '}', reconnectCount = 15 }) {
+function WebsocketHeartbeatJs({
+                                url,
+                                pingTimeout = 15000,
+                                pongTimeout = 10000,
+                                reconnectTimeout = 2000,
+                                pingMsg = '{"code":' + MessageInfoType.MSG_PING + '}'
+                              }) {
   this.opts = {
-    vue: self,
     url: url,
     pingTimeout: pingTimeout,
     pongTimeout: pongTimeout,
     reconnectTimeout: reconnectTimeout,
-    pingMsg: pingMsg,
-    reconnectCount: reconnectCount
+    pingMsg: pingMsg
   };
   this.ws = null; // websocket实例
-  console.log("=================vvvvvvvvvvvvvvvv====================");
-  console.log(self);
+
   // override hook function
   this.onclose = () => {};
   this.onerror = () => {};
@@ -41,31 +40,21 @@ function WebsocketHeartbeatJs({ self, url, pingTimeout = 15000, pongTimeout = 10
 }
 
 WebsocketHeartbeatJs.prototype.createWebSocket = function() {
-  this.ws = new WebSocket(this.opts.url + '?token=' + sessionStorage.getItem('token'));
-  this.initEventHandle();
+  try {
+    this.ws = new WebSocket(this.opts.url + "?token=" + sessionStorage.getItem("token"));
+    this.initEventHandle();
+  } catch (e) {
+    this.reconnect();
+    throw e;
+  }
 };
 
 WebsocketHeartbeatJs.prototype.initEventHandle = function() {
-  this.ws.onclose = e => {
+  this.ws.onclose = () => {
     this.onclose();
     this.reconnect();
   };
-  this.ws.onerror = e => {
-    let self = this;
-    //刷新token
-    let httpApiUtils = new HttpApiUtils(this.opts.vue);
-    let ps = httpApiUtils.flushToken();
-    ps.then(token => {
-      self.opts.vue.$store.commit('setToken', token);
-      setTimeout(function() {
-        self.flushToken();
-      }, (token.expires_in - 10) * 1000);
-    }).catch(error => {
-      //如果刷新token 是失败，说明服务器已经重启了，只能退出重新登录。
-      self.heartReset();
-      logout(self.opts.vue);
-    });
-
+  this.ws.onerror = () => {
     this.onerror();
     this.reconnect();
   };

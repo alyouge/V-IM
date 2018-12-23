@@ -13,7 +13,6 @@ class HttpApiUtils {
    * @returns {Promise<any>} 返回 Promise
    */
   login(formData) {
-    let self = this;
     return timeoutFetch(
       fetch(conf.getTokenUrl(), {
         method: 'POST',
@@ -38,47 +37,17 @@ class HttpApiUtils {
           });
         }
       })
-      .then(token => {
-        //提前10秒刷新 token
-        setTimeout(function() {
-          self.flushToken();
-        }, (token.expires_in - 10) * 1000);
 
-        self.vueObj.$store.commit('setToken', token);
-        self.vueObj.$store.commit('setTokenStatus', true);
-        //获取用户好友
-        return tokenFetch(conf.getInitUrl(), new FormData());
-      })
-      .then(response => {
-        if (response.status === 200) {
-          return response.json();
-        } else if (response.status === 401) {
-          return new Promise((resolve, reject) => {
-            reject(ErrorType.TOKEN_ERROR);
-          });
-        } else {
-          return new Promise((resolve, reject) => {
-            reject(ErrorType.SERVER_ERROR);
-          });
-        }
-      })
-      .then(json => {
-        //个人信息
-        self.vueObj.$store.commit('setUser', json.me);
-        //好友
-        self.vueObj.$store.commit('setUserFriendList', json.friends);
-        //群
-        self.vueObj.$store.commit('setChatGroupList', json.groups);
-
-        // 跳转到index 页面
-        self.vueObj.$router.push({
-          path: '/index/chatBox',
-          params: {}
-        });
-      })
 
   }
 
+  /**
+   * 初始化信息
+   * @returns {Promise<any>}
+   */
+  initInfo(){
+    return timeoutFetch(tokenFetch(conf.getInitUrl(), new FormData()),this.timeOutTime);
+  }
   /**
    * 刷新token
    * @param flushTokenTimerId
@@ -99,7 +68,7 @@ class HttpApiUtils {
         },
         body: param
       }),
-      5000
+      this.timeOutTime
     )
       .then(response => {
         if (response.status === 200) {

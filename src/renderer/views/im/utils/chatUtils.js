@@ -424,50 +424,6 @@ export function tokenFetch(url, formData) {
   });
 }
 
-/**
- * 刷新token封装函数
- * @param url
- * @returns {Promise<Response>}
- */
-export function flushToken(store, flushTokenTimerId) {
-  let param = new FormData();
-  param.set('client_id', 'v-client');
-  param.set('client_secret', 'v-client-ppp');
-  param.set('grant_type', 'refresh_token');
-  param.set('scope', 'select');
-  param.set('refresh_token', sessionStorage.getItem('refresh_token'));
-
-  timeoutFetch(
-    fetch(conf.getTokenUrl(), {
-      method: 'POST',
-      model: 'cros', //跨域
-      headers: {
-        Accept: 'application/json'
-      },
-      body: param
-    }),
-    5000
-  )
-    .then(response => {
-      if (response.status === 200) {
-        return response.json();
-      } else {
-        return new Promise((resolve, reject) => {
-          reject(ErrorType.FLUSH_TOKEN_ERROR);
-        });
-      }
-    })
-    .then(token => {
-      clearTimeout(flushTokenTimerId);
-      store.commit('setToken', token);
-      let newFlushTokenTimerId = setTimeout(function() {
-        flushToken(self.$store, newFlushTokenTimerId);
-      }, token.expires_in - 10);
-    })
-    .catch(() => {
-      store.commit('setTokenStatus', false);
-    });
-}
 
 export const ErrorType = {
   TIMEOUT_ERROR: 9, //超时
