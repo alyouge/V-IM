@@ -12,6 +12,9 @@
  * }
  * @api public
  */
+import HttpApiUtils from './HttpApiUtils';
+import { logout } from './chatUtils';
+
 const { MessageInfoType } = require('./chatUtils');
 
 function WebsocketHeartbeatJs({ self, url, pingTimeout = 15000, pongTimeout = 10000, reconnectTimeout = 4000, pingMsg = '{"code":' + MessageInfoType.MSG_PING + '}', reconnectCount = 15 }) {
@@ -25,18 +28,14 @@ function WebsocketHeartbeatJs({ self, url, pingTimeout = 15000, pongTimeout = 10
     reconnectCount: reconnectCount
   };
   this.ws = null; // websocket实例
-
+  console.log("=================vvvvvvvvvvvvvvvv====================");
+  console.log(self);
   // override hook function
-  this.onclose = () => {
-  };
-  this.onerror = () => {
-  };
-  this.onopen = () => {
-  };
-  this.onmessage = () => {
-  };
-  this.onreconnect = () => {
-  };
+  this.onclose = () => {};
+  this.onerror = () => {};
+  this.onopen = () => {};
+  this.onmessage = () => {};
+  this.onreconnect = () => {};
 
   this.createWebSocket();
 }
@@ -47,20 +46,30 @@ WebsocketHeartbeatJs.prototype.createWebSocket = function() {
 };
 
 WebsocketHeartbeatJs.prototype.initEventHandle = function() {
-  this.ws.onclose = (e) => {
-    console.log('onclose');
-    console.log(e);
+  this.ws.onclose = e => {
     this.onclose();
     this.reconnect();
   };
-  this.ws.onerror = (e) => {
-    console.log('onerror');
-    console.log(this.ws.state);
+  this.ws.onerror = e => {
+    let self = this;
+    //刷新token
+    let httpApiUtils = new HttpApiUtils(this.opts.vue);
+    let ps = httpApiUtils.flushToken();
+    ps.then(token => {
+      self.opts.vue.$store.commit('setToken', token);
+      setTimeout(function() {
+        self.flushToken();
+      }, (token.expires_in - 10) * 1000);
+    }).catch(error => {
+      //如果刷新token 是失败，说明服务器已经重启了，只能退出重新登录。
+      self.heartReset();
+      logout(self.opts.vue);
+    });
+
     this.onerror();
     this.reconnect();
   };
   this.ws.onopen = () => {
-    console.log('onopen');
     this.onopen();
     // 心跳检测重置
     this.heartCheck();

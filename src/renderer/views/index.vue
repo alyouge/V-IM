@@ -49,8 +49,8 @@
     </div>
 </template>
 <script>
-import { fetchPost, logout } from "./im/utils/chatUtils";
-import conf from "./im/conf";
+import { fetchPost, logout } from './im/utils/chatUtils';
+import conf from './im/conf';
 
 export default {
   data() {
@@ -69,25 +69,13 @@ export default {
     this.user = this.$store.state.user;
   },
   mounted: function() {
-    let self = this;
-    fetchPost(
-      conf.getChatGroupsUrl(),
-      new FormData(),
-      function(json) {
-        let chatMap = new Map();
-        for (let chat of json) {
-          chatMap.set(chat.id, chat);
-        }
-        self.$store.commit("setChatMap", chatMap);
-      },
-      self
-    );
+
   }
 };
 </script>
 <style lang="scss">
-@import "./../styles/theme.scss";
-@import "./../styles/v-im.scss";
+@import './../styles/theme.scss';
+@import './../styles/v-im.scss';
 
 .v-im {
   display: flex;

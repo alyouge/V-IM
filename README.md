@@ -45,6 +45,7 @@ npm run build
 > 9. 聊天记录（单聊、群聊）
 > 10. 支持心跳检测，断线重连
 > 11. 使用SpringBoot security oauth2.0 支持单点登录。
+> 12. 用户搜索。
 
 
 ### 登录测试

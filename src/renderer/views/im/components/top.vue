@@ -12,13 +12,13 @@
     </div>
 </template>
 <script>
-import winControl from "../../../../main/windowControl.js";
+import winControl from '../../../../main/windowControl.js';
 
 export default {
   data() {
     return {
       // 默认选中的值
-      icon: "ios-square-outline"
+      icon: 'ios-square-outline'
     };
   },
   methods: {
@@ -27,10 +27,7 @@ export default {
     },
     max() {
       winControl.max();
-      this.icon =
-        this.icon === "ios-square-outline"
-          ? "ios-browsers-outline"
-          : "ios-square-outline";
+      this.icon = this.icon === 'ios-square-outline' ? 'ios-browsers-outline' : 'ios-square-outline';
     },
     close() {
       winControl.close();
@@ -39,7 +36,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../../styles/theme";
+@import '../../../styles/theme';
 
 $top-height: 4rem;
 $color-online: #d1ffe9;

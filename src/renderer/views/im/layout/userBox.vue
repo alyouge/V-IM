@@ -32,12 +32,12 @@
     </div>
 </template>
 <script>
-import Search from "../components/search.vue";
-import Top from "../components/top.vue";
-import Welcome from "../components/welcome.vue";
-import conf from "../conf";
+import Search from '../components/search.vue';
+import Top from '../components/top.vue';
+import Welcome from '../components/welcome.vue';
+import conf from '../conf';
 
-const { ChatListUtils } = require("../utils/chatUtils.js");
+const { ChatListUtils } = require('../utils/chatUtils.js');
 
 export default {
   components: {
@@ -51,7 +51,7 @@ export default {
         return this.$store.state.userFriendList;
       },
       set: function(userFriendList) {
-        this.$store.commit("setUserFriendList", userFriendList);
+        this.$store.commit('setUserFriendList', userFriendList);
       }
     }
   },
@@ -69,7 +69,7 @@ export default {
       let self = this;
       let chat = ChatListUtils.resetChatList(self, user, conf.getHostUrl());
       self.$router.push({
-        path: "/index/chatBox",
+        path: '/index/chatBox',
         query: { chat: chat }
       });
     }
@@ -77,7 +77,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../styles/theme";
+@import '../../../styles/theme';
 
 .ivu-tabs-content {
   height: 100%;

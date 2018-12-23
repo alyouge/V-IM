@@ -411,7 +411,7 @@ export function fetchPost(url, formData, resultFun, self) {
  * @param self vue this 对象
  * @returns {Promise<any | never>}
  */
-export function tokenFetch(url, formData, self) {
+export function tokenFetch(url, formData) {
   let token = sessionStorage.getItem('token');
   formData.set('access_token', token);
   return fetch(url, {
@@ -429,7 +429,7 @@ export function tokenFetch(url, formData, self) {
  * @param url
  * @returns {Promise<Response>}
  */
-export function flushToken(store,flushTokenTimerId) {
+export function flushToken(store, flushTokenTimerId) {
   let param = new FormData();
   param.set('client_id', 'v-client');
   param.set('client_secret', 'v-client-ppp');
@@ -461,9 +461,8 @@ export function flushToken(store,flushTokenTimerId) {
       clearTimeout(flushTokenTimerId);
       store.commit('setToken', token);
       let newFlushTokenTimerId = setTimeout(function() {
-        flushToken(self.$store,newFlushTokenTimerId);
-      },token.expires_in - 10);
-
+        flushToken(self.$store, newFlushTokenTimerId);
+      }, token.expires_in - 10);
     })
     .catch(() => {
       store.commit('setTokenStatus', false);

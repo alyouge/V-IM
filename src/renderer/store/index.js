@@ -1,15 +1,9 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-import modules from "./modules";
-import {
-  Chat,
-  ChatListUtils,
-  MessageInfoType,
-  MessageTargetType,
-  transform
-} from "../views/im/utils/chatUtils";
-import conf from "../views/im/conf";
+import modules from './modules';
+import { Chat, ChatListUtils, MessageInfoType, MessageTargetType, transform } from '../views/im/utils/chatUtils';
+import conf from '../views/im/conf';
 
 Vue.use(Vuex);
 
@@ -37,8 +31,8 @@ export default new Vuex.Store({
   },
   mutations: {
     setToken: function(state, token) {
-      sessionStorage.setItem("token", token.access_token);
-      sessionStorage.setItem("refresh_token", token.refresh_token);
+      sessionStorage.setItem('token', token.access_token);
+      sessionStorage.setItem('refresh_token', token.refresh_token);
     },
     //token 是否有效
     setTokenStatus: function(state, tokenStatus) {
@@ -87,15 +81,9 @@ export default new Vuex.Store({
     setLastMessage: function(state, message) {
       let list = ChatListUtils.getChatList(state.user.id);
       let tempChatList = list.map(function(chat) {
-        if (
-          String(chat.id) === String(message.fromid) &&
-          message.type === "0"
-        ) {
+        if (String(chat.id) === String(message.fromid) && message.type === '0') {
           chat.sign = message.content;
-        } else if (
-          String(chat.id) === String(message.id) &&
-          message.type === "1"
-        ) {
+        } else if (String(chat.id) === String(message.id) && message.type === '1') {
           chat.sign = message.content;
         }
         return chat;
@@ -112,7 +100,7 @@ export default new Vuex.Store({
     },
     addUnreadMessage: function(state, message) {
       message.content = transform(message.content);
-      if (message.type === "0") {
+      if (message.type === '0') {
         // 从内存中取聊天信息
         let cacheMessages = state.messageListMap.get(message.fromid);
         if (cacheMessages) {
@@ -164,10 +152,7 @@ export default new Vuex.Store({
 
       for (let chat of state.chatList) {
         // 给接受消息的聊天室未读数量 +1
-        if (
-          String(chat.id) === String(message.fromid) &&
-          message.type === MessageTargetType.FRIEND
-        ) {
+        if (String(chat.id) === String(message.fromid) && message.type === MessageTargetType.FRIEND) {
           if (!chat.unReadCount) {
             chat.unReadCount = 0;
           }
@@ -175,10 +160,7 @@ export default new Vuex.Store({
           tempChat = chat;
         }
         //群组聊天
-        else if (
-          String(chat.id) === String(message.id) &&
-          message.type === MessageTargetType.CHAT_GROUP
-        ) {
+        else if (String(chat.id) === String(message.id) && message.type === MessageTargetType.CHAT_GROUP) {
           if (!chat.unReadCount) {
             chat.unReadCount = 0;
           }
@@ -191,32 +173,11 @@ export default new Vuex.Store({
       }
       // 聊天列表没有此人的chat
       if (!tempChat.id && message.type === MessageTargetType.FRIEND) {
-        tempChat = new Chat(
-          message.fromid,
-          message.username,
-          message.avatar,
-          1,
-          message.content,
-          state.user.mobile,
-          state.user.email,
-          MessageTargetType.FRIEND
-        );
-      } else if (
-        !tempChat.id &&
-        message.type === MessageTargetType.CHAT_GROUP
-      ) {
+        tempChat = new Chat(message.fromid, message.username, message.avatar, 1, message.content, state.user.mobile, state.user.email, MessageTargetType.FRIEND);
+      } else if (!tempChat.id && message.type === MessageTargetType.CHAT_GROUP) {
         let groupChat = state.chatMap.get(message.id);
         console.log(groupChat);
-        tempChat = new Chat(
-          message.id,
-          groupChat.name,
-          conf.getHostUrl() + groupChat.avatar,
-          1,
-          message.content,
-          state.user.mobile,
-          state.user.email,
-          MessageTargetType.CHAT_GROUP
-        );
+        tempChat = new Chat(message.id, groupChat.name, conf.getHostUrl() + groupChat.avatar, 1, message.content, state.user.mobile, state.user.email, MessageTargetType.CHAT_GROUP);
         console.log(tempChat);
       }
       // 添加到聊天室列表的第一个
@@ -228,5 +189,5 @@ export default new Vuex.Store({
     }
   },
   modules,
-  strict: process.env.NODE_ENV !== "production"
+  strict: process.env.NODE_ENV !== 'production'
 });

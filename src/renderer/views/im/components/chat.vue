@@ -163,24 +163,7 @@ export default {
       showFace: false,
       userList: [],
       imgFormat: ['jpg', 'jpeg', 'png', 'gif'],
-      fileFormat: [
-        'doc',
-        'docx',
-        'jpg',
-        'jpeg',
-        'png',
-        'gif',
-        'xls',
-        'xlsx',
-        'pdf',
-        'gif',
-        'exe',
-        'msi',
-        'swf',
-        'sql',
-        'apk',
-        'psd'
-      ],
+      fileFormat: ['doc', 'docx', 'jpg', 'jpeg', 'png', 'gif', 'xls', 'xlsx', 'pdf', 'gif', 'exe', 'msi', 'swf', 'sql', 'apk', 'psd'],
       tokenImg: {
         access_token: sessionStorage.getItem('token'),
         type: 'image'
@@ -228,7 +211,7 @@ export default {
       this.$Message.error(error);
     },
     showFaceBox: function() {
-      this.showFace = (!this.showFace);
+      this.showFace = !this.showFace;
     },
     insertFace: function(item) {
       this.messageContent = this.messageContent + 'face' + item;

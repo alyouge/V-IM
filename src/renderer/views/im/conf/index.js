@@ -3,9 +3,7 @@ export default {
   http_protocol: 'http',
   http_port: 8080,
   ws_port: 9326,
-  users_url: '/api/user/list',
-  chat_groups_url: '/api/user/chatList',
-  me_url: '/api/user/me',
+  init: '/api/user/init',
   his_url: '/api/message/list',
   chat_users_url: '/api/user/chatUserList',
   token_path: '/oauth/token',
@@ -17,17 +15,11 @@ export default {
   getTokenUrl: function() {
     return this.getHostUrl() + this.token_path;
   },
-  getUsersUrl: function() {
-    return this.getHostUrl() + this.users_url;
+  getInitUrl: function() {
+    return this.getHostUrl() + this.init;
   },
   getChatUsersUrl: function() {
     return this.getHostUrl() + this.chat_users_url;
-  },
-  getChatGroupsUrl: function() {
-    return this.getHostUrl() + this.chat_groups_url;
-  },
-  getMeUrl: function() {
-    return this.getHostUrl() + this.me_url;
   },
   getHisUrl: function() {
     return this.getHostUrl() + this.his_url;

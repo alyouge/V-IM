@@ -21,14 +21,14 @@
     </div>
 </template>
 <script>
-  import Search from "../components/search.vue";
-  import Top from "../components/top.vue";
-  import UserChat from "../components/chat.vue";
-  import Welcome from "../components/welcome.vue";
-  import conf from "../conf";
-  import { Chat, ChatListUtils, MessageTargetType } from "../utils/chatUtils";
+import Search from '../components/search.vue';
+import Top from '../components/top.vue';
+import UserChat from '../components/chat.vue';
+import Welcome from '../components/welcome.vue';
+import conf from '../conf';
+import { Chat, ChatListUtils, MessageTargetType } from '../utils/chatUtils';
 
-  export default {
+export default {
   components: {
     Search,
     Top,
@@ -42,7 +42,7 @@
         return this.$store.state.chatGroupList;
       },
       set: function(chatGroupList) {
-        this.$store.commit("setChatGroupList", chatGroupList);
+        this.$store.commit('setChatGroupList', chatGroupList);
       }
     }
   },
@@ -61,22 +61,13 @@
         return String(element.id) !== String(chatGroup.id);
       });
       // 重新添加会话，放到第一个
-      let chat = new Chat(
-        chatGroup.id,
-        chatGroup.name,
-        conf.getHostUrl() + chatGroup.avatar,
-        0,
-        "",
-        "",
-        "",
-        MessageTargetType.CHAT_GROUP
-      );
+      let chat = new Chat(chatGroup.id, chatGroup.name, conf.getHostUrl() + chatGroup.avatar, 0, '', '', '', MessageTargetType.CHAT_GROUP);
       newChatList.unshift(chat);
       // 存储到localStorage 的 chatList
       ChatListUtils.setChatList(self.$store.state.user.id, chatList);
-      this.$store.commit("setChatList", newChatList);
+      this.$store.commit('setChatList', newChatList);
       this.$router.push({
-        path: "/index/chatBox",
+        path: '/index/chatBox',
         query: { chat: chat }
       });
     }
@@ -84,7 +75,7 @@
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../styles/theme";
+@import '../../../styles/theme';
 
 .ivu-tabs-content {
   height: 100%;

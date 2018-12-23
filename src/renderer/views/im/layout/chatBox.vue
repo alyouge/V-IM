@@ -145,7 +145,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../styles/theme";
+@import '../../../styles/theme';
 
 .ivu-tabs-content {
   height: 100%;

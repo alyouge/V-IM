@@ -22,15 +22,15 @@
     </div>
 </template>
 <script>
-import conf from "../conf";
-import { pinyin } from "../utils/pinyin.js";
-import { fetchPost } from "../utils/chatUtils";
+import conf from '../conf';
+import { pinyin } from '../utils/pinyin.js';
+import { fetchPost } from '../utils/chatUtils';
 
 export default {
   components: {},
   data() {
     return {
-      search: "",
+      search: '',
       userList: [],
       searchUserList: [],
       showSearchDiv: false
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     showSearch: function() {
-      this.search = "";
+      this.search = '';
       this.showSearchDiv = true;
     },
     searchUser: function() {
@@ -46,7 +46,7 @@ export default {
       for (let i = 0; i < this.userList.length; i++) {
         let name = this.userList[i].name;
         let searchTemp = this.search.trim().toUpperCase();
-        if (searchTemp !== "") {
+        if (searchTemp !== '') {
           // 支持拼音查询
           if (
             name.indexOf(searchTemp) !== -1 ||
@@ -56,9 +56,8 @@ export default {
               .indexOf(searchTemp) !== -1 ||
             pinyin.getCamelChars(name).indexOf(searchTemp) !== -1
           ) {
-            if (this.userList[i].avatar.indexOf("http") !== 0) {
-              this.userList[i].avatar =
-                conf.getHostUrl() + this.userList[i].avatar;
+            if (this.userList[i].avatar.indexOf('http') !== 0) {
+              this.userList[i].avatar = conf.getHostUrl() + this.userList[i].avatar;
             }
             this.searchUserList.push(this.userList[i]);
           }
@@ -70,23 +69,22 @@ export default {
     },
     showChat: function(user) {
       this.showSearchDiv = false;
-      this.$emit("showChat", user);
+      this.$emit('showChat', user);
     }
   },
   created: function() {
     let self = this;
-    fetchPost(conf.getUsersUrl(), new FormData(), function(json) {
-      for (let group of json) {
-        for (let user of group.userList) {
-          self.userList.push(user);
-        }
+    let users = self.$store.state.userFriendList;
+    for (let group of users) {
+      for (let user of group.userList) {
+        self.userList.push(user);
       }
-    },self);
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../styles/theme";
+@import '../../../styles/theme';
 
 .search {
   margin: 0 0 1rem;
