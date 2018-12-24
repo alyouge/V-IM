@@ -156,8 +156,12 @@ export default {
           });
         })
         .catch(error => {
-          console.log(error);
-          self.$Message.warning(error);
+          if ('TypeError: Failed to fetch' === error.toLocaleString()){
+            self.$Message.warning(error);
+          }else {
+            self.$Message.warning(error);
+          }
+
         });
     }
   },

@@ -2,8 +2,7 @@ import conf from '../conf';
 import { ErrorType, timeoutFetch, tokenFetch } from './chatUtils';
 
 class HttpApiUtils {
-  constructor(vueObj) {
-    this.vueObj = vueObj;
+  constructor() {
     this.timeOutTime = 5000; //请求超时时间
   }
 

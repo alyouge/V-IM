@@ -15,9 +15,10 @@ const { MessageInfoType } = require('./chatUtils');
 
 function WebsocketHeartbeatJs({
                                 url,
-                                pingTimeout = 15000,
-                                pongTimeout = 10000,
-                                reconnectTimeout = 2000,
+                                pingTimeout = 20000,
+                                pongTimeout = 15000,
+                                reconnectTimeout = 5000,
+                                reconnectCount = 24,
                                 pingMsg = '{"code":' + MessageInfoType.MSG_PING + '}'
                               }) {
   this.opts = {
@@ -54,8 +55,8 @@ WebsocketHeartbeatJs.prototype.initEventHandle = function() {
     this.onclose();
     this.reconnect();
   };
-  this.ws.onerror = () => {
-    this.onerror();
+  this.ws.onerror = error => {
+    this.onerror(error);
     this.reconnect();
   };
   this.ws.onopen = () => {

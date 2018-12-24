@@ -11,7 +11,7 @@
                 <ul class="user-list">
                     <li class="user" v-for="user in searchUserList">
                         <a href="javascript:" @click="showChat(user)">
-                            <img :src="user.avatar">
+                            <img :src="user.avatar" alt="头像">
                             <b>{{ user.name }}</b>
                             <p>{{ user.sign }}</p>
                         </a>

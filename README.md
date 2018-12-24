@@ -1,4 +1,10 @@
-### 在做一个大的改动，主要处理各种非正常错误，请持续关注。
+### V-0.39 发布
+>   1. 重构一些代码。fetch 封装到HttpApiUtils.js。
+>   2. 服务端重启后客户端自动退出登录。
+>   3. 断线重连（24次，两分钟），系统会自动退出登录。
+>   4. 断线重连界面提示（5秒一次）。
+>   5. 更换logo
+![logo](build/icons/icon.png)
 ### 服务端代码在此
 >   1. https://gitee.com/lele-666/V-IM-Server
 >   2. 测试账号：zhangsan/123456  lisi/123456  wangwu/123456
@@ -10,6 +16,7 @@
 
 
 ### 截图
+
 ![登录](doc/img/1.PNG)
 ![群聊](doc/img/2.PNG)
 ![表情](doc/img/3.PNG)
@@ -53,7 +60,7 @@ npm run build
 > 2. 服务端代码在整理中，后续开源。
 > 3. 自己可以注册个用户进行测试，默认。
 > 4. 没有提供在线添加好友和管理群组的功能，后续开发，好友关系维护都在后台服务里。
-> 5. 打包好的测试文件-->[下载exe安装文件 64位](https://gitee.com/lele-666/V-IM/blob/master/v-im%20Setup%200.3.8.exe)。
+> 5. 打包好的测试文件-->[下载exe安装文件 64位](https://gitee.com/lele-666/V-IM/blob/master/v-im%20Setup%200.3.9.exe)。
 
 
 ### 参考项目及技术
