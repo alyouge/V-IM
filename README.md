@@ -4,6 +4,8 @@
 >   3. 断线重连（24次，两分钟），系统会自动退出登录。
 >   4. 断线重连界面提示（5秒一次）。
 >   5. 更换logo
+>   6. api 整合
+
 ![logo](build/icons/icon.png)
 ### 服务端代码在此
 >   1. https://gitee.com/lele-666/V-IM-Server
