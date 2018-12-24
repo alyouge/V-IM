@@ -306,6 +306,7 @@ export default {
       }
       let param = new FormData();
       param.set('chatId', self.chat.id);
+      param.set('chatType', self.chat.type);
       param.set('fromId', self.$store.state.user.id);
       param.set('pageNo', pageNo);
       fetchPost(

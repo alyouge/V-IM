@@ -162,17 +162,16 @@ export default {
             path: '/index/chatBox',
             params: {}
           });
-
-
-
         })
         .catch(error => {
+          console.log(error);
           if ('TypeError: Failed to fetch' === error.toLocaleString()){
-            self.$Message.warning(error);
-          }else {
+            self.$Message.warning("服务器未响应");
+          }else if (ErrorType.TOKEN_ERROR === error || ErrorType.PARAM_ERROR === error || ErrorType.SERVER_ERROR === error){
+            self.$Message.warning("用户名或密码不对");
+          } else{
             self.$Message.warning(error);
           }
-
         });
     }
   },
