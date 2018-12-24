@@ -1,5 +1,5 @@
 import conf from '../conf';
-import { ErrorType, timeoutFetch, tokenFetch } from './chatUtils';
+import { ErrorType, logout, timeoutFetch, tokenFetch } from './chatUtils';
 
 class HttpApiUtils {
   constructor() {
@@ -51,7 +51,8 @@ class HttpApiUtils {
    * 刷新token
    * @param flushTokenTimerId
    */
-  flushToken() {
+  flushToken(self) {
+    let apiSelf = this;
      let param = new FormData();
     param.set('client_id', 'v-client');
     param.set('client_secret', 'v-client-ppp');
@@ -67,7 +68,7 @@ class HttpApiUtils {
         },
         body: param
       }),
-      this.timeOutTime
+      apiSelf.timeOutTime
     )
       .then(response => {
         if (response.status === 200) {
@@ -78,6 +79,23 @@ class HttpApiUtils {
           });
         }
       })
+      .then(json => {
+        self.$store.commit('setToken', json);
+        self.$store.commit('setTokenStatus', json);
+        //清除原先的刷新缓存的定时器
+        self.$store.commit('clearFlushTokenTimerId');
+        //新的刷新token 定时器
+        let flushTokenTimerId = setTimeout(function() {
+          apiSelf.flushToken(self)
+        },((json.expires_in-10)*1000));
+        //重新设置定时器
+        self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
+
+      })
+      //非常不幸，如果整合刷新token 时候网络中断，直接退出登录
+      .catch(() => {
+        logout(self);
+      });
   }
 }
 

@@ -40,7 +40,7 @@
 <script>
 import Top from './im/components/top.vue';
 import conf from './im/conf';
-import { timeoutFetch, fetchPost, tokenFetch, flushToken, ErrorType } from './im/utils/chatUtils';
+import { timeoutFetch, fetchPost, tokenFetch, flushToken, ErrorType, logout } from './im/utils/chatUtils';
 import HttpApiUtils from './im/utils/HttpApiUtils';
 
 export default {
@@ -118,12 +118,28 @@ export default {
       param.set('scope', 'select');
       param.set('username', self.username.trim());
       param.set('password', self.password.trim());
-      let hp = new HttpApiUtils(self);
+      let hp = new HttpApiUtils();
       hp.login(param)
         //存储 token
         .then(token => {
           self.$store.commit('setToken', token);
           self.$store.commit('setTokenStatus', true);
+
+          //刷新token 定时器
+          let flushTokenTimerId = setTimeout(function() {
+            let api = HttpApiUtils();
+            api.flushToken()
+              .then(json => {
+                self.$store.commit('setToken', json);
+                self.$store.commit('setTokenStatus', json);
+              })
+              //非常不幸，如果整合刷新token 时候网络中断，直接退出登录
+              .catch(() => {
+                logout(self);
+              });
+          },((token.expires_in-10)*1000));
+          self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
+
           //初始化用户数据
           return hp.initInfo();
         })
@@ -154,6 +170,9 @@ export default {
             path: '/index/chatBox',
             params: {}
           });
+
+
+
         })
         .catch(error => {
           if ('TypeError: Failed to fetch' === error.toLocaleString()){

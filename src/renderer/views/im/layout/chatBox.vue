@@ -30,7 +30,15 @@
   import WebsocketHeartbeatJs from '../utils/WebsocketHeartbeatJs.js';
   import conf from '../conf';
   import winControl from '../../../../main/windowControl.js';
-  import { ChatListUtils, ErrorType, imageLoad, logout, MessageInfoType, MessageTargetType } from '../utils/chatUtils';
+  import {
+    ChatListUtils,
+    ErrorType,
+    imageLoad,
+    logout,
+    MessageInfoType,
+    MessageTargetType,
+    timeoutFetch
+  } from '../utils/chatUtils';
   import HttpApiUtils from '../utils/HttpApiUtils';
 
   export default {
@@ -141,12 +149,47 @@
 
       let count = 0;
       websocketHeartbeatJs.onerror = function(error) {
-        let http = new HttpApiUtils(self);
-        http.flushToken()
+
+        let param = new FormData();
+        param.set('client_id', 'v-client');
+        param.set('client_secret', 'v-client-ppp');
+        param.set('grant_type', 'refresh_token');
+        param.set('scope', 'select');
+        param.set('refresh_token', sessionStorage.getItem('refresh_token'));
+        timeoutFetch(
+          fetch(conf.getTokenUrl(), {
+            method: 'POST',
+            model: 'cros', //跨域
+            headers: {
+              Accept: 'application/json'
+            },
+            body: param
+          }),
+          5000
+        )
+          .then(response => {
+            if (response.status === 200) {
+              return response.json();
+            } else {
+              return new Promise((resolve, reject) => {
+                reject(ErrorType.FLUSH_TOKEN_ERROR);
+              });
+            }
+          })
           .then(json => {
             count = 0;
             self.$store.commit('setToken', json);
             self.$store.commit('setTokenStatus', json);
+
+            //清除原先的刷新缓存的定时器
+            self.$store.commit('clearFlushTokenTimerId');
+            //刷新token 定时器
+            let flushTokenTimerId = setTimeout(function() {
+              let api = HttpApiUtils();
+              api.flushToken(self)
+            },((json.expires_in-10)*1000));
+            self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
+
           })
           .catch(error => {
             count++;
@@ -159,7 +202,6 @@
         //重连次数大于24 退出登录
         if (count > 24) {
           count = 0;
-          websocketHeartbeatJs.heartReset();
           logout(self);
         }
       };
