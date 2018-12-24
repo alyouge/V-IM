@@ -128,15 +128,7 @@ export default {
           //刷新token 定时器
           let flushTokenTimerId = setTimeout(function() {
             let api = HttpApiUtils();
-            api.flushToken()
-              .then(json => {
-                self.$store.commit('setToken', json);
-                self.$store.commit('setTokenStatus', json);
-              })
-              //非常不幸，如果整合刷新token 时候网络中断，直接退出登录
-              .catch(() => {
-                logout(self);
-              });
+            api.flushToken(self);
           },((token.expires_in-10)*1000));
           self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
 
