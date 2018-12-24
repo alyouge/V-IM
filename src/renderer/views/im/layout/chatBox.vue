@@ -145,6 +145,8 @@
         http.flushToken()
           .then(json => {
             count = 0;
+            self.$store.commit('setToken', json);
+            self.$store.commit('setTokenStatus', json);
           })
           .catch(error => {
             count++;
