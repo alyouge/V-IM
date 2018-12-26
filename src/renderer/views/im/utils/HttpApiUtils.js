@@ -86,7 +86,7 @@ class HttpApiUtils {
         self.$store.commit('clearFlushTokenTimerId');
         //新的刷新token 定时器
         let flushTokenTimerId = setTimeout(function() {
-          apiSelf.flushToken()
+          apiSelf.flushToken(self)
         },((json.expires_in-10)*1000));
         //重新设置定时器
         self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
