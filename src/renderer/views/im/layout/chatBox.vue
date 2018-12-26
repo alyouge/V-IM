@@ -186,7 +186,7 @@
             //刷新token 定时器
             let flushTokenTimerId = setTimeout(function() {
               let api = HttpApiUtils();
-              api.flushToken(self)
+              api.flushToken()
             },((json.expires_in-10)*1000));
             self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
 
