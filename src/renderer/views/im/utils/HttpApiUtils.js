@@ -52,6 +52,7 @@ class HttpApiUtils {
    * @param flushTokenTimerId
    */
   flushToken(self) {
+    console.log("开始刷新...");
     let apiSelf = this;
      let param = new FormData();
     param.set('client_id', 'v-client');
