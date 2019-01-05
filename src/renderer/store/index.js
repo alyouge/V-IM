@@ -29,14 +29,14 @@ export default new Vuex.Store({
     //群组列表
     chatGroupList: [],
     //刷新token 的定时器
-    flushTokenTimerId : null
+    flushTokenTimerId: null
   },
   mutations: {
     setFlushTokenTimerId: function(state, flushTokenTimerId) {
       state.flushTokenTimerId = flushTokenTimerId;
     },
     clearFlushTokenTimerId: function(state) {
-     clearTimeout(state.flushTokenTimerId) ;
+      clearTimeout(state.flushTokenTimerId);
     },
     setToken: function(state, token) {
       sessionStorage.setItem('token', token.access_token);
@@ -68,6 +68,9 @@ export default new Vuex.Store({
         message: message
       };
       state.websocket.send(JSON.stringify(msg));
+    },
+    resetUnRead: function(state) {
+      state.currentChat.unReadCount = 0;
     },
     // 退出登录
     closeConnect: function(state) {

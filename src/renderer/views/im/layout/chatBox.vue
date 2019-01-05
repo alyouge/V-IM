@@ -70,7 +70,7 @@
     },
     methods: {
       showChat: function(chat) {
-        this.$store.state.currentChat.unReadCount = 0;
+        this.$store.commit('resetUnRead');
         this.currentChat = chat;
         // 每次滚动到最底部
         this.$nextTick(() => {

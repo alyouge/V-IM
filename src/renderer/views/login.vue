@@ -38,153 +38,160 @@
 </template>
 
 <script>
-import Top from './im/components/top.vue';
-import conf from './im/conf';
-import { timeoutFetch, fetchPost, tokenFetch, flushToken, ErrorType, logout } from './im/utils/chatUtils';
-import HttpApiUtils from './im/utils/HttpApiUtils';
+  import Top from './im/components/top.vue';
+  import conf from './im/conf';
+  import { timeoutFetch, fetchPost, tokenFetch, flushToken, ErrorType, logout } from './im/utils/chatUtils';
+  import HttpApiUtils from './im/utils/HttpApiUtils';
 
-export default {
-  name: 'login',
-  data() {
-    return {
-      app_name: conf.app_name,
-      username: '',
-      password: '',
-      registerPhone: '',
-      registerUsername: '',
-      registerPassword: '',
-      err: '',
-      showErr: false,
-      showSetting: false,
-      showRegister: false,
-      host: '127.0.0.1'
-    };
-  },
-  components: {
-    Top
-  },
-  methods: {
-    saveSetting() {
-      let self = this;
-      localStorage.setItem('host', self.host);
-      self.$Message.success('保存成功！');
-      self.showSetting = false;
+  export default {
+    name: 'login',
+    data() {
+      return {
+        app_name: conf.app_name,
+        username: '',
+        password: '',
+        registerPhone: '',
+        registerUsername: '',
+        registerPassword: '',
+        err: '',
+        showErr: false,
+        showSetting: false,
+        showRegister: false,
+        host: '127.0.0.1'
+      };
     },
-    clickUser() {
-      location.reload();
+    components: {
+      Top
     },
-    saveRegister: function() {
-      let self = this;
-      if (!/^1[34578]\d{9}$/.test(self.registerPhone)) {
-        self.$Message.error('手机号码有误，请重填');
-        return;
-      }
-      let formData = new FormData();
-      // 请求参数 ('key',value)
-      formData.set('phone', self.registerPhone);
-      formData.set('name', self.registerUsername);
-      formData.set('password', self.registerPassword);
-      fetch(conf.getRegisterUrl(), {
-        method: 'POST',
-        model: 'cros', //跨域
-        headers: {
-          Accept: 'application/json'
-        },
-        body: formData
-      })
-        .then(response => response.json())
-        .then(json => {
-          if ('0' === json.resultCode) {
-            self.$Message.success('注册成功');
-            self.showRegister = false;
-          } else {
-            self.$Message.error(json.message);
-          }
+    methods: {
+      saveSetting() {
+        let self = this;
+        localStorage.setItem('host', self.host);
+        self.$Message.success('保存成功！');
+        self.showSetting = false;
+      },
+      clickUser() {
+        location.reload();
+      },
+      saveRegister: function() {
+        let self = this;
+        if (!/^1[34578]\d{9}$/.test(self.registerPhone)) {
+          self.$Message.error('手机号码有误，请重填');
+          return;
+        }
+        let formData = new FormData();
+        // 请求参数 ('key',value)
+        formData.set('phone', self.registerPhone);
+        formData.set('name', self.registerUsername);
+        formData.set('password', self.registerPassword);
+        fetch(conf.getRegisterUrl(), {
+          method: 'POST',
+          model: 'cros', //跨域
+          headers: {
+            Accept: 'application/json'
+          },
+          body: formData
         })
-        .catch(() => {
-          self.$Message.error('与服务器通讯失败');
-        });
-    },
-    /**
-     * 从远程服务中获取登录用户的信息
-     */
-
-    login: function() {
-      let self = this;
-      let param = new FormData();
-      param.set('client_id', 'v-client');
-      param.set('client_secret', 'v-client-ppp');
-      param.set('grant_type', 'password');
-      param.set('scope', 'select');
-      param.set('username', self.username.trim());
-      param.set('password', self.password.trim());
-      let hp = new HttpApiUtils();
-      hp.login(param)
-        //存储 token
-        .then(token => {
-          self.$store.commit('setToken', token);
-          self.$store.commit('setTokenStatus', true);
-
-          //刷新token 定时器
-          let flushTokenTimerId = setTimeout(function() {
-            let api = new HttpApiUtils();
-            api.flushToken(self);
-          },((token.expires_in-10)*1000));
-          self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
-
-          //初始化用户数据
-          return hp.initInfo();
-        })
-        //存储用户数据
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          } else if (response.status === 401) {
-            return new Promise((resolve, reject) => {
-              reject(ErrorType.TOKEN_ERROR);
-            });
-          } else {
-            return new Promise((resolve, reject) => {
-              reject(ErrorType.SERVER_ERROR);
-            });
-          }
-        })
-        //存储用户数据
-        .then(json => {
-          //个人信息
-          self.$store.commit('setUser', json.me);
-          //好友
-          self.$store.commit('setUserFriendList', json.friends);
-          //群
-          self.$store.commit('setChatGroupList', json.groups);
-          // 跳转到index 页面
-          self.$router.push({
-            path: '/index/chatBox',
-            params: {}
+          .then(response => response.json())
+          .then(json => {
+            if ('0' === json.resultCode) {
+              self.$Message.success('注册成功');
+              self.showRegister = false;
+            } else {
+              self.$Message.error(json.message);
+            }
+          })
+          .catch(() => {
+            self.$Message.error('与服务器通讯失败');
           });
-        })
-        .catch(error => {
-          console.log(error);
-          if ('TypeError: Failed to fetch' === error.toLocaleString()){
-            self.$Message.warning("服务器未响应");
-          }else if (ErrorType.TOKEN_ERROR === error || ErrorType.PARAM_ERROR === error || ErrorType.SERVER_ERROR === error){
-            self.$Message.warning("用户名或密码不对");
-          } else{
-            self.$Message.warning(error);
-          }
-        });
+      },
+      /**
+       * 从远程服务中获取登录用户的信息
+       */
+
+      login: function() {
+        let self = this;
+        let param = new FormData();
+        param.set('client_id', 'v-client');
+        param.set('client_secret', 'v-client-ppp');
+        param.set('grant_type', 'password');
+        param.set('scope', 'select');
+        param.set('username', self.username.trim());
+        param.set('password', self.password.trim());
+        let hp = new HttpApiUtils();
+        hp.login(param)
+        //存储 token
+          .then(token => {
+            self.$store.commit('setToken', token);
+            self.$store.commit('setTokenStatus', true);
+
+            //刷新token 定时器
+            let flushTimeout = (token.expires_in - 10) * 1000;
+            let api = new HttpApiUtils();
+            //刷新时间短
+            if (flushTimeout < 10000) {
+              api.flushToken(self);
+            } else {
+              let flushTokenTimerId = setTimeout(function() {
+                api.flushToken(self);
+              }, flushTimeout);
+              self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
+            }
+
+
+            //初始化用户数据
+            return hp.initInfo();
+          })
+          //存储用户数据
+          .then(response => {
+            if (response.status === 200) {
+              return response.json();
+            } else if (response.status === 401) {
+              return new Promise((resolve, reject) => {
+                reject(ErrorType.TOKEN_ERROR);
+              });
+            } else {
+              return new Promise((resolve, reject) => {
+                reject(ErrorType.SERVER_ERROR);
+              });
+            }
+          })
+          //存储用户数据
+          .then(json => {
+            //个人信息
+            self.$store.commit('setUser', json.me);
+            //好友
+            self.$store.commit('setUserFriendList', json.friends);
+            //群
+            self.$store.commit('setChatGroupList', json.groups);
+            // 跳转到index 页面
+            self.$router.push({
+              path: '/index/chatBox',
+              params: {}
+            });
+          })
+          .catch(error => {
+            console.log(error);
+            if ('TypeError: Failed to fetch' === error.toLocaleString()) {
+              self.$Message.warning('服务器未响应');
+            } else if (ErrorType.TOKEN_ERROR === error || ErrorType.PARAM_ERROR === error || ErrorType.SERVER_ERROR === error) {
+              self.$Message.warning('用户名或密码不对');
+            } else {
+              self.$Message.warning(error.toLocaleString());
+            }
+          });
+      }
+    },
+    created: function() {
+      let self = this;
+      let host = localStorage.getItem('host');
+      if (host) {
+        self.host = host;
+      } else {
+        localStorage.setItem('host', self.host);
+      }
     }
-  },
-  created: function() {
-    let self = this;
-    let host = localStorage.getItem('host');
-    if (host) {
-      self.host = host;
-    } else {
-      localStorage.setItem('host', self.host);
-    }
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoped>
