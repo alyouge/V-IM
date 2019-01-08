@@ -93,7 +93,7 @@ class HttpApiUtils {
         self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
 
       })
-      //非常不幸，如果整合刷新token 时候网络中断，直接退出登录
+      //非常不幸，如果正好刷新token 时候网络中断，直接退出登录
       .catch(() => {
         logout(self);
       });
