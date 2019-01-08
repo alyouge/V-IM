@@ -193,7 +193,7 @@
           })
           .catch(error => {
             count++;
-            if ('TypeError: Failed to fetch' === error.toLocaleString()) {
+            if ('TypeError: Failed to fetch' === error.toString()) {
               self.$Message.error('网络断开，正在重连...');
             } else if(ErrorType.FLUSH_TOKEN_ERROR === error) {
               count = 25;
