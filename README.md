@@ -1,4 +1,6 @@
-
+#### 打包网页版本
+1. 把引用 windowControl.js 的地方改成 webControl.js(里面功能需要自己实现，方法是空方法)
+2. npm run build:web 
 #### V-0.40
 >  实现双向用户关系，新增表 im_user_friend，删除表 im_group_user，原先注册的用户已经清除，使用请重新注册。
 >  请关注服务端源码！
