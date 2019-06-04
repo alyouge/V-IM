@@ -40,8 +40,7 @@
 <script>
   import Top from './im/components/top.vue';
   import conf from './im/conf';
-  import { timeoutFetch, fetchPost, tokenFetch, flushToken, ErrorType, logout } from './im/utils/chatUtils';
-  import HttpApiUtils from './im/utils/HttpApiUtils';
+  import RequestUtils from '../utils/RequestUtils';
 
   export default {
     name: 'login',
@@ -102,13 +101,9 @@
             }
           })
           .catch(() => {
-            self.$Message.error('服务器未响应');
+            self.$Message.error('与服务器通讯失败');
           });
       },
-      /**
-       * 从远程服务中获取登录用户的信息
-       */
-
       login: function() {
         let self = this;
         let param = new FormData();
@@ -118,66 +113,37 @@
         param.set('scope', 'select');
         param.set('username', self.username.trim());
         param.set('password', self.password.trim());
-        let hp = new HttpApiUtils();
-        hp.login(param)
-        //存储 token
+        let requestApi = RequestUtils.getInstance();
+        requestApi
+          .login(self.username.trim(), self.password.trim())
           .then(token => {
+            console.log("token",token);
             self.$store.commit('setToken', token);
             self.$store.commit('setTokenStatus', true);
-
-            //刷新token 定时器
-            let flushTimeout = (token.expires_in - 10) * 1000;
-            let api = new HttpApiUtils();
-            //刷新时间短
-            if (flushTimeout < 10000) {
-              api.flushToken(self);
-            } else {
-              let flushTokenTimerId = setTimeout(function() {
-                api.flushToken(self);
-              }, flushTimeout);
-              self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
-            }
-
-
-            //初始化用户数据
-            return hp.initInfo();
+            // 获取当前登录的用户，存入store
+            return requestApi.request(conf.getInitUrl(), new FormData());
           })
-          //存储用户数据
-          .then(response => {
-            if (response.status === 200) {
-              return response.json();
-            } else if (response.status === 401) {
-              return new Promise((resolve, reject) => {
-                reject(ErrorType.TOKEN_ERROR);
-              });
-            } else {
-              return new Promise((resolve, reject) => {
-                reject(ErrorType.SERVER_ERROR);
-              });
-            }
-          })
-          //存储用户数据
-          .then(json => {
-            //个人信息
-            self.$store.commit('setUser', json.me);
-            //好友
-            self.$store.commit('setUserFriendList', json.friends);
-            //群
-            self.$store.commit('setChatGroupList', json.groups);
+          .then(json=>{
+            // 把当前用户放入 vuex
+            self.$store.commit('setUser', json);
             // 跳转到index 页面
             self.$router.push({
               path: '/index/chatBox',
               params: {}
             });
+            //获取用户好友
+            return requestApi.request(conf.getChatUsersUrl(), new FormData());
           })
-          .catch(error => {
+          .then(json => {
+            self.$store.commit('setChatGroupList', json);
+          })
+          .catch(function(error) {
             console.log(error);
-            if ('TypeError: Failed to fetch' === error.toString()) {
-              self.$Message.warning('服务器未响应');
-            } else if (ErrorType.TOKEN_ERROR === error || ErrorType.PARAM_ERROR === error || ErrorType.SERVER_ERROR === error) {
-              self.$Message.warning('用户名或密码不对');
+            self.showErr = true;
+            if (error.toString() === 'TypeError: Failed to fetch') {
+              self.err = '服务通讯失败，请检查服务设置';
             } else {
-              self.$Message.warning(error.toString());
+              self.err = error.toString();
             }
           });
       }
@@ -195,11 +161,11 @@
 </script>
 
 <style lang="scss" scoped>
-    @import './../styles/theme.scss';
+    @import "./../styles/theme.scss";
 
     .login {
         height: 100%;
-        background: url('../assets/bg.png') no-repeat;
+        background: url("../assets/bg.png") no-repeat;
         background-size: 100% 100%;
         position: relative;
 

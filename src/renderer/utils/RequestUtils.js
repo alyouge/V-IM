@@ -1,10 +1,12 @@
+import { ErrorType } from '../views/im/utils/chatUtils';
+import conf from '../views/im/conf/index.js';
+
 class RequestUtils {
     constructor() {
         this.instance = null;
         this.isRefreshing = false;
         this.subscribers = [];
         this.token = null;
-        this.LOGIN_URL = "http://101.200.151.183:8080/oauth/token";
     }
 
     /**
@@ -27,7 +29,7 @@ class RequestUtils {
     request(url, options) {
         let self = this;
         options.set('access_token', self.token.access_token);
-        return fetch(url, {
+        return self.timeoutFetch(fetch(url, {
             method: 'POST',
             model: 'cros', //跨域
             headers: {
@@ -37,7 +39,13 @@ class RequestUtils {
         })
             .then(response => {
                 return self.checkStatus(response, url, options);
-            });
+            })
+          .then(json=>{
+              console.log(json);
+              return new Promise(resolve => {
+                  resolve(json)
+              })
+          }),5000);
     }
 
     /**
@@ -82,12 +90,13 @@ class RequestUtils {
      * 重新执行token 失效的函数
      */
     onAccessTokenFetched() {
+        let self = this;
         // eslint-disable-next-line no-console
-        console.log("subscribers", this.subscribers);
-        this.subscribers.forEach((callback) => {
+        console.log("subscribers", self.subscribers);
+        self.subscribers.forEach((callback) => {
             callback();
         });
-        this.subscribers = [];
+        self.subscribers = [];
     }
 
     /**
@@ -95,11 +104,12 @@ class RequestUtils {
      * @param callback 请求的token 失效的函数
      */
     addSubscriber(callback) {
+        let self = this;
         // eslint-disable-next-line no-console
         console.log("addSubscriber", callback);
-        this.subscribers.push(callback);
+        self.subscribers.push(callback);
         // eslint-disable-next-line no-console
-        console.log("this.subscribers", this.subscribers);
+        console.log("this.subscribers", self.subscribers);
     }
 
     /**
@@ -117,7 +127,7 @@ class RequestUtils {
         param.set('scope', 'select');
         param.set('username', username.trim());
         param.set('password', password.trim());
-        return fetch(self.LOGIN_URL, {
+        return fetch(conf.getTokenUrl(), {
             method: 'POST',
             model: 'cros', //跨域
             headers: {
@@ -126,6 +136,7 @@ class RequestUtils {
             body: param
         })
             .then(response => {
+                console.log(response);
                 if (response.status === 200) {
                     return response.json();
                 } else if (response.status === 401) {
@@ -146,6 +157,10 @@ class RequestUtils {
             })
     }
 
+    /**
+     * 刷新token
+     * @returns {Promise<Response | never>}
+     */
     flushToken() {
         let self = this;
         let param = new FormData();
@@ -154,7 +169,7 @@ class RequestUtils {
         param.set('grant_type', 'refresh_token');
         param.set('scope', 'select');
         param.set('refresh_token', self.token.refresh_token);
-        return fetch(self.LOGIN_URL, {
+        return fetch(conf.getTokenUrl(), {
             method: 'POST',
             model: 'cros', //跨域
             headers: {
@@ -181,6 +196,26 @@ class RequestUtils {
                 self.onAccessTokenFetched();
                 self.isRefreshing = true;
             })
+    }
+
+    timeoutFetch(fetchPromise, timeout) {
+        let abortFn = null;
+
+        //这是一个可以被reject的promise
+        let abortPromise = new Promise(function(resolve, reject) {
+            abortFn = function() {
+                reject(ErrorType.TIMEOUT_ERROR);
+            };
+        });
+
+        //这里使用Promise.race，以最快 resolve 或 reject 的结果来传入后续绑定的回调
+        let abortAblePromise = Promise.race([fetchPromise, abortPromise]);
+
+        setTimeout(function() {
+            abortFn();
+        }, timeout);
+
+        return abortAblePromise;
     }
 }
 
