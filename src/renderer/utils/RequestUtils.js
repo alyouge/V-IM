@@ -36,7 +36,7 @@ class RequestUtils {
                 Accept: 'application/json'
             },
             body: options
-        })
+        }),5000)
             .then(response => {
                 return self.checkStatus(response, url, options);
             })
@@ -45,7 +45,7 @@ class RequestUtils {
               return new Promise(resolve => {
                   resolve(json)
               })
-          }),5000);
+          });
     }
 
     /**

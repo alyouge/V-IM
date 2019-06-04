@@ -124,18 +124,18 @@
             return requestApi.request(conf.getInitUrl(), new FormData());
           })
           .then(json=>{
-            // 把当前用户放入 vuex
-            self.$store.commit('setUser', json);
+            console.log(json);
+            //个人信息
+            self.$store.commit('setUser', json.me);
+            //好友
+            self.$store.commit('setUserFriendList', json.friends);
+            //群
+            self.$store.commit('setChatGroupList', json.groups);
             // 跳转到index 页面
             self.$router.push({
               path: '/index/chatBox',
               params: {}
             });
-            //获取用户好友
-            return requestApi.request(conf.getChatUsersUrl(), new FormData());
-          })
-          .then(json => {
-            self.$store.commit('setChatGroupList', json);
           })
           .catch(function(error) {
             console.log(error);
