@@ -35,7 +35,7 @@ class HttpApiUtils {
             reject(ErrorType.SERVER_ERROR);
           });
         }
-      })
+      });
 
 
   }
@@ -44,17 +44,18 @@ class HttpApiUtils {
    * 初始化信息
    * @returns {Promise<any>}
    */
-  initInfo(){
-    return timeoutFetch(tokenFetch(conf.getInitUrl(), new FormData()),this.timeOutTime);
+  initInfo() {
+    return timeoutFetch(tokenFetch(conf.getInitUrl(), new FormData()), this.timeOutTime);
   }
+
   /**
    * 刷新token
    * @param flushTokenTimerId
    */
   flushToken(self) {
-    console.log("开始刷新...");
+    console.log('开始刷新...');
     let apiSelf = this;
-     let param = new FormData();
+    let param = new FormData();
     param.set('client_id', 'v-client');
     param.set('client_secret', 'v-client-ppp');
     param.set('grant_type', 'refresh_token');
@@ -87,8 +88,8 @@ class HttpApiUtils {
         self.$store.commit('clearFlushTokenTimerId');
         //新的刷新token 定时器
         let flushTokenTimerId = setTimeout(function() {
-          apiSelf.flushToken(self)
-        },((json.expires_in-10)*1000));
+          apiSelf.flushToken(self);
+        }, ((json.expires_in - 10) * 1000));
         //重新设置定时器
         self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
 
