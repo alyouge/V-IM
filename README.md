@@ -1,7 +1,8 @@
+需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
+
 #### V-0.41
 >  新增 RequestUtils.js 解决同一用户下的刷新并发问题
 >  所有的http请求都基于 RequestUtils.js 
-
 #### 打包网页版本
 1. 把引用 windowControl.js 的地方改成 webControl.js(里面功能需要自己实现，方法是空方法)
 2. npm run build:web 
