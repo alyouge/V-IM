@@ -21,14 +21,14 @@
     </div>
 </template>
 <script>
-import Search from '../components/search.vue';
-import Top from '../components/top.vue';
-import UserChat from '../components/chat.vue';
-import Welcome from '../components/welcome.vue';
-import conf from '../conf';
-import { Chat, ChatListUtils, MessageTargetType } from '../utils/chatUtils';
+  import Search from '../components/search.vue';
+  import Top from '../components/top.vue';
+  import UserChat from '../components/chat.vue';
+  import Welcome from '../components/welcome.vue';
+  import conf from '../conf';
+  import { Chat, ChatListUtils, MessageTargetType } from '../utils/chatUtils';
 
-export default {
+  export default {
   components: {
     Search,
     Top,

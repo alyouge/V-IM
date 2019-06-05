@@ -32,12 +32,12 @@
     </div>
 </template>
 <script>
-import Search from '../components/search.vue';
-import Top from '../components/top.vue';
-import Welcome from '../components/welcome.vue';
-import conf from '../conf';
+  import Search from '../components/search.vue';
+  import Top from '../components/top.vue';
+  import Welcome from '../components/welcome.vue';
+  import conf from '../conf';
 
-const { ChatListUtils } = require('../utils/chatUtils.js');
+  const { ChatListUtils } = require('../utils/chatUtils.js');
 
 export default {
   components: {

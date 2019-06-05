@@ -123,8 +123,11 @@
             // 获取当前登录的用户，存入store
             return requestApi.request(conf.getInitUrl(), new FormData());
           })
+          .then(response=>{
+            return response.json();
+          })
           .then(json=>{
-            console.log(json);
+            console.log("json",json);
             //个人信息
             self.$store.commit('setUser', json.me);
             //好友

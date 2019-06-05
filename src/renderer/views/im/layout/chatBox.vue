@@ -27,19 +27,11 @@
   import Search from '../components/search.vue';
   import Top from '../components/top.vue';
   import UserChat from '../components/chat.vue';
-  import WebsocketHeartbeatJs from '../utils/WebsocketHeartbeatJs.js';
+  import WebsocketHeartbeatJs from '../utils/WebsocketHeartbeatJs';
   import conf from '../conf';
-  import winControl from '../../../../main/windowControl.js';
-  import {
-    ChatListUtils,
-    ErrorType,
-    imageLoad,
-    logout,
-    MessageInfoType,
-    MessageTargetType,
-    timeoutFetch
-  } from '../utils/chatUtils';
-  import HttpApiUtils from '../utils/HttpApiUtils';
+  import winControl from '../../../../main/windowControl';
+  import RequestUtils from '../../../utils/RequestUtils';
+  import { ChatListUtils, ErrorType, imageLoad, logout, MessageInfoType, MessageTargetType } from '../utils/chatUtils';
 
   export default {
     components: {
@@ -156,46 +148,22 @@
         param.set('grant_type', 'refresh_token');
         param.set('scope', 'select');
         param.set('refresh_token', sessionStorage.getItem('refresh_token'));
-        timeoutFetch(
-          fetch(conf.getTokenUrl(), {
-            method: 'POST',
-            model: 'cros', //跨域
-            headers: {
-              Accept: 'application/json'
-            },
-            body: param
-          }),
-          5000
-        )
+        let requestApi = RequestUtils.getInstance();
+        requestApi
+          .request(conf.getTokenUrl(), param)
           .then(response => {
-            if (response.status === 200) {
-              return response.json();
-            } else {
-              return new Promise((resolve, reject) => {
-                reject(ErrorType.FLUSH_TOKEN_ERROR);
-              });
-            }
+            return response.json();
           })
           .then(json => {
             count = 0;
             self.$store.commit('setToken', json);
             self.$store.commit('setTokenStatus', json);
-
-            //清除原先的刷新缓存的定时器
-            self.$store.commit('clearFlushTokenTimerId');
-            //刷新token 定时器
-            let flushTokenTimerId = setTimeout(function() {
-              let api = new HttpApiUtils();
-              api.flushToken(self)
-            },((json.expires_in-10)*1000));
-            self.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
-
           })
           .catch(error => {
             count++;
             if ('TypeError: Failed to fetch' === error.toString()) {
               self.$Message.error('网络断开，正在重连...');
-            } else if(ErrorType.FLUSH_TOKEN_ERROR === error) {
+            } else if (ErrorType.FLUSH_TOKEN_ERROR === error) {
               count = 25;
             }
           });

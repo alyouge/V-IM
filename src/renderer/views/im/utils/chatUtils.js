@@ -1,5 +1,4 @@
 // 格式化时间
-import conf from '../conf';
 
 export function formatDateTime(date) {
   let y = date.getFullYear();
@@ -336,91 +335,6 @@ export function logout(self) {
   self.$router.push({
     path: '/',
     params: {}
-  });
-}
-
-/**
- * 重新封装的fetch，支持超时操作。
- * @param fetchPromise 真正要执行的promise
- * @param timeout 超时时间
- * @returns {Promise<any>} 返回一个 promise
- */
-export function timeoutFetch(fetchPromise, timeout) {
-  let abortFn = null;
-
-  //这是一个可以被reject的promise
-  let abortPromise = new Promise(function(resolve, reject) {
-    abortFn = function() {
-      reject(ErrorType.TIMEOUT_ERROR);
-    };
-  });
-
-  //这里使用Promise.race，以最快 resolve 或 reject 的结果来传入后续绑定的回调
-  let abortAblePromise = Promise.race([fetchPromise, abortPromise]);
-
-  setTimeout(function() {
-    abortFn();
-  }, timeout);
-
-  return abortAblePromise;
-}
-
-/**
- * 封装的ajax 跨域请求
- * @param url 请求路径
- * @param formData 请求参数 formData 类型
- * @param resultFun 返回结果处理函数
- * @param self vue this 对象
- */
-export function fetchPost(url, formData, resultFun, self) {
-  timeoutFetch(tokenFetch(url, formData, self), 5000)
-    .then(response => {
-      //token 失效，需要刷新
-      if (response.status === 401) {
-        return new Promise((resolve, reject) => {
-          reject(ErrorType.TOKEN_ERROR);
-        });
-      } else if (response.status === 200) {
-        return response.json();
-      } else {
-        return new Promise((resolve, reject) => {
-          reject(ErrorType.SERVER_ERROR);
-        });
-      }
-    })
-    .then(json => {
-      if (typeof json != 'undefined') {
-        resultFun(json);
-      }
-    })
-    .catch(error => {
-      if (error === ErrorType.SERVER_ERROR) {
-        self.$Message.error('服务器错误');
-      } else if (error === ErrorType.TIMEOUT_ERROR) {
-        self.$Message.error('服务器响应超时');
-      } else {
-        self.$Message.error(error);
-      }
-    });
-}
-
-/**
- * 带有token 的fetch 请求
- * @param url url
- * @param formData 参数
- * @param self vue this 对象
- * @returns {Promise<any | never>}
- */
-export function tokenFetch(url, formData) {
-  let token = sessionStorage.getItem('token');
-  formData.set('access_token', token);
-  return fetch(url, {
-    method: 'POST',
-    model: 'cros', //跨域
-    headers: {
-      Accept: 'application/json'
-    },
-    body: formData
   });
 }
 

@@ -27,17 +27,10 @@ export default new Vuex.Store({
     //好友列表
     userFriendList: [],
     //群组列表
-    chatGroupList: [],
-    //刷新token 的定时器
-    flushTokenTimerId: null
+    chatGroupList: []
   },
   mutations: {
-    setFlushTokenTimerId: function(state, flushTokenTimerId) {
-      state.flushTokenTimerId = flushTokenTimerId;
-    },
-    clearFlushTokenTimerId: function(state) {
-      clearTimeout(state.flushTokenTimerId);
-    },
+
     setToken: function(state, token) {
       sessionStorage.setItem('token', token.access_token);
       sessionStorage.setItem('refresh_token', token.refresh_token);

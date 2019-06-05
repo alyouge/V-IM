@@ -22,11 +22,10 @@
     </div>
 </template>
 <script>
-import conf from '../conf';
-import { pinyin } from '../utils/pinyin.js';
-import { fetchPost } from '../utils/chatUtils';
+  import conf from '../conf';
+  import { pinyin } from '../utils/pinyin.js';
 
-export default {
+  export default {
   components: {},
   data() {
     return {

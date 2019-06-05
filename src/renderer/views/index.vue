@@ -49,10 +49,9 @@
     </div>
 </template>
 <script>
-import { fetchPost, logout } from './im/utils/chatUtils';
-import conf from './im/conf';
+  import { logout } from './im/utils/chatUtils';
 
-export default {
+  export default {
   data() {
     return {
       user: {},

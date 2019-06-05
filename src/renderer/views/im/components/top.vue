@@ -12,62 +12,66 @@
     </div>
 </template>
 <script>
-import winControl from '../../../../main/windowControl.js';
+  import winControl from '../../../../main/windowControl.js';
 
-export default {
-  data() {
-    return {
-      // 默认选中的值
-      icon: 'ios-square-outline'
-    };
-  },
-  methods: {
-    min() {
-      winControl.min();
+  export default {
+    data() {
+      return {
+        // 默认选中的值
+        icon: 'ios-square-outline'
+      };
     },
-    max() {
-      winControl.max();
-      this.icon = this.icon === 'ios-square-outline' ? 'ios-browsers-outline' : 'ios-square-outline';
-    },
-    close() {
-      winControl.close();
+    methods: {
+      min() {
+        winControl.min();
+      },
+      max() {
+        winControl.max();
+        this.icon = this.icon === 'ios-square-outline' ? 'ios-browsers-outline' : 'ios-square-outline';
+      },
+      close() {
+        winControl.close();
+      }
     }
-  }
-};
+  };
 </script>
 <style lang="scss">
-@import '../../../styles/theme';
+    @import '../../../styles/theme';
 
-$top-height: 4rem;
-$color-online: #d1ffe9;
+    $top-height: 4rem;
+    $color-online: #d1ffe9;
 
-.im-top {
-  height: $top-height;
-  padding: 0.5rem;
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  width: 100%;
-  a {
-    display: inline-block;
-    color: $color-write;
-    float: right;
-    i {
-      color: $color-default;
-      font-size: 1.4rem;
-      font-weight: bolder;
+    .im-top {
+        height: $top-height;
+        padding: 0.5rem;
+        position: absolute;
+        z-index: 2;
+        right: 0;
+        width: 100%;
+
+        a {
+            display: inline-block;
+            color: $color-write;
+            float: right;
+
+            i {
+                color: $color-default;
+                font-size: 1.4rem;
+                font-weight: bolder;
+            }
+
+            :hover {
+                background-color: $color-gray;
+            }
+
+            .text-right {
+                float: right;
+                width: 2.4rem;
+                height: 2.4rem;
+                display: inline-block;
+                padding: 0.5rem;
+                text-align: center;
+            }
+        }
     }
-    :hover {
-      background-color: $color-gray;
-    }
-    .text-right {
-      float: right;
-      width: 2.4rem;
-      height: 2.4rem;
-      display: inline-block;
-      padding: 0.5rem;
-      text-align: center;
-    }
-  }
-}
 </style>
