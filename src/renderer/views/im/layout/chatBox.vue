@@ -194,7 +194,7 @@
 
         .chat-box {
             flex: 1;
-            background-color: $color-write;
+            background-color: $color-box-bg;
             display: flex;
             flex-direction: column;
             position: relative;

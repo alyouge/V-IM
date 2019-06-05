@@ -59,7 +59,7 @@
                                @insertFace="insertFace"></Faces>
                         <Button class="history-message-btn" @click="getHistoryMessage()">聊天记录</Button>
                     </div>
-                    <textarea v-model="messageContent" @keyup.enter="mineSend()"></textarea>
+                    <textarea v-model="messageContent" class="textarea" @keyup.enter="mineSend()"></textarea>
                     <div class="im-chat-send">
                         <Button @click="mineSend()">发送</Button>
                     </div>
@@ -356,7 +356,7 @@
           param.set('chatId', self.chat.id);
           RequestUtils
             .getInstance()
-            .request(conf.getTokenUrl(), param)
+            .request(conf.getChatUsersUrl(), param)
             .then(response => {
               return response.json();
             }).then(json => {
@@ -382,6 +382,7 @@
         display: flex;
         flex-direction: column;
         margin-top: 4rem;
+
     }
 
     .im-chat-top {
@@ -607,6 +608,8 @@
             .history-message-btn {
                 float: right;
             }
+
+
         }
 
         textarea {
@@ -615,7 +618,7 @@
             width: 100%;
             flex: 1;
             resize: none;
-
+            background-color: $color-box-bg !important;
             &:focus {
                 border: 0;
             }

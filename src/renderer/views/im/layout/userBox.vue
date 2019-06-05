@@ -39,148 +39,168 @@
 
   const { ChatListUtils } = require('../utils/chatUtils.js');
 
-export default {
-  components: {
-    Search,
-    Top,
-    Welcome
-  },
-  computed: {
-    userFriendList: {
-      get: function() {
-        return this.$store.state.userFriendList;
-      },
-      set: function(userFriendList) {
-        this.$store.commit('setUserFriendList', userFriendList);
+  export default {
+    components: {
+      Search,
+      Top,
+      Welcome
+    },
+    computed: {
+      userFriendList: {
+        get: function() {
+          return this.$store.state.userFriendList;
+        },
+        set: function(userFriendList) {
+          this.$store.commit('setUserFriendList', userFriendList);
+        }
+      }
+    },
+    data() {
+      return {
+        chat: {},
+        user: {},
+        currentUser: {},
+        host: conf.getHostUrl(),
+        userFriends: []
+      };
+    },
+
+    methods: {
+      // 打开一个聊天对话框
+      showChat: function(user) {
+        let self = this;
+        let chat = ChatListUtils.resetChatList(self, user, conf.getHostUrl());
+        self.$router.push({
+          path: '/index/chatBox',
+          query: { chat: chat }
+        });
       }
     }
-  },
-  data() {
-    return {
-      chat: {},
-      user: {},
-      currentUser: {},
-      host: conf.getHostUrl()
-    };
-  },
-  methods: {
-    // 打开一个聊天对话框
-    showChat: function(user) {
-      let self = this;
-      let chat = ChatListUtils.resetChatList(self, user, conf.getHostUrl());
-      self.$router.push({
-        path: '/index/chatBox',
-        query: { chat: chat }
-      });
-    }
-  }
-};
+  };
 </script>
 <style lang="scss" scoped>
-@import '../../../styles/theme';
+    @import '../../../styles/theme';
 
-.ivu-tabs-content {
-  height: 100%;
-}
-
-.user-box {
-  width: 26rem;
-  background-color: $color-light-gray;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  .chat-box {
-    flex: 1;
-    background-color: $color-write;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-  .user-box-list {
-    height: 100%;
-    width: 22rem;
-    display: flex;
-    flex-direction: column;
-    .search-box {
-      margin: 1.5rem;
-      width: 19rem;
+    .ivu-tabs-content {
+        height: 100%;
     }
-    .group-box {
-      overflow-y: scroll;
-      flex: 1;
-      .group-list {
-        margin: 0 1rem;
-        .count {
-          color: #aaaaaa;
+
+    .user-box {
+        width: 26rem;
+        background-color: $color-light-gray;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+
+        .chat-box {
+            flex: 1;
+            background-color: $color-box-bg;
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
-        li {
-          list-style: none;
-          position: relative;
-          font-size: 1.2rem;
-          cursor: pointer;
-          font-weight: 200;
-          h5 {
-            padding: 0.5rem 0;
-            cursor: pointer;
-            font-size: 1.3rem;
-            font-weight: 200;
-            i {
-              vertical-align: baseline;
-            }
-          }
-          img {
-            width: 4.4rem;
-            height: 4.4rem;
-            border-radius: 50%;
-            position: absolute;
-            top: 0.4rem;
-            left: 2.5rem;
-          }
-          .outline {
-            filter: grayscale(100%);
-          }
-          b {
-            position: absolute;
-            font-size: 1.3rem;
-            left: 7.5rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-weight: 600;
-            top: 0.6rem;
-          }
-          p {
-            position: absolute;
-            left: 7.5rem;
-            bottom: 0.4rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            width: 75%;
-            font-size: 1.1rem;
-            color: #aaaaaa;
-          }
-        }
-        .user {
-          padding-left: 1.3rem;
-          height: 5.2rem;
-          a {
-            display: block;
-            width: 100%;
+
+        .user-box-list {
             height: 100%;
-            color: $color-default;
-          }
+            width: 22rem;
+            display: flex;
+            flex-direction: column;
+
+            .search-box {
+                margin: 1.5rem;
+                width: 19rem;
+            }
+
+            .group-box {
+                overflow-y: scroll;
+                flex: 1;
+
+                .group-list {
+                    margin: 0 1rem;
+
+                    .count {
+                        color: #aaaaaa;
+                    }
+
+                    li {
+                        list-style: none;
+                        position: relative;
+                        font-size: 1.2rem;
+                        cursor: pointer;
+                        font-weight: 200;
+
+                        h5 {
+                            padding: 0.5rem 0;
+                            cursor: pointer;
+                            font-size: 1.3rem;
+                            font-weight: 200;
+
+                            i {
+                                vertical-align: baseline;
+                            }
+                        }
+
+                        img {
+                            width: 4.4rem;
+                            height: 4.4rem;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 0.4rem;
+                            left: 2.5rem;
+                        }
+
+                        .outline {
+                            filter: grayscale(100%);
+                        }
+
+                        b {
+                            position: absolute;
+                            font-size: 1.3rem;
+                            left: 7.5rem;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            font-weight: 600;
+                            top: 0.6rem;
+                        }
+
+                        p {
+                            position: absolute;
+                            left: 7.5rem;
+                            bottom: 0.4rem;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            width: 75%;
+                            font-size: 1.1rem;
+                            color: #aaaaaa;
+                        }
+                    }
+
+                    .user {
+                        padding-left: 1.3rem;
+                        height: 5.2rem;
+
+                        a {
+                            display: block;
+                            width: 100%;
+                            height: 100%;
+                            color: $color-default;
+                        }
+                    }
+
+                    > li:hover {
+                        /*background-color: #efefef;*/
+                    }
+
+                    > li > ul {
+                        /*background-color: #ffffff;*/
+                    }
+
+                    li.user:hover {
+                        /*background-color: #efefef;*/
+                    }
+                }
+            }
         }
-        > li:hover {
-          /*background-color: #efefef;*/
-        }
-        > li > ul {
-          /*background-color: #ffffff;*/
-        }
-        li.user:hover {
-          /*background-color: #efefef;*/
-        }
-      }
     }
-  }
-}
 </style>
