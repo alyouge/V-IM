@@ -132,8 +132,17 @@
             self.$store.commit('setUser', json.me);
             //好友
             self.$store.commit('setUserFriendList', json.friends);
+
             //群
             self.$store.commit('setChatGroupList', json.groups);
+
+            //把群组封装到map中
+            let chatMap = new Map();
+            json.groups.forEach(group => {
+              chatMap.set(group.id,group);
+            });
+            self.$store.commit('setChatMap', chatMap);
+
             // 跳转到index 页面
             self.$router.push({
               path: '/index/chatBox',

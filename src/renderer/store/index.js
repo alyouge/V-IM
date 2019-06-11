@@ -5,6 +5,7 @@ import modules from './modules';
 import { Chat, ChatListUtils, MessageInfoType, MessageTargetType, transform } from '../views/im/utils/chatUtils';
 import conf from '../views/im/conf';
 
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -180,9 +181,7 @@ export default new Vuex.Store({
         tempChat = new Chat(message.fromid, message.username, message.avatar, 1, message.content, state.user.mobile, state.user.email, MessageTargetType.FRIEND);
       } else if (!tempChat.id && message.type === MessageTargetType.CHAT_GROUP) {
         let groupChat = state.chatMap.get(message.id);
-        console.log(groupChat);
         tempChat = new Chat(message.id, groupChat.name, conf.getHostUrl() + groupChat.avatar, 1, message.content, state.user.mobile, state.user.email, MessageTargetType.CHAT_GROUP);
-        console.log(tempChat);
       }
       // 添加到聊天室列表的第一个
       tempChatList.unshift(tempChat);
@@ -192,6 +191,6 @@ export default new Vuex.Store({
       ChatListUtils.setChatList(state.user.id, tempChatList);
     }
   },
-  modules,
+  modules:modules,
   strict: process.env.NODE_ENV !== 'production'
 });
