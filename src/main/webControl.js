@@ -5,6 +5,8 @@ const webControl = {
   flashFrame: function() {},
   min: function() {},
   max: function() {},
+  flashIcon: function() {},
+  clearFlashIcon: function() {},
   close: function() {}
 };
 export default webControl;

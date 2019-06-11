@@ -129,7 +129,7 @@
   import Button from 'iview/src/components/button/button';
   import conf from '../conf';
   import Faces from './faces.vue';
-  import winControl from '../../../../main/windowControl.js';
+  import winControl from '../../../../main/windowControl';
   import RequestUtils from '../../../utils/RequestUtils';
 
   const { imageLoad, transform, ChatListUtils } = require('../utils/chatUtils');
