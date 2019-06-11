@@ -391,7 +391,7 @@
         padding: 0 0 0.2rem 1rem;
         font-size: 1.6rem;
         font-weight: bold;
-
+        height: 40px;
         .menu {
             color: $color-default;
             display: inline-block;
@@ -429,7 +429,7 @@
         flex: 1;
         display: flex;
         flex-direction: row;
-        height: 100%;
+        height: calc(100% - 40px);
 
         .im-chat-main-left {
             flex: 4;
