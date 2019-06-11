@@ -1,7 +1,8 @@
 需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
-#### V-0.42
+#### V-0.42 (觉得不错，请帮点star,谢谢)
 >  解决web 方式发送消息报错的bug
 >  新部署web 版本测试地址，暂时不支持页面刷新（正在解决） http://101.200.151.183
+>  测试账号：lisi/123456  wangwu/123456
 #### V-0.41
 >  新增 RequestUtils.js 解决同一用户下的刷新并发问题
 >  所有的http请求都基于 RequestUtils.js 
@@ -22,7 +23,7 @@
 ![logo](build/icons/icon.png)
 ### 服务端代码在此
 >   1. https://gitee.com/lele-666/V-IM-Server
->   2. 测试账号：zhangsan/123456  lisi/123456  wangwu/123456
+>   2. 测试账号：lisi/123456  wangwu/123456
 ### 注意事项
 
 > 1. 打包时候项目路径不能有中文，包括你 windows 用户都不能有中文字符，因为npm 缓存都是在用户目录下（如果原先的用户名是中文，再修改成英文也不好用，因为原先的npm包都还在中文目录下，可以新建个window 英文账号，登录新账号打包）。
