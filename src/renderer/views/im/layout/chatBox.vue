@@ -150,15 +150,7 @@
         param.set('scope', 'select');
         param.set('refresh_token', StoreUtils.getToken().refresh_token);
         let requestApi = RequestUtils.getInstance();
-        requestApi
-          .request(conf.getTokenUrl(), param)
-          .then(response => {
-            return response.json();
-          })
-          .then(json => {
-            count = 0;
-            StoreUtils.setToken(json);
-          })
+        requestApi.flushToken()
           .catch(error => {
             count++;
             if ('TypeError: Failed to fetch' === error.toString()) {
