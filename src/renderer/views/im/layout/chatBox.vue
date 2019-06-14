@@ -29,7 +29,7 @@
   import UserChat from '../components/chat.vue';
   import WebsocketHeartbeatJs from '../utils/WebsocketHeartbeatJs';
   import conf from '../conf';
-  import winControl from '../../../../main/webControl';
+  import winControl from '../../../../main/windowControl';
   import RequestUtils from '../../../utils/RequestUtils';
   import { ChatListUtils, ErrorType, imageLoad, logout, MessageInfoType, MessageTargetType } from '../utils/chatUtils';
 
