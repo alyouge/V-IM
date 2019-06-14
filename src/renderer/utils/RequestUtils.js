@@ -175,7 +175,7 @@ class RequestUtils {
     param.set('client_secret', 'v-client-ppp');
     param.set('grant_type', 'refresh_token');
     param.set('scope', 'select');
-    param.set('refresh_token', self.token.refresh_token);
+    param.set('refresh_token',StoreUtils.getToken().refresh_token);
     fetch(conf.getTokenUrl(), {
       method: 'POST',
       model: 'cros', //跨域

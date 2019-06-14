@@ -32,6 +32,7 @@
   import winControl from '../../../../main/windowControl';
   import RequestUtils from '../../../utils/RequestUtils';
   import { ChatListUtils, ErrorType, imageLoad, logout, MessageInfoType, MessageTargetType } from '../utils/chatUtils';
+  import StoreUtils from '../../../utils/StoreUtils';
 
   export default {
     components: {
@@ -147,7 +148,7 @@
         param.set('client_secret', 'v-client-ppp');
         param.set('grant_type', 'refresh_token');
         param.set('scope', 'select');
-        param.set('refresh_token', sessionStorage.getItem('refresh_token'));
+        param.set('refresh_token', StoreUtils.getToken().refresh_token);
         let requestApi = RequestUtils.getInstance();
         requestApi
           .request(conf.getTokenUrl(), param)
