@@ -131,6 +131,7 @@
   import Faces from './faces.vue';
   import winControl from '../../../../main/windowControl';
   import RequestUtils from '../../../utils/RequestUtils';
+  import StoreUtils from '../../../utils/StoreUtils';
 
   const { imageLoad, transform, ChatListUtils } = require('../utils/chatUtils');
 
@@ -166,11 +167,11 @@
         imgFormat: ['jpg', 'jpeg', 'png', 'gif'],
         fileFormat: ['doc', 'docx', 'jpg', 'jpeg', 'png', 'gif', 'xls', 'xlsx', 'pdf', 'gif', 'exe', 'msi', 'swf', 'sql', 'apk', 'psd'],
         tokenImg: {
-          access_token: sessionStorage.getItem('token'),
+          access_token: StoreUtils.getAccessToken(),
           type: 'image'
         },
         tokenFile: {
-          access_token: sessionStorage.getItem('token'),
+          access_token: StoreUtils.getAccessToken(),
           type: 'file'
         },
         action: conf.getHostUrl() + '/api/upload',
@@ -194,11 +195,11 @@
       },
       beforeUpload() {
         this.tokenImg = {
-          access_token: sessionStorage.getItem('token'),
+          access_token: StoreUtils.getAccessToken(),
           type: 'image'
         };
         this.tokenFile = {
-          access_token: sessionStorage.getItem('token'),
+          access_token: StoreUtils.getAccessToken(),
           type: 'file'
         };
         return new Promise(resolve => {

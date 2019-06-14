@@ -12,14 +12,12 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     token: {},
-    //token 是否有效
-    tokenStatus: false,
     // 当前的用户
     user: {},
-    flushLocalStore: false,
     websocket: {},
+    //内存中的聊天记录
     messageListMap: new Map(),
-    //聊天群的图片映射
+    //聊天群的映射 id->chat
     chatMap: new Map(),
     messageList: [],
     // 当前聊天窗口

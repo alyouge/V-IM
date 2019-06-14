@@ -149,7 +149,8 @@ class RequestUtils {
         }
       }).then(json => {
         self.token = json;
-        sessionStorage.setItem('token', json.access_token);
+        // sessionStorage.setItem('token', json.access_token);
+        StoreUtils.setToken(json);
         self.isRefreshing = false;
         setTimeout(function() {
           self.isRefreshing = true;
@@ -201,7 +202,7 @@ class RequestUtils {
       })
       .then(json => {
         self.token = json;
-        sessionStorage.setItem('token', json.access_token);
+        StoreUtils.setToken(json);
         self.onAccessTokenFetched();
         self.isRefreshing = false;
 
