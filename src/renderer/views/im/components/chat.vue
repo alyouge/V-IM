@@ -129,7 +129,7 @@
   import Button from 'iview/src/components/button/button';
   import conf from '../conf';
   import Faces from './faces.vue';
-  import winControl from '../../../../main/windowControl';
+  import winControl from '../../../../main/webControl';
   import RequestUtils from '../../../utils/RequestUtils';
 
   const { imageLoad, transform, ChatListUtils } = require('../utils/chatUtils');
@@ -185,7 +185,7 @@
         let self = this;
         if (user.id !== self.$store.state.user.id) {
           let chat = ChatListUtils.resetChatList(self, user, conf.getHostUrl());
-          self.$store.commit('setCurrentChat', chat);
+          self.$store.commit('setCurrentChat', JSON.parse(JSON.stringify(chat)));
         } else {
           self.$Message.warning('不能给自己说话哦');
         }
@@ -343,7 +343,7 @@
         let self = this;
         self.messageList = [];
         // 从内存中取聊天信息
-        let cacheMessages = self.$store.state.messageListMap.get(self.chat.id);
+        let cacheMessages = self.$store.state.messageListMap[self.chat.id];
         if (cacheMessages) {
           self.messageList = cacheMessages;
         }

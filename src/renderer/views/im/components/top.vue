@@ -12,7 +12,7 @@
     </div>
 </template>
 <script>
-  import winControl from '../../../../main/windowControl';
+  import winControl from '../../../../main/webControl';
 
   export default {
     data() {

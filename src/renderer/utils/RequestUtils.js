@@ -1,5 +1,6 @@
 import { ErrorType } from '../views/im/utils/chatUtils';
 import conf from '../views/im/conf/index.js';
+import StoreUtils from './StoreUtils';
 
 class RequestUtils {
   constructor() {
@@ -28,7 +29,9 @@ class RequestUtils {
    */
   request(url, options) {
     let self = this;
-    options.set('access_token', self.token.access_token);
+    let access_token = StoreUtils.getAccessToken();
+    console.log("StoreUtils.getAccessToken()",StoreUtils.getAccessToken());
+    options.set('access_token', access_token);
     return self.timeoutFetch(fetch(url, {
       method: 'POST',
       model: 'cros', //跨域
@@ -146,7 +149,7 @@ class RequestUtils {
         }
       }).then(json => {
         self.token = json;
-        sessionStorage.setItem("token",json.access_token);
+        sessionStorage.setItem('token', json.access_token);
         self.isRefreshing = false;
         setTimeout(function() {
           self.isRefreshing = true;
@@ -198,7 +201,7 @@ class RequestUtils {
       })
       .then(json => {
         self.token = json;
-        sessionStorage.setItem("token",json.access_token);
+        sessionStorage.setItem('token', json.access_token);
         self.onAccessTokenFetched();
         self.isRefreshing = false;
 

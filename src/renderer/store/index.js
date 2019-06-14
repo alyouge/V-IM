@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate'
 
 import modules from './modules';
 import { Chat, ChatListUtils, MessageInfoType, MessageTargetType, transform } from '../views/im/utils/chatUtils';
@@ -33,8 +34,7 @@ export default new Vuex.Store({
   mutations: {
 
     setToken: function(state, token) {
-      sessionStorage.setItem('token', token.access_token);
-      sessionStorage.setItem('refresh_token', token.refresh_token);
+      sessionStorage.setItem('token', token);
     },
     //token 是否有效
     setTokenStatus: function(state, tokenStatus) {
@@ -64,7 +64,11 @@ export default new Vuex.Store({
       state.websocket.send(JSON.stringify(msg));
     },
     resetUnRead: function(state) {
-      state.currentChat.unReadCount = 0;
+      console.log("state.currentChat",state.currentChat);
+      if (typeof state.currentChat == 'string') {
+        state.currentChat = {}
+      }
+      state.currentChat['unReadCount'] = 0;
     },
     // 退出登录
     closeConnect: function(state) {
@@ -80,7 +84,7 @@ export default new Vuex.Store({
     addMessage: function(state, message) {
       message.content = transform(message.content);
       state.messageList.push(message);
-      state.messageListMap.set(message.id, state.messageList);
+      state.messageListMap[message.id]= state.messageList;
     },
     // 在用户姓名下展示收到的最后一条信息
     setLastMessage: function(state, message) {
@@ -105,40 +109,41 @@ export default new Vuex.Store({
     },
     addUnreadMessage: function(state, message) {
       message.content = transform(message.content);
-      if (message.type === '0') {
+      if (message.type ===  MessageTargetType.FRIEND) {
         // 从内存中取聊天信息
-        let cacheMessages = state.messageListMap.get(message.fromid);
+        let cacheMessages = state.messageListMap[message.fromid];
         if (cacheMessages) {
           cacheMessages.push(message);
         } else {
           cacheMessages = [];
           cacheMessages.push(message);
-          state.messageListMap.set(message.fromid, cacheMessages);
+          state.messageListMap[message.fromid] = cacheMessages;
         }
       } else {
         // 从内存中取聊天信息
-        let cacheMessages = state.messageListMap.get(message.id);
+        let cacheMessages = state.messageListMap[message.id];
         if (cacheMessages) {
           cacheMessages.push(message);
         } else {
           cacheMessages = [];
           cacheMessages.push(message);
-          state.messageListMap.set(message.id, cacheMessages);
+          state.messageListMap[message.id] = cacheMessages;
         }
       }
     },
     setCurrentChat: function(state, currentChat) {
-      state.currentChat = currentChat;
-      state.currentChat.unReadCount = 0;
-
-      let tempChatList = state.chatList.map(function(chat) {
-        if (String(chat.id) === String(currentChat.id)) {
-          chat.unReadCount = 0;
-        }
-        return chat;
-      });
-      // 放入缓存
-      ChatListUtils.setChatList(state.user.id, tempChatList);
+      if(typeof currentChat != 'string'){
+        state.currentChat = currentChat;
+        state.currentChat['unReadCount'] = 0;
+        let tempChatList = state.chatList.map(function(chat) {
+          if (String(chat.id) === String(currentChat.id)) {
+            chat['unReadCount'] = 0;
+          }
+          return chat;
+        });
+        // 放入缓存
+        ChatListUtils.setChatList(state.user.id, tempChatList);
+      }
     },
     setChatList: function(state, chatList) {
       state.chatList = chatList;
@@ -158,19 +163,19 @@ export default new Vuex.Store({
       for (let chat of state.chatList) {
         // 给接受消息的聊天室未读数量 +1
         if (String(chat.id) === String(message.fromid) && message.type === MessageTargetType.FRIEND) {
-          if (!chat.unReadCount) {
-            chat.unReadCount = 0;
+          if (!chat['unReadCount']) {
+            chat['unReadCount'] = 0;
           }
-          chat.unReadCount = chat.unReadCount + 1;
+          chat['unReadCount'] = chat['unReadCount'] + 1;
           tempChat = chat;
         }
         //群组聊天
         else if (String(chat.id) === String(message.id) && message.type === MessageTargetType.CHAT_GROUP) {
-          if (!chat.unReadCount) {
-            chat.unReadCount = 0;
+          if (!chat['unReadCount']) {
+            chat['unReadCount'] = 0;
           }
-          chat.unReadCount = chat.unReadCount + 1;
-          chat.avatar = conf.getHostUrl() + state.chatMap.get(message.id).avatar;
+          chat['unReadCount'] = chat['unReadCount'] + 1;
+          chat.avatar = conf.getHostUrl() + state.chatMap[message.id].avatar;
           tempChat = chat;
         } else {
           tempChatList.push(chat);
@@ -180,7 +185,7 @@ export default new Vuex.Store({
       if (!tempChat.id && message.type === MessageTargetType.FRIEND) {
         tempChat = new Chat(message.fromid, message.username, message.avatar, 1, message.content, state.user.mobile, state.user.email, MessageTargetType.FRIEND);
       } else if (!tempChat.id && message.type === MessageTargetType.CHAT_GROUP) {
-        let groupChat = state.chatMap.get(message.id);
+        let groupChat = state.chatMap[message.id];
         tempChat = new Chat(message.id, groupChat.name, conf.getHostUrl() + groupChat.avatar, 1, message.content, state.user.mobile, state.user.email, MessageTargetType.CHAT_GROUP);
       }
       // 添加到聊天室列表的第一个
@@ -192,5 +197,6 @@ export default new Vuex.Store({
     }
   },
   modules:modules,
+  plugins: [createPersistedState()],
   strict: process.env.NODE_ENV !== 'production'
 });

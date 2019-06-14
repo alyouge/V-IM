@@ -11,6 +11,8 @@
  * }
  * @api public
  */
+import StoreUtils from '../../../utils/StoreUtils';
+
 const { MessageInfoType } = require('./chatUtils');
 
 function WebsocketHeartbeatJs({
@@ -42,7 +44,7 @@ function WebsocketHeartbeatJs({
 
 WebsocketHeartbeatJs.prototype.createWebSocket = function() {
   try {
-    this.ws = new WebSocket(this.opts.url + "?token=" + sessionStorage.getItem("token"));
+    this.ws = new WebSocket(this.opts.url + "?token=" + StoreUtils.getAccessToken());
     this.initEventHandle();
   } catch (e) {
     this.reconnect();

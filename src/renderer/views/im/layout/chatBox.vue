@@ -29,7 +29,7 @@
   import UserChat from '../components/chat.vue';
   import WebsocketHeartbeatJs from '../utils/WebsocketHeartbeatJs';
   import conf from '../conf';
-  import winControl from '../../../../main/windowControl';
+  import winControl from '../../../../main/webControl';
   import RequestUtils from '../../../utils/RequestUtils';
   import { ChatListUtils, ErrorType, imageLoad, logout, MessageInfoType, MessageTargetType } from '../utils/chatUtils';
 
@@ -48,7 +48,7 @@
           return this.$store.state.currentChat;
         },
         set: function(currentChat) {
-          this.$store.commit('setCurrentChat', currentChat);
+          this.$store.commit('setCurrentChat', JSON.parse(JSON.stringify(currentChat)));
         }
       },
       chatList: {
@@ -77,12 +77,12 @@
       let self = this;
       // 当前聊天室
       if (self.$route.query.chat) {
-        self.$store.commit('setCurrentChat', this.$route.query.chat);
+        self.$store.commit('setCurrentChat', JSON.parse(JSON.stringify(self.$route.query.chat)));
       }
       // 重新设置chatList
       self.$store.commit('setChatList', ChatListUtils.getChatList(self.$store.state.user.id));
       // 每次滚动到最底部
-      this.$nextTick(() => {
+      self.$nextTick(() => {
         imageLoad('message-box');
       });
     },

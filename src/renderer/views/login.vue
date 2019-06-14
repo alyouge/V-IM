@@ -41,6 +41,7 @@
   import Top from './im/components/top.vue';
   import conf from './im/conf';
   import RequestUtils from '../utils/RequestUtils';
+  import StoreUtils from '../utils/StoreUtils';
 
   export default {
     name: 'login',
@@ -118,8 +119,7 @@
           .login(self.username.trim(), self.password.trim())
           .then(token => {
             console.log("token",token);
-            self.$store.commit('setToken', token);
-            self.$store.commit('setTokenStatus', true);
+            StoreUtils.setToken(token);
             // 获取当前登录的用户，存入store
             return requestApi.request(conf.getInitUrl(), new FormData());
           })
