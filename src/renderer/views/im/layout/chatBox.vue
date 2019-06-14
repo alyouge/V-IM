@@ -157,8 +157,7 @@
           })
           .then(json => {
             count = 0;
-            self.$store.commit('setToken', json);
-            self.$store.commit('setTokenStatus', json);
+            StoreUtils.setToken(json);
           })
           .catch(error => {
             count++;

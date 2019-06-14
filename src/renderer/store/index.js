@@ -32,14 +32,6 @@ export default new Vuex.Store({
     chatGroupList: []
   },
   mutations: {
-
-    setToken: function(state, token) {
-      sessionStorage.setItem('token', token);
-    },
-    //token 是否有效
-    setTokenStatus: function(state, tokenStatus) {
-      state.tokenStatus = tokenStatus;
-    },
     setUser: function(state, user) {
       state.user = user;
     },
