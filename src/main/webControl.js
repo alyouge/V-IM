@@ -6,6 +6,7 @@ const winControl = {
   flashFrame: function() {
   },
   min: function() {
+    alert("方法需要自定义");
   },
   max: function() {
     if(i%2 === 0){
@@ -18,7 +19,7 @@ const winControl = {
   flashIcon: function() {},
   clearFlashIcon: function() {},
   close: function() {
-
+    alert("方法需要自定义");
   }
 };
 export default winControl;
