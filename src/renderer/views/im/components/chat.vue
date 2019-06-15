@@ -129,7 +129,6 @@
   import Button from 'iview/src/components/button/button';
   import conf from '../conf';
   import Faces from './faces.vue';
-  import winControl from '../../../../main/windowControl';
   import RequestUtils from '../../../utils/RequestUtils';
   import StoreUtils from '../../../utils/StoreUtils';
 
@@ -258,11 +257,12 @@
       },
       // 附件和图片点击展开
       openImageProxy: function(event) {
+        let self = this;
         event.preventDefault();
         if (event.target.nodeName === 'IMG') {
-          winControl.openURL(event.target.src);
+          self.winControl.openURL(event.target.src);
         } else if (event.target.className === 'message-file') {
-          winControl.openURL(event.target.href);
+          self.winControl.openURL(event.target.href);
         }
       },
       // 本人发送信息

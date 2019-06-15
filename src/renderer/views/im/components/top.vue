@@ -12,7 +12,6 @@
     </div>
 </template>
 <script>
-  import winControl from '../../../../main/windowControl';
 
   export default {
     data() {
@@ -23,14 +22,16 @@
     },
     methods: {
       min() {
-        winControl.min();
+        console.log(this.winControl);
+        console.log(typeof this.winControl);
+        this.winControl.min();
       },
       max() {
-        winControl.max();
+        this.winControl.max();
         this.icon = this.icon === 'ios-square-outline' ? 'ios-browsers-outline' : 'ios-square-outline';
       },
       close() {
-        winControl.close();
+        this.winControl.close();
       }
     }
   };

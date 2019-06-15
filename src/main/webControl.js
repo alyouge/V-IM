@@ -1,4 +1,4 @@
-const webControl = {
+const winControl = {
   openURL: function(url) {
     window.open(url);
   },
@@ -9,4 +9,4 @@ const webControl = {
   clearFlashIcon: function() {},
   close: function() {}
 };
-export default webControl;
+export default winControl;

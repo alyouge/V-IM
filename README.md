@@ -1,7 +1,9 @@
 需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
-#### V-0.50 (觉得不错，请帮点star，谢谢)
->  解决web刷新状态丢失问题，已支持PC安装程序（.exe）和web 两个平台。
+#### V-0.51 (觉得不错，请帮点star，谢谢)
+>  解决web版本打包问题，直接 npm run build:web 就可以搞定，不用改文件了
 >  不能yarn 安装成功依赖包，请翻墙后再安装。
+#### V-0.50 
+>  解决web刷新状态丢失问题，已支持PC安装程序（.exe）和web 两个平台。
 #### V-0.42 
 >  解决web 方式发送消息报错的bug
 >  新部署web 版本测试地址，暂时不支持页面刷新（正在解决） http://101.200.151.183
@@ -9,9 +11,7 @@
 #### V-0.41
 >  新增 RequestUtils.js 解决同一用户下的刷新并发问题
 >  所有的http请求都基于 RequestUtils.js 
-#### 打包网页版本
-1. 把引用 windowControl.js 的地方改成 webControl.js(里面功能需要自己实现，方法是空方法)
-2. npm run build:web 
+
 #### V-0.40
 >  实现双向用户关系，新增表 im_user_friend，删除表 im_group_user，原先注册的用户已经清除，使用请重新注册。
 >  请关注服务端源码！

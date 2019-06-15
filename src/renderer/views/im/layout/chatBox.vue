@@ -29,7 +29,6 @@
   import UserChat from '../components/chat.vue';
   import WebsocketHeartbeatJs from '../utils/WebsocketHeartbeatJs';
   import conf from '../conf';
-  import winControl from '../../../../main/windowControl';
   import RequestUtils from '../../../utils/RequestUtils';
   import { ChatListUtils, ErrorType, imageLoad, logout, MessageInfoType, MessageTargetType } from '../utils/chatUtils';
   import StoreUtils from '../../../utils/StoreUtils';
@@ -100,7 +99,7 @@
         let sendInfo = JSON.parse(data);
         // 真正的消息类型
         if (sendInfo.code === MessageInfoType.MSG_MESSAGE) {
-          winControl.flashIcon();
+          self.winControl.flashIcon();
           let message = sendInfo.message;
           if (message.avatar && message.avatar.indexOf('http') === -1) {
             message.avatar = conf.getHostUrl() + message.avatar;
@@ -127,7 +126,7 @@
               self.$store.commit('addUnreadMessage', message);
             }
           }
-          winControl.flashFrame();
+          self.winControl.flashFrame();
           self.$store.commit('setLastMessage', message);
           // 每次滚动到最底部
           self.$nextTick(() => {
