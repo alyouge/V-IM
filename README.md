@@ -1,6 +1,6 @@
 需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
 #### V-0.50 (觉得不错，请帮点star，谢谢)
->  解决web刷新状态丢失问题，已支持两个PC安装程序（.exe）和web 两个平台。
+>  解决web刷新状态丢失问题，已支持PC安装程序（.exe）和web 两个平台。
 >  不能yarn 安装成功依赖包，请翻墙后再安装。
 #### V-0.42 
 >  解决web 方式发送消息报错的bug
