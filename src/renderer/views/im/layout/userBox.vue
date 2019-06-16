@@ -37,7 +37,7 @@
   import Welcome from '../components/welcome.vue';
   import conf from '../conf';
 
-  const { ChatListUtils } = require('../utils/chatUtils.js');
+  const { ChatListUtils } = require('../../../utils/ChatUtils.js');
 
   export default {
     components: {

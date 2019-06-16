@@ -339,11 +339,11 @@ export function logout(self) {
   });
 }
 
-
 export const ErrorType = {
   TIMEOUT_ERROR: 9, //超时
   TOKEN_ERROR: 401, //token 失效错误
   PARAM_ERROR: 400, //参数错误
   FLUSH_TOKEN_ERROR: 7, //刷新token错误
-  SERVER_ERROR: 500 //刷新token错误
+  SERVER_ERROR: 500, //服务器错误
+  NET_ERROR:'TypeError: Failed to fetch' //网络链接不通
 };

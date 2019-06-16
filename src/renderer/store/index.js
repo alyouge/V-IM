@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 import modules from './modules';
-import { Chat, ChatListUtils, MessageInfoType, MessageTargetType, transform } from '../views/im/utils/chatUtils';
+import { Chat, ChatListUtils, MessageInfoType, MessageTargetType, transform } from '../utils/ChatUtils';
 import conf from '../views/im/conf';
 
 

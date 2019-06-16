@@ -1,6 +1,7 @@
-import { ErrorType } from '../views/im/utils/chatUtils';
+import { ErrorType, imageLoad, MessageInfoType, MessageTargetType } from './ChatUtils';
 import conf from '../views/im/conf/index.js';
 import StoreUtils from './StoreUtils';
+import WebsocketHeartbeatJs from './WebsocketHeartbeatJs';
 
 class RequestUtils {
   constructor() {
@@ -229,6 +230,83 @@ class RequestUtils {
     }, timeout);
 
     return abortAblePromise;
+  }
+
+  /**
+   * websocket 连接处理
+   * @param self vue
+   */
+  webSocketOperation(self) {
+    let websocketHeartbeatJs = new WebsocketHeartbeatJs({
+      url: conf.getWsUrl()
+    });
+    websocketHeartbeatJs.onopen = function() {
+      websocketHeartbeatJs.send('{"code":' + MessageInfoType.MSG_READY + '}');
+    };
+    websocketHeartbeatJs.onmessage = function(event) {
+      let data = event.data;
+      let sendInfo = JSON.parse(data);
+      // 真正的消息类型
+      if (sendInfo.code === MessageInfoType.MSG_MESSAGE) {
+        self.winControl.flashIcon();
+        let message = sendInfo.message;
+        //如果图片不带域名，加上域名
+        if (message.avatar && message.avatar.indexOf('http') === -1) {
+          message.avatar = conf.getHostUrl() + message.avatar;
+        }
+        message.timestamp = self.formatDateTime(new Date(message.timestamp));
+        // 发送给个人
+        if (message.type === MessageTargetType.FRIEND) {
+          // 接受人是当前的聊天窗口
+          if (String(message.fromid) === String(self.$store.state.currentChat.id)) {
+            self.$store.commit('addMessage', message);
+          } else {
+            self.$store.commit('setUnReadCount', message);
+            self.$store.commit('addUnreadMessage', message);
+          }
+        } else if (message.type === MessageTargetType.CHAT_GROUP) {
+          // message.avatar = self.$store.state.chatMap.get(message.id);
+          // 接受人是当前的聊天窗口
+          if (String(message.id) === String(self.$store.state.currentChat.id)) {
+            if (String(message.fromid) !== self.$store.state.user.id) {
+              self.$store.commit('addMessage', message);
+            }
+          } else {
+            self.$store.commit('setUnReadCount', message);
+            self.$store.commit('addUnreadMessage', message);
+          }
+        }
+        self.winControl.flashFrame();
+        self.$store.commit('setLastMessage', message);
+        // 每次滚动到最底部
+        self.$nextTick(() => {
+          imageLoad('message-box');
+        });
+      }
+    };
+
+    websocketHeartbeatJs.onreconnect = function() {
+      console.log('reconnecting...');
+    };
+
+    let count = 0;
+    websocketHeartbeatJs.onerror = function(error) {
+      RequestUtils.getInstance().flushToken(self)
+        .catch(error => {
+          count++;
+          if (ErrorType.NET_ERROR === error.toString()) {
+            self.$Message.error('网络断开，正在重连...');
+          } else if (ErrorType.FLUSH_TOKEN_ERROR === error) {
+            count = 25;
+          }
+        });
+      //重连次数大于24 退出登录
+      if (count > 24) {
+        count = 0;
+        logout(self);
+      }
+    };
+    self.$store.commit('setWebsocket', websocketHeartbeatJs);
   }
 }
 

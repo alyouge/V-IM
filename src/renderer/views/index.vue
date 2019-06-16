@@ -49,7 +49,7 @@
     </div>
 </template>
 <script>
-  import { logout } from './im/utils/chatUtils';
+  import { logout } from '../utils/ChatUtils';
 
   export default {
   data() {

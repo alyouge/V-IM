@@ -1,6 +1,9 @@
 <template>
     <div class="login">
         <Top></Top>
+        <div class="logo">
+            <img src="~@/assets/icon.png" alt="icon">
+        </div>
         <div class="login-panel" style="-webkit-app-region: no-drag">
             <div class="title">{{app_name}} 登录</div>
             <Alert v-if="showErr" type="error">{{err}}</Alert>
@@ -42,6 +45,7 @@
   import conf from './im/conf';
   import RequestUtils from '../utils/RequestUtils';
   import StoreUtils from '../utils/StoreUtils';
+  import { ErrorType } from '../utils/ChatUtils';
 
   export default {
     name: 'login',
@@ -116,18 +120,18 @@
         param.set('password', self.password.trim());
         let requestApi = RequestUtils.getInstance();
         requestApi
-          .login(self.username.trim(), self.password.trim(),self)
+          .login(self.username.trim(), self.password.trim(), self)
           .then(token => {
-            console.log("token",token);
+            console.log('token', token);
             StoreUtils.setToken(token);
             // 获取当前登录的用户，存入store
             return requestApi.request(conf.getInitUrl(), new FormData());
           })
-          .then(response=>{
+          .then(response => {
             return response.json();
           })
-          .then(json=>{
-            console.log("json",json);
+          .then(json => {
+            console.log('json', json);
             //个人信息
             self.$store.commit('setUser', json.me);
             //好友
@@ -139,7 +143,7 @@
             //把群组封装到map中
             let chatMap = new Map();
             json.groups.forEach(group => {
-              chatMap.set(group.id,group);
+              chatMap.set(group.id, group);
             });
             self.$store.commit('setChatMap', chatMap);
 
@@ -152,7 +156,7 @@
           .catch(function(error) {
             console.log(error);
             self.showErr = true;
-            if (error.toString() === 'TypeError: Failed to fetch') {
+            if (ErrorType.NET_ERROR === error.toString()) {
               self.err = '服务通讯失败，请检查服务设置';
             } else {
               self.err = error.toString();
@@ -187,6 +191,21 @@
             top: 0;
             width: 100%;
             z-index: 1;
+        }
+
+        .logo {
+            width: 33rem;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .logo > img {
+            width: 10rem;
+            height: 10rem;
+            margin-left: 15rem;
         }
 
         .login-panel {

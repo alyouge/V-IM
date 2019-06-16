@@ -1,7 +1,6 @@
 class StoreUtils {
 
   static setJson(key,json){
-    console.log("JSON.stringify(json)",JSON.stringify(json));
     sessionStorage.setItem(key,JSON.stringify(json));
   }
 

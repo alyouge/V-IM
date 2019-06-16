@@ -9,7 +9,7 @@
     </div>
 </template>
 <script>
-const { faceUtils } = require('../utils/chatUtils');
+const { faceUtils } = require('../../../utils/ChatUtils');
 
 export default {
   name: 'faces',

@@ -27,11 +27,9 @@
   import Search from '../components/search.vue';
   import Top from '../components/top.vue';
   import UserChat from '../components/chat.vue';
-  import WebsocketHeartbeatJs from '../utils/WebsocketHeartbeatJs';
-  import conf from '../conf';
+  import { ChatListUtils, imageLoad } from '../../../utils/ChatUtils';
   import RequestUtils from '../../../utils/RequestUtils';
-  import { ChatListUtils, ErrorType, imageLoad, logout, MessageInfoType, MessageTargetType } from '../utils/chatUtils';
-  import StoreUtils from '../../../utils/StoreUtils';
+
 
   export default {
     components: {
@@ -87,76 +85,7 @@
       });
     },
     mounted: function() {
-      let self = this;
-      let websocketHeartbeatJs = new WebsocketHeartbeatJs({
-        url: conf.getWsUrl()
-      });
-      websocketHeartbeatJs.onopen = function() {
-        websocketHeartbeatJs.send('{"code":' + MessageInfoType.MSG_READY + '}');
-      };
-      websocketHeartbeatJs.onmessage = function(event) {
-        let data = event.data;
-        let sendInfo = JSON.parse(data);
-        // 真正的消息类型
-        if (sendInfo.code === MessageInfoType.MSG_MESSAGE) {
-          self.winControl.flashIcon();
-          let message = sendInfo.message;
-          if (message.avatar && message.avatar.indexOf('http') === -1) {
-            message.avatar = conf.getHostUrl() + message.avatar;
-          }
-          message.timestamp = self.formatDateTime(new Date(message.timestamp));
-          // 发送给个人
-          if (message.type === MessageTargetType.FRIEND) {
-            // 接受人是当前的聊天窗口
-            if (String(message.fromid) === String(self.$store.state.currentChat.id)) {
-              self.$store.commit('addMessage', message);
-            } else {
-              self.$store.commit('setUnReadCount', message);
-              self.$store.commit('addUnreadMessage', message);
-            }
-          } else if (message.type === MessageTargetType.CHAT_GROUP) {
-            // message.avatar = self.$store.state.chatMap.get(message.id);
-            // 接受人是当前的聊天窗口
-            if (String(message.id) === String(self.$store.state.currentChat.id)) {
-              if (String(message.fromid) !== self.$store.state.user.id) {
-                self.$store.commit('addMessage', message);
-              }
-            } else {
-              self.$store.commit('setUnReadCount', message);
-              self.$store.commit('addUnreadMessage', message);
-            }
-          }
-          self.winControl.flashFrame();
-          self.$store.commit('setLastMessage', message);
-          // 每次滚动到最底部
-          self.$nextTick(() => {
-            imageLoad('message-box');
-          });
-        }
-      };
-
-      websocketHeartbeatJs.onreconnect = function() {
-        console.log('reconnecting...');
-      };
-
-      let count = 0;
-      websocketHeartbeatJs.onerror = function(error) {
-        RequestUtils.getInstance().flushToken(self)
-          .catch(error => {
-            count++;
-            if ('TypeError: Failed to fetch' === error.toString()) {
-              self.$Message.error('网络断开，正在重连...');
-            } else if (ErrorType.FLUSH_TOKEN_ERROR === error) {
-              count = 25;
-            }
-          });
-        //重连次数大于24 退出登录
-        if (count > 24) {
-          count = 0;
-          logout(self);
-        }
-      };
-      self.$store.commit('setWebsocket', websocketHeartbeatJs);
+      RequestUtils.getInstance().webSocketOperation(this);
     }
   };
 </script>

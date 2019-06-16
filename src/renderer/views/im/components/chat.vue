@@ -132,7 +132,7 @@
   import RequestUtils from '../../../utils/RequestUtils';
   import StoreUtils from '../../../utils/StoreUtils';
 
-  const { imageLoad, transform, ChatListUtils } = require('../utils/chatUtils');
+  const { imageLoad, transform, ChatListUtils } = require('../../../utils/ChatUtils');
 
   export default {
     components: {

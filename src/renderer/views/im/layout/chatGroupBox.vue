@@ -26,7 +26,7 @@
   import UserChat from '../components/chat.vue';
   import Welcome from '../components/welcome.vue';
   import conf from '../conf';
-  import { Chat, ChatListUtils, MessageTargetType } from '../utils/chatUtils';
+  import { Chat, ChatListUtils, MessageTargetType } from '../../../utils/ChatUtils';
 
   export default {
   components: {

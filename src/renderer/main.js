@@ -6,7 +6,7 @@ import store from './store';
 
 import iView from 'iview';
 import 'iview/dist/styles/iview.css'; // 使用 CSS
-import { dateStr, formatDateTime } from './views/im/utils/chatUtils.js';
+import { dateStr, formatDateTime } from './utils/ChatUtils.js';
 import VueParticles from 'vue-particles';
 
 Vue.use(VueParticles);

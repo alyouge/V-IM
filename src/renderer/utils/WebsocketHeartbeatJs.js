@@ -11,16 +11,15 @@
  * }
  * @api public
  */
-import StoreUtils from '../../../utils/StoreUtils';
+import StoreUtils from './StoreUtils';
 
-const { MessageInfoType } = require('./chatUtils');
+const { MessageInfoType } = require('./ChatUtils');
 
 function WebsocketHeartbeatJs({
                                 url,
                                 pingTimeout = 20000,
                                 pongTimeout = 15000,
                                 reconnectTimeout = 5000,
-                                reconnectCount = 24,
                                 pingMsg = '{"code":' + MessageInfoType.MSG_PING + '}'
                               }) {
   this.opts = {
