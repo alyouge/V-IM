@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate'
+import createPersistedState from 'vuex-persistedstate';
 
 import modules from './modules';
 import { Chat, ChatListUtils, MessageInfoType, MessageTargetType, transform } from '../views/im/utils/chatUtils';
@@ -26,10 +26,18 @@ export default new Vuex.Store({
     chatList: [],
     //好友列表
     userFriendList: [],
+    //刷新token 定时器
+    flushTokenTimerId: null,
     //群组列表
     chatGroupList: []
   },
   mutations: {
+    setFlushTokenTimerId: function(state, flushTokenTimerId) {
+      state.flushTokenTimerId = flushTokenTimerId;
+    },
+    clearFlushTokenTimerId: function(state) {
+      clearTimeout(state.flushTokenTimerId);
+    },
     setUser: function(state, user) {
       state.user = user;
     },
@@ -54,9 +62,9 @@ export default new Vuex.Store({
       state.websocket.send(JSON.stringify(msg));
     },
     resetUnRead: function(state) {
-      console.log("state.currentChat",state.currentChat);
+      console.log('state.currentChat', state.currentChat);
       if (typeof state.currentChat == 'string') {
-        state.currentChat = {}
+        state.currentChat = {};
       }
       state.currentChat['unReadCount'] = 0;
     },
@@ -74,7 +82,7 @@ export default new Vuex.Store({
     addMessage: function(state, message) {
       message.content = transform(message.content);
       state.messageList.push(message);
-      state.messageListMap[message.id]= state.messageList;
+      state.messageListMap[message.id] = state.messageList;
     },
     // 在用户姓名下展示收到的最后一条信息
     setLastMessage: function(state, message) {
@@ -99,7 +107,7 @@ export default new Vuex.Store({
     },
     addUnreadMessage: function(state, message) {
       message.content = transform(message.content);
-      if (message.type ===  MessageTargetType.FRIEND) {
+      if (message.type === MessageTargetType.FRIEND) {
         // 从内存中取聊天信息
         let cacheMessages = state.messageListMap[message.fromid];
         if (cacheMessages) {
@@ -122,7 +130,7 @@ export default new Vuex.Store({
       }
     },
     setCurrentChat: function(state, currentChat) {
-      if(typeof currentChat != 'string'){
+      if (typeof currentChat != 'string') {
         state.currentChat = currentChat;
         state.currentChat['unReadCount'] = 0;
         let tempChatList = state.chatList.map(function(chat) {
@@ -186,7 +194,7 @@ export default new Vuex.Store({
       ChatListUtils.setChatList(state.user.id, tempChatList);
     }
   },
-  modules:modules,
+  modules: modules,
   plugins: [createPersistedState()],
   strict: process.env.NODE_ENV !== 'production'
 });

@@ -141,15 +141,7 @@
 
       let count = 0;
       websocketHeartbeatJs.onerror = function(error) {
-
-        let param = new FormData();
-        param.set('client_id', 'v-client');
-        param.set('client_secret', 'v-client-ppp');
-        param.set('grant_type', 'refresh_token');
-        param.set('scope', 'select');
-        param.set('refresh_token', StoreUtils.getToken().refresh_token);
-        let requestApi = RequestUtils.getInstance();
-        requestApi.flushToken()
+        RequestUtils.getInstance().flushToken(self)
           .catch(error => {
             count++;
             if ('TypeError: Failed to fetch' === error.toString()) {
@@ -164,7 +156,6 @@
           logout(self);
         }
       };
-
       self.$store.commit('setWebsocket', websocketHeartbeatJs);
     }
   };

@@ -7,7 +7,6 @@ class RequestUtils {
     this.instance = null;
     this.isRefreshing = false;
     this.subscribers = [];
-    this.token = null;
   }
 
   /**
@@ -30,7 +29,7 @@ class RequestUtils {
   request(url, options) {
     let self = this;
     let access_token = StoreUtils.getAccessToken();
-    console.log("StoreUtils.getAccessToken()",StoreUtils.getAccessToken());
+    console.log('StoreUtils.getAccessToken()', StoreUtils.getAccessToken());
     options.set('access_token', access_token);
     return self.timeoutFetch(fetch(url, {
       method: 'POST',
@@ -117,7 +116,7 @@ class RequestUtils {
    * @param password 密码
    * @returns {Promise<Response>} 登录状态
    */
-  login(username, password) {
+  login(username, password,vue) {
     let self = this;
     let param = new FormData();
     param.set('client_id', 'v-client');
@@ -138,7 +137,7 @@ class RequestUtils {
         console.log(response);
         if (response.status === 200) {
           return response.json();
-        } else if (response.status === 401) {
+        } else if (response.status === 401 || response.status === 400) {
           return new Promise((resolve, reject) => {
             reject('用户名密码错误');
           });
@@ -148,13 +147,13 @@ class RequestUtils {
           });
         }
       }).then(json => {
-        self.token = json;
         // sessionStorage.setItem('token', json.access_token);
         StoreUtils.setToken(json);
         self.isRefreshing = false;
+        console.log('token',json);
         setTimeout(function() {
           self.isRefreshing = true;
-          self.flushToken();
+          self.flushToken(vue);
 
         }, ((json.expires_in - 10) * 1000));
         return new Promise((resolve) => {
@@ -167,7 +166,7 @@ class RequestUtils {
    * 刷新token
    * @returns {Promise<Response | never>}
    */
-  flushToken() {
+  flushToken(vue) {
     console.log('刷新token');
     let self = this;
     self.isRefreshing = true;
@@ -176,8 +175,9 @@ class RequestUtils {
     param.set('client_secret', 'v-client-ppp');
     param.set('grant_type', 'refresh_token');
     param.set('scope', 'select');
-    param.set('refresh_token',StoreUtils.getToken().refresh_token);
-    fetch(conf.getTokenUrl(), {
+    param.set('refresh_token', StoreUtils.getToken().refresh_token);
+    console.log('刷新token param', param);
+    return   fetch(conf.getTokenUrl(), {
       method: 'POST',
       model: 'cros', //跨域
       headers: {
@@ -190,30 +190,25 @@ class RequestUtils {
         console.log('刷新token response.status', response.status);
         if (response.status === 200) {
           return response.json();
-        } else if (response.status === 401) {
-          return new Promise((resolve, reject) => {
-            reject('刷新token错误：请退出重新登录');
-          });
         } else {
           return new Promise((resolve, reject) => {
-            reject('刷新token错误：服务器错误');
+            reject(ErrorType.FLUSH_TOKEN_ERROR);
           });
         }
       })
       .then(json => {
-        self.token = json;
         StoreUtils.setToken(json);
         self.onAccessTokenFetched();
         self.isRefreshing = false;
 
-        setTimeout(function() {
-          self.flushToken();
+        //清除原先的刷新缓存的定时器
+        vue.$store.commit('clearFlushTokenTimerId');
+        //刷新token 定时器
+        let flushTokenTimerId = setTimeout(function() {
+          self.flushToken(vue);
         }, ((json.expires_in - 10) * 1000));
+        vue.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
       })
-      .catch(error => {
-        console.log(error);
-        self.isRefreshing = false;
-      });
   }
 
   timeoutFetch(fetchPromise, timeout) {

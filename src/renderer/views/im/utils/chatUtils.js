@@ -332,6 +332,7 @@ export const MessageTargetType = {
 export function logout(self) {
   self.$store.commit('closeConnect');
   self.$store.commit('clear');
+  self.$store.commit('clearFlushTokenTimerId');
   self.$router.push({
     path: '/',
     params: {}

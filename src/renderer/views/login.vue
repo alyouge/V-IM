@@ -116,7 +116,7 @@
         param.set('password', self.password.trim());
         let requestApi = RequestUtils.getInstance();
         requestApi
-          .login(self.username.trim(), self.password.trim())
+          .login(self.username.trim(), self.password.trim(),self)
           .then(token => {
             console.log("token",token);
             StoreUtils.setToken(token);
