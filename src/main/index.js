@@ -31,7 +31,11 @@ function createWindow() {
     useContentSize: true,
     width: 1000,
     frame: false,
-    webPreferences: { webSecurity: false }
+    webPreferences: { 
+      webSecurity: false,
+      nodeIntegration: true,  // 解决require is not defined问题
+      webviewTag: true  // 解决webview无法显示问题
+    }
   });
 
   mainWindow.loadURL(winURL);

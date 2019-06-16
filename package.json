@@ -53,11 +53,11 @@
   "dependencies": {
     "isomorphic-fetch": "^2.2.1",
     "iview": "^3.1.0",
-    "vue": "^2.3.3",
+    "vue": "^2.6.10",
     "vue-electron": "^1.0.6",
-    "vue-router": "^2.5.3",
-    "vuex-persistedstate": "^2.5.4",
-    "vuex": "^2.3.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "autoprefixer-loader": "^2.0.0",
@@ -78,7 +78,7 @@
     "css-loader": "^0.28.4",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
-    "electron": "^3.0.10",
+    "electron": "^5.0.4",
     "electron-builder": "^20.28.4",
     "electron-debug": "^2.0.0",
     "electron-devtools-installer": "^2.2.4",
