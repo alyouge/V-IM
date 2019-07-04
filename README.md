@@ -4,6 +4,7 @@
 >   1. 主动推送消息给用户，新增一个system用户，负责给用户推送消息
 >   2. 语句 ：INSERT INTO `im_user` (`id`, `avatar`, `name`, `sign`, `mobile`, `email`, `password`, `login_name`, `default_group_id`, `create_date`, `create_by`, `update_date`, `update_by`, `remarks`, `del_flag`) VALUES ('system', '/img/icon.png', '系统用户', '我爱吃肉', '13699988999', 'zhangsan@163.com', '{bcrypt}$2a$10$tcoeSq.LUagBuj6WalYUaeJjvXEI86YBDS6LVCQUfYtjoUvhHaUWC', 'system', '1048889640612864002', '2019-07-04 13:17:34', '', '2019-07-04 13:17:44', '', '', '0');
 >   3. 调用方式：http://localhost:8080/api/user/sendMsg?access_token=你的token&userId=接收人&msg=我是消息
+![图片](doc/img/system.PNG)
 #### V-0.51
 >   1. 解决web版本打包问题，直接 npm run build:web 就可以搞定，不用改文件了
 >   2. 如不能yarn 安装成功依赖包，请翻墙后再安装。
