@@ -1,9 +1,9 @@
 {
   "name": "V-IM",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "author": "乐乐（乐天）",
   "description": "一款基于JS的聊天工具",
-  "license": "LGPL V3",
+  "license": "AGPL-3.0",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
