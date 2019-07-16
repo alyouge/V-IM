@@ -13,8 +13,8 @@
                         <transition name="fade">
                             <ul class="userList" v-if="group.expansion">
                                 <li class="user" v-for="user in group.userList">
-                                    <a href="javascript:;" @click="showChat(user)">
-                                        <img :src="[host + user.avatar]">
+                                    <a href="javascript:;" @click="showUser(user)">
+                                        <img :src="host + user.avatar">
                                         <b>{{ user.name }}</b>
                                         <p>{{ user.sign }}</p>
                                     </a>
@@ -27,7 +27,8 @@
         </div>
         <div class="chat-box">
             <Top></Top>
-            <Welcome></Welcome>
+            <Welcome v-if="first"></Welcome>
+            <UserInfo class="user-box-view" v-if="!first" v-bind:user="user"></UserInfo>
         </div>
     </div>
 </template>
@@ -35,6 +36,7 @@
   import Search from '../components/search.vue';
   import Top from '../components/top.vue';
   import Welcome from '../components/welcome.vue';
+  import UserInfo from '../components/userInfo.vue';
   import conf from '../conf';
 
   const { ChatListUtils } = require('../../../utils/ChatUtils.js');
@@ -43,7 +45,8 @@
     components: {
       Search,
       Top,
-      Welcome
+      Welcome,
+      UserInfo
     },
     computed: {
       userFriendList: {
@@ -61,7 +64,8 @@
         user: {},
         currentUser: {},
         host: conf.getHostUrl(),
-        userFriends: []
+        userFriends: [],
+        first:true
       };
     },
 
@@ -71,9 +75,15 @@
         let self = this;
         let chat = ChatListUtils.resetChatList(self, user, conf.getHostUrl());
         self.$router.push({
-          path: '/index/chatBox',
+          path: '/index/chatBox/',
           query: { chat: chat }
         });
+      },
+      // 打开一个聊天对话框
+      showUser: function(user) {
+        let self = this;
+        self.first = false;
+        self.user = user;
       }
     }
   };
@@ -98,6 +108,12 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            .user-box-view{
+                position: absolute;
+                width: 100%;
+                top: 40px;
+                padding: 100px;
+            }
         }
 
         .user-box-list {
@@ -202,5 +218,6 @@
                 }
             }
         }
+
     }
 </style>
