@@ -5,7 +5,7 @@
                 <h5 class="username">{{user.name}}</h5>
             </Col>
             <Col span="12" class="text-right">
-                <Avatar :src="host + user.avatar"/>
+                <Avatar size="large" :src="host + user.avatar"/>
             </Col>
         </Row>
         <Divider/>
