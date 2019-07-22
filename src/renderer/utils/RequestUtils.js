@@ -199,6 +199,7 @@ class RequestUtils {
       })
       .then(json => {
         StoreUtils.setToken(json);
+        //把token 失效后的请求重新执行
         self.onAccessTokenFetched();
         self.isRefreshing = false;
 
@@ -208,6 +209,7 @@ class RequestUtils {
         let flushTokenTimerId = setTimeout(function() {
           self.flushToken(vue);
         }, ((json.expires_in - 10) * 1000));
+        //将定时器存储到 $store
         vue.$store.commit('setFlushTokenTimerId', flushTokenTimerId);
       })
   }
