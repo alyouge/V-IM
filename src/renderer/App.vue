@@ -9,4 +9,9 @@ export default {
   name: 'v-im'
 };
 </script>
+<style lang="scss">
+  #app{
+    position: relative;
+  }
+</style>
 
