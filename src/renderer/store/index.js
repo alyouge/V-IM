@@ -62,7 +62,6 @@ export default new Vuex.Store({
       state.websocket.send(JSON.stringify(msg));
     },
     resetUnRead: function(state) {
-      console.log('state.currentChat', state.currentChat);
       if (typeof state.currentChat == 'string') {
         state.currentChat = {};
       }

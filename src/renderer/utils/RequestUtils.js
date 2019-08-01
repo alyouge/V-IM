@@ -30,7 +30,6 @@ class RequestUtils {
   request(url, options) {
     let self = this;
     let access_token = StoreUtils.getAccessToken();
-    console.log('StoreUtils.getAccessToken()', StoreUtils.getAccessToken());
     options.set('access_token', access_token);
     return self.timeoutFetch(fetch(url, {
       method: 'POST',
@@ -44,7 +43,6 @@ class RequestUtils {
         return self.checkStatus(response, url, options);
       })
       .then(json => {
-        console.log(json);
         return new Promise(resolve => {
           resolve(json);
         });
@@ -60,12 +58,9 @@ class RequestUtils {
    */
   checkStatus(response, url, options) {
     // eslint-disable-next-line no-console
-    console.log('checkStatus', response.status);
     let self = this;
     if (response && response.status === 401) {
       // eslint-disable-next-line no-console
-      console.log('response.status', response.status);
-
       // 这个Promise函数很关键
       let p = new Promise((resolve) => {
         self.addSubscriber(() => {
@@ -73,7 +68,6 @@ class RequestUtils {
         });
       });
       // eslint-disable-next-line no-console
-      console.log('isRefreshing', self.isRefreshing);
       // 刷新token的函数,这需要添加一个开关，防止重复请求
       if (!self.isRefreshing) {
         self.isRefreshing = true;
@@ -91,7 +85,6 @@ class RequestUtils {
   onAccessTokenFetched() {
     let self = this;
     // eslint-disable-next-line no-console
-    console.log('subscribers', self.subscribers);
     self.subscribers.forEach((callback) => {
       callback();
     });
@@ -105,10 +98,8 @@ class RequestUtils {
   addSubscriber(callback) {
     let self = this;
     // eslint-disable-next-line no-console
-    console.log('addSubscriber', callback);
     self.subscribers.push(callback);
     // eslint-disable-next-line no-console
-    console.log('this.subscribers', self.subscribers);
   }
 
   /**
@@ -135,7 +126,6 @@ class RequestUtils {
       body: param
     })
       .then(response => {
-        console.log(response);
         if (response.status === 200) {
           return response.json();
         } else if (response.status === 401 || response.status === 400) {
@@ -151,7 +141,6 @@ class RequestUtils {
         // sessionStorage.setItem('token', json.access_token);
         StoreUtils.setToken(json);
         self.isRefreshing = false;
-        console.log('token',json);
         setTimeout(function() {
           self.isRefreshing = true;
           self.flushToken(vue);
@@ -168,7 +157,6 @@ class RequestUtils {
    * @returns {Promise<Response | never>}
    */
   flushToken(vue) {
-    console.log('刷新token');
     let self = this;
     self.isRefreshing = true;
     let param = new FormData();
@@ -177,7 +165,6 @@ class RequestUtils {
     param.set('grant_type', 'refresh_token');
     param.set('scope', 'select');
     param.set('refresh_token', StoreUtils.getToken().refresh_token);
-    console.log('刷新token param', param);
     return   fetch(conf.getTokenUrl(), {
       method: 'POST',
       model: 'cros', //跨域
@@ -188,7 +175,6 @@ class RequestUtils {
     })
       .then(response => {
         // eslint-disable-next-line no-console
-        console.log('刷新token response.status', response.status);
         if (response.status === 200) {
           return response.json();
         } else {

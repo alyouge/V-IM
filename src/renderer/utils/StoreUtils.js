@@ -20,6 +20,7 @@ class StoreUtils {
   }
 
   static setToken(token){
+    console.log("token",token);
     return StoreUtils.setJson("token",token);
   }
 

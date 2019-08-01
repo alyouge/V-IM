@@ -85,7 +85,6 @@
       if (self.$route.query.chat) {
         self.$store.commit('setCurrentChat', JSON.parse(JSON.stringify(self.$route.query.chat)));
       }
-      console.log("activated",self.currentChat);
       // 重新设置chatList
       self.$store.commit('setChatList', ChatListUtils.getChatList(self.$store.state.user.id));
       // 每次滚动到最底部

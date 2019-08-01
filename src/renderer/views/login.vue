@@ -126,7 +126,6 @@
             return response.json();
           })
           .then(json => {
-            console.log('json', json);
             //个人信息
             self.$store.commit('setUser', json.me);
             //好友
@@ -149,7 +148,6 @@
             });
           })
           .catch(function(error) {
-            console.log(error);
             self.showErr = true;
             if (ErrorType.NET_ERROR === error.toString()) {
               self.err = '服务通讯失败，请检查服务设置';

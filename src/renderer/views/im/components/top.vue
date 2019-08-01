@@ -22,8 +22,6 @@
     },
     methods: {
       min() {
-        console.log(this.winControl);
-        console.log(typeof this.winControl);
         this.winControl.min();
       },
       max() {
