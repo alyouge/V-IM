@@ -17,7 +17,7 @@
         <Row>
             <Col span="3" class="label">邮箱</Col>
             <Col span="2">&nbsp;</Col>
-            <Col span="18">{{user.mail}}</Col>
+            <Col span="18">{{user.email}}</Col>
         </Row>
         <Row>
             <Col span="18">&nbsp;</Col>

@@ -3,8 +3,7 @@
         <Input search v-model="search" placeholder="搜索" size="small" class="search" @on-focus="showSearch()"/>
         <div class="search-div" v-show="showSearchDiv">
             <div class="search-item">
-                <Input search v-model="search" placeholder="搜索" size="small" class="search" @on-search="searchUser"
-                       @on-keyup="searchUser"/>
+                <Input search v-model="search" placeholder="搜索" size="small" class="search" @on-search="searchUser" @on-keyup="searchUser"/>
                 <Icon type="ios-close" class="text-right" @click="closeSearchDiv()"></Icon>
             </div>
             <div class="group-box">
