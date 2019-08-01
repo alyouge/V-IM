@@ -16,11 +16,16 @@
                 <Input prefix="ios-lock-outline" type="password" v-model="password" placeholder="密码"
                        class="item-input"/>
             </div>
+            <div class="item">
+                <label>服务：</label>
+                <Input prefix="ios-settings-outline" v-model="host" placeholder="服务"
+                       class="item-input"/>
+            </div>
             <div class="btn item">
-                <Button type="success" @click="login()">登录</Button>
+                <Button type="primary" @click="login()" icon="md-contact" >登录</Button>
             </div>
             <div class="item register">
-                <a type="info" class="pull-right" @click="showRegister = true">注册</a>
+                <a type="info" class="pull-right" @click="showRegister = true"><Icon type="ios-cloud-circle" />注册</a>
             </div>
         </div>
         <Modal closable class="user-model" v-model="showSetting"
@@ -35,7 +40,6 @@
             <Input v-model="registerPassword" type="password" class="setting-item" placeholder="密码"/>
             <Button type="primary" ghost long @click="saveRegister" style="margin: 1rem 0">保存</Button>
         </Modal>
-        <Icon type="ios-settings-outline" class="setting" @click="showSetting = true"/>
         <vue-particles color="#dedede" :particlesNumber="50" class="bg-login"></vue-particles>
     </div>
 </template>
@@ -68,12 +72,6 @@
       Top
     },
     methods: {
-      saveSetting() {
-        let self = this;
-        localStorage.setItem('host', self.host);
-        self.$Message.success('保存成功！');
-        self.showSetting = false;
-      },
       clickUser() {
         location.reload();
       },
@@ -111,6 +109,8 @@
       },
       login: function() {
         let self = this;
+        localStorage.setItem('host', self.host);
+
         let param = new FormData();
         param.set('client_id', 'v-client');
         param.set('client_secret', 'v-client-ppp');
@@ -122,7 +122,6 @@
         requestApi
           .login(self.username.trim(), self.password.trim(), self)
           .then(token => {
-            console.log('token', token);
             StoreUtils.setToken(token);
             // 获取当前登录的用户，存入store
             return requestApi.request(conf.getInitUrl(), new FormData());
@@ -212,11 +211,12 @@
             width: 33rem;
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 2rem 3rem 5rem 3rem;
+            padding: 2rem 3rem 3rem 3rem;
             position: absolute;
             right: 8rem;
-            top: 15rem;
+            top: 12rem;
             z-index: 2;
+            box-shadow: 0 0 5px 3px rgba(186, 186, 186, 0.3);
 
             .item {
                 margin-top: 2rem;
@@ -265,6 +265,13 @@
 
         .register {
             padding: 0 2.2rem;
+            a{
+                color: #ffffff;
+                i{
+                    font-size: 14px;
+                    letter-spacing: 5px;
+                }
+            }
         }
     }
 
