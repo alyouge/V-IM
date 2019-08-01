@@ -28,7 +28,7 @@
                 <a type="info" class="pull-right" @click="showRegister = true"><Icon type="ios-cloud-circle" />注册</a>
             </div>
         </div>
-      
+
         <Modal closable class="user-model" v-model="showRegister"
                footer-hide title="注册新用户" width="300">
             <Input v-model="registerPhone" class="setting-item" placeholder="手机"/>
