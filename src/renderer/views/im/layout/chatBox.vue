@@ -1,7 +1,7 @@
 <template>
     <div class="chat-panel">
         <div class="chat-box-list">
-            <Search class="search-box" @showChat="showChat"></Search>
+            <Search class="search-box" @showChat="showSearchChat"></Search>
             <div class="group-box">
                 <ul class="user-list">
                     <li class="user" v-for="chat in chatList">
@@ -68,7 +68,17 @@
         self.$nextTick(() => {
           imageLoad('message-box');
         });
-        ChatListUtils.resetChatList(self, chat, conf.getHostUrl(),false)
+
+      },
+      showSearchChat: function(chat) {
+        let self = this;
+        self.$store.commit('resetUnRead');
+        self.currentChat = chat;
+        // 每次滚动到最底部
+        self.$nextTick(() => {
+          imageLoad('message-box');
+        });
+        ChatListUtils.resetChatList(self, chat, conf.getHostUrl())
 
       },
       delChat(chat) {
