@@ -73,10 +73,9 @@
       // 打开一个聊天对话框
       showChat: function(user) {
         let self = this;
-        let chat = ChatListUtils.resetChatList(self, user, conf.getHostUrl());
         self.$router.push({
           path: '/index/chatBox/',
-          query: { chat: chat }
+          query: { chat: ChatListUtils.resetChatList(self, user, conf.getHostUrl()) }
         });
       },
       // 打开一个用户信息对话框

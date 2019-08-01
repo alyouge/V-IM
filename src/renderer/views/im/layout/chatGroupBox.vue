@@ -26,7 +26,7 @@
   import UserChat from '../components/chat.vue';
   import Welcome from '../components/welcome.vue';
   import conf from '../conf';
-  import { Chat, ChatListUtils, MessageTargetType } from '../../../utils/ChatUtils';
+  import { ChatListUtils } from '../../../utils/ChatUtils';
 
   export default {
   components: {
@@ -55,10 +55,9 @@
     // 打开一个聊天对话框
     showChat: function(user) {
       let self = this;
-      let chat = ChatListUtils.resetChatList(self, user, conf.getHostUrl());
       self.$router.push({
         path: '/index/chatBox/',
-        query: { chat: chat }
+        query: { chat:  ChatListUtils.resetChatList(self, user, conf.getHostUrl()) }
       });
     }
   }
