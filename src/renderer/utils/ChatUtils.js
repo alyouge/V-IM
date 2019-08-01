@@ -304,8 +304,15 @@ export const ChatListUtils = {
     let newChatList = chatList.filter(function(element) {
       return String(element.id) !== String(user.id);
     });
+
+    let  avatar =  user.avatar;
+    if(user.avatar.indexOf(host) === 0){
+      avatar = user.avatar;
+    }else {
+      avatar = host + user.avatar;
+    }
     // 重新添加会话，放到第一个
-    let chat = new Chat(user.id, user.name, host + user.avatar, 0, '', user.mobile, user.email, MessageTargetType.FRIEND);
+    let chat = new Chat(user.id, user.name, avatar, 0, '', user.mobile, user.email, MessageTargetType.FRIEND);
     newChatList.unshift(chat);
     // 存储到localStorage 的 chatList
     this.setChatList(self.$store.state.user.id, chatList);

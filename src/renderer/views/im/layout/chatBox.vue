@@ -62,18 +62,14 @@
     methods: {
       showChat: function(chat) {
         let self = this;
-
-        this.$store.commit('resetUnRead');
-        this.currentChat = chat;
+        self.$store.commit('resetUnRead');
+        self.currentChat = chat;
         // 每次滚动到最底部
-        this.$nextTick(() => {
+        self.$nextTick(() => {
           imageLoad('message-box');
         });
+        ChatListUtils.resetChatList(self, chat, conf.getHostUrl())
 
-        self.$router.push({
-          path: '/index/chatBox/',
-          query: { chat: ChatListUtils.resetChatList(self, chat, conf.getHostUrl()) }
-        });
       },
       delChat(chat) {
         this.$store.commit('delChat', chat);
@@ -85,6 +81,7 @@
       if (self.$route.query.chat) {
         self.$store.commit('setCurrentChat', JSON.parse(JSON.stringify(self.$route.query.chat)));
       }
+      console.log("activated",self.currentChat);
       // 重新设置chatList
       self.$store.commit('setChatList', ChatListUtils.getChatList(self.$store.state.user.id));
       // 每次滚动到最底部
