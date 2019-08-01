@@ -1,9 +1,14 @@
 需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
+#### V-0.53 (觉得不错，请帮点star，谢谢)
+>   1. 新增功能点：点击用户显示用户信息页面，
+>   2. 修改登录界面，把设置放置到密码下面，原先的右下角的小图标不太容易被看到。
+>   3. 修改搜索用户点击无效的bug
+>   4. 登录界面美化调整！
 #### V-0.52 (觉得不错，请帮点star，谢谢)
 >   1. 请更新后台
->   1. 主动推送消息给用户，新增一个system用户，负责给用户推送消息
->   2. 语句 ：INSERT INTO `im_user` (`id`, `avatar`, `name`, `sign`, `mobile`, `email`, `password`, `login_name`, `default_group_id`, `create_date`, `create_by`, `update_date`, `update_by`, `remarks`, `del_flag`) VALUES ('system', '/img/icon.png', '系统用户', '我爱吃肉', '13699988999', 'zhangsan@163.com', '{bcrypt}$2a$10$tcoeSq.LUagBuj6WalYUaeJjvXEI86YBDS6LVCQUfYtjoUvhHaUWC', 'system', '1048889640612864002', '2019-07-04 13:17:34', '', '2019-07-04 13:17:44', '', '', '0');
->   3. 调用方式：http://localhost:8080/api/user/sendMsg?access_token=你的token&userId=接收人&msg=我是消息
+>   2. 主动推送消息给用户，新增一个system用户，负责给用户推送消息
+>   3. 语句 ：INSERT INTO `im_user` (`id`, `avatar`, `name`, `sign`, `mobile`, `email`, `password`, `login_name`, `default_group_id`, `create_date`, `create_by`, `update_date`, `update_by`, `remarks`, `del_flag`) VALUES ('system', '/img/icon.png', '系统用户', '我爱吃肉', '13699988999', 'zhangsan@163.com', '{bcrypt}$2a$10$tcoeSq.LUagBuj6WalYUaeJjvXEI86YBDS6LVCQUfYtjoUvhHaUWC', 'system', '1048889640612864002', '2019-07-04 13:17:34', '', '2019-07-04 13:17:44', '', '', '0');
+>   4. 调用方式：http://localhost:8080/api/user/sendMsg?access_token=你的token&userId=接收人&msg=我是消息
 ![图片](doc/img/system.PNG)
 #### V-0.51
 >   1. 解决web版本打包问题，直接 npm run build:web 就可以搞定，不用改文件了
