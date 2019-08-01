@@ -53,21 +53,11 @@
   },
   methods: {
     // 打开一个聊天对话框
-    showChat: function(chatGroup) {
+    showChat: function(user) {
       let self = this;
-      let chatList = ChatListUtils.getChatList(self.$store.state.user.id);
-      // 删除当前用户已经有的会话
-      let newChatList = chatList.filter(function(element) {
-        return String(element.id) !== String(chatGroup.id);
-      });
-      // 重新添加会话，放到第一个
-      let chat = new Chat(chatGroup.id, chatGroup.name, conf.getHostUrl() + chatGroup.avatar, 0, '', '', '', MessageTargetType.CHAT_GROUP);
-      newChatList.unshift(chat);
-      // 存储到localStorage 的 chatList
-      ChatListUtils.setChatList(self.$store.state.user.id, chatList);
-      this.$store.commit('setChatList', newChatList);
-      this.$router.push({
-        path: '/index/chatBox',
+      let chat = ChatListUtils.resetChatList(self, user, conf.getHostUrl());
+      self.$router.push({
+        path: '/index/chatBox/',
         query: { chat: chat }
       });
     }

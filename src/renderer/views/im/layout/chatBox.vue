@@ -29,6 +29,7 @@
   import UserChat from '../components/chat.vue';
   import { ChatListUtils, imageLoad } from '../../../utils/ChatUtils';
   import RequestUtils from '../../../utils/RequestUtils';
+  import conf from '../conf';
 
 
   export default {
@@ -60,11 +61,18 @@
     },
     methods: {
       showChat: function(chat) {
+        let self = this;
+
         this.$store.commit('resetUnRead');
         this.currentChat = chat;
         // 每次滚动到最底部
         this.$nextTick(() => {
           imageLoad('message-box');
+        });
+
+        self.$router.push({
+          path: '/index/chatBox/',
+          query: { chat: ChatListUtils.resetChatList(self, chat, conf.getHostUrl()) }
         });
       },
       delChat(chat) {
