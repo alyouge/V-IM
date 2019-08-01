@@ -68,7 +68,7 @@
         self.$nextTick(() => {
           imageLoad('message-box');
         });
-        ChatListUtils.resetChatList(self, chat, conf.getHostUrl())
+        ChatListUtils.resetChatList(self, chat, conf.getHostUrl(),false)
 
       },
       delChat(chat) {

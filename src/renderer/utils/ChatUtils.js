@@ -296,27 +296,31 @@ export const ChatListUtils = {
    * @param self 当前对象
    * @param user 用户
    * @param host 主机名
+   * @param flag 是否是不是会话列表
    * @returns {Chat} 当前会话
    */
-  resetChatList: function(self, user, host) {
+  resetChatList: function(self, user, host, flag = true) {
     let chatList = this.getChatList(self.$store.state.user.id);
     // 删除当前用户已经有的会话
     let newChatList = chatList.filter(function(element) {
       return String(element.id) !== String(user.id);
     });
 
-    let  avatar =  user.avatar;
-    if(user.avatar.indexOf(host) === 0){
+    let avatar = user.avatar;
+    if (user.avatar.indexOf(host) === 0) {
       avatar = user.avatar;
-    }else {
+    } else {
       avatar = host + user.avatar;
     }
     // 重新添加会话，放到第一个
     let chat = new Chat(user.id, user.name, avatar, 0, '', user.mobile, user.email, MessageTargetType.FRIEND);
-    newChatList.unshift(chat);
-    // 存储到localStorage 的 chatList
-    this.setChatList(self.$store.state.user.id, chatList);
-    self.$store.commit('setChatList', newChatList);
+    //如果是在当前会话列表，不用移动到第一个
+    if (flag) {
+      newChatList.unshift(chat);
+      // 存储到localStorage 的 chatList
+      this.setChatList(self.$store.state.user.id, chatList);
+      self.$store.commit('setChatList', newChatList);
+    }
     return chat;
   }
 };
@@ -352,5 +356,5 @@ export const ErrorType = {
   PARAM_ERROR: 400, //参数错误
   FLUSH_TOKEN_ERROR: 7, //刷新token错误
   SERVER_ERROR: 500, //服务器错误
-  NET_ERROR:'TypeError: Failed to fetch' //网络链接不通
+  NET_ERROR: 'TypeError: Failed to fetch' //网络链接不通
 };
