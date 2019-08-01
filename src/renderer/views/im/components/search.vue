@@ -10,7 +10,7 @@
                 <ul class="user-list">
                     <li class="user" v-for="user in searchUserList">
                         <a href="javascript:" @click="showChat(user)">
-                            <img :src="user.avatar" alt="头像">
+                            <img :src="host + user.avatar" alt="头像">
                             <b>{{ user.name }}</b>
                             <p>{{ user.sign }}</p>
                         </a>
@@ -31,7 +31,8 @@
       search: '',
       userList: [],
       searchUserList: [],
-      showSearchDiv: false
+      showSearchDiv: false,
+      host:conf.getHostUrl()
     };
   },
   methods: {
@@ -54,9 +55,6 @@
               .indexOf(searchTemp) !== -1 ||
             pinyin.getCamelChars(name).indexOf(searchTemp) !== -1
           ) {
-            if (this.userList[i].avatar.indexOf('http') !== 0) {
-              this.userList[i].avatar = conf.getHostUrl() + this.userList[i].avatar;
-            }
             this.searchUserList.push(this.userList[i]);
           }
         }

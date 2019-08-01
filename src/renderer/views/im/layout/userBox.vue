@@ -79,9 +79,14 @@
           query: { chat: chat }
         });
       },
-      // 打开一个聊天对话框
+      // 打开一个用户信息对话框
       showUser: function(user) {
         let self = this;
+        console.log("useruseruseruseruseruseruseruseruseruseruser",user)
+        self.$router.push({
+          path: '/index/userBox/'
+        });
+
         self.first = false;
         self.user = user;
       }
