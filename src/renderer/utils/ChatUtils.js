@@ -296,6 +296,7 @@ export const ChatListUtils = {
    * @param self 当前对象
    * @param user 用户
    * @param host 主机名
+   * @param type 0 单聊 1 群聊
    * @returns {Chat} 当前会话
    */
   resetChatList: function(self, user, host, type) {
