@@ -62,6 +62,7 @@
     methods: {
       showChat: function(chat) {
         let self = this;
+        console.log("chat:",chat);
         self.$store.commit('resetUnRead');
         self.currentChat = chat;
         // 每次滚动到最底部

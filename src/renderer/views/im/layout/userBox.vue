@@ -38,6 +38,7 @@
   import Welcome from '../components/welcome.vue';
   import UserInfo from '../components/userInfo.vue';
   import conf from '../conf';
+  import { MessageTargetType } from '../../../utils/ChatUtils';
 
   const { ChatListUtils } = require('../../../utils/ChatUtils.js');
 
@@ -65,7 +66,7 @@
         currentUser: {},
         host: conf.getHostUrl(),
         userFriends: [],
-        first:true
+        first: true
       };
     },
 
@@ -75,7 +76,7 @@
         let self = this;
         self.$router.push({
           path: '/index/chatBox/',
-          query: { chat: ChatListUtils.resetChatList(self, user, conf.getHostUrl()) }
+          query: { chat: ChatListUtils.resetChatList(self, user, conf.getHostUrl(), MessageTargetType.FRIEND) }
         });
       },
       // 打开一个用户信息对话框
@@ -111,7 +112,8 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            .user-box-view{
+
+            .user-box-view {
                 position: absolute;
                 width: 100%;
                 top: 40px;

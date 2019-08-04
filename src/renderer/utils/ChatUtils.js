@@ -298,7 +298,8 @@ export const ChatListUtils = {
    * @param host 主机名
    * @returns {Chat} 当前会话
    */
-  resetChatList: function(self, user, host) {
+  resetChatList: function(self, user, host, type) {
+    console.log('user:' + JSON.stringify(user));
     let chatList = this.getChatList(self.$store.state.user.id);
     // 删除当前用户已经有的会话
     let newChatList = chatList.filter(function(element) {
@@ -312,7 +313,7 @@ export const ChatListUtils = {
       avatar = host + user.avatar;
     }
     // 重新添加会话，放到第一个
-    let chat = new Chat(user.id, user.name, avatar, 0, '', user.mobile, user.email, MessageTargetType.FRIEND);
+    let chat = new Chat(user.id, user.name, avatar, 0, '', user.mobile, user.email, type);
     newChatList.unshift(chat);
     // 存储到localStorage 的 chatList
     this.setChatList(self.$store.state.user.id, chatList);
