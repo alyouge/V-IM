@@ -23,7 +23,7 @@
 				</view>
 				<view :class="PageCur=='group'?'text-green':'text-gray'">群组</view>
 			</view>
-				<view class="action" @click="NavChange" data-cur="mine">
+			<view class="action" @click="NavChange" data-cur="mine">
 				<view class='cuIcon-cu-image'>
 					<image :src="'/static/tabbar/mine' + [PageCur == 'mine'?'_cur':''] + '.png'"></image>
 				</view>
@@ -36,7 +36,7 @@
 <script>
 	export default {
 		data() {
-		return {
+			return {
 				PageCur: 'chat'
 			}
 		},

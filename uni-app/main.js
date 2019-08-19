@@ -22,6 +22,15 @@ Vue.component('chat',chat)
 import windows from './pages/chat/components/windows.vue'
 Vue.component('windows',windows)
 
+import login from './pages/login/login.vue'
+Vue.component('login',login)
+
+import forget from './pages/login/forget.vue'
+Vue.component('forget',forget)
+
+import register from './pages/login/register.vue'
+Vue.component('register',register)
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'
