@@ -131,6 +131,7 @@
   import Faces from './faces.vue';
   import RequestUtils from '../../../utils/RequestUtils';
   import StoreUtils from '../../../utils/StoreUtils';
+  import { MessageTargetType } from '../../../utils/ChatUtils';
 
   const { imageLoad, transform, ChatListUtils } = require('../../../utils/ChatUtils');
 
@@ -184,7 +185,7 @@
       showChat(user) {
         let self = this;
         if (user.id !== self.$store.state.user.id) {
-          let chat = ChatListUtils.resetChatList(self, user, conf.getHostUrl());
+          let chat = ChatListUtils.resetChatList(self, user, conf.getHostUrl(), MessageTargetType.FRIEND);
           self.$store.commit('setCurrentChat', JSON.parse(JSON.stringify(chat)));
         } else {
           self.$Message.warning('不能给自己说话哦');

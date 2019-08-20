@@ -27,7 +27,7 @@
   import Search from '../components/search.vue';
   import Top from '../components/top.vue';
   import UserChat from '../components/chat.vue';
-  import { ChatListUtils, imageLoad } from '../../../utils/ChatUtils';
+  import { ChatListUtils, imageLoad, MessageTargetType } from '../../../utils/ChatUtils';
   import RequestUtils from '../../../utils/RequestUtils';
   import conf from '../conf';
 
@@ -79,7 +79,7 @@
         self.$nextTick(() => {
           imageLoad('message-box');
         });
-        ChatListUtils.resetChatList(self, chat, conf.getHostUrl())
+        ChatListUtils.resetChatList(self, chat, conf.getHostUrl(), MessageTargetType.FRIEND)
 
       },
       delChat(chat) {

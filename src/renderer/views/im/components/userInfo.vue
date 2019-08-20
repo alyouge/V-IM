@@ -30,6 +30,7 @@
 
 <script>
   import conf from '../conf';
+  import { MessageTargetType } from '../../../utils/ChatUtils';
   const { ChatListUtils } = require('../../../utils/ChatUtils.js');
 
   export default {
@@ -44,7 +45,8 @@
       // 打开一个聊天对话框
       showChat: function() {
         let self = this;
-        let chat = ChatListUtils.resetChatList(self, self.user, conf.getHostUrl());
+        console.log("self.user",self.user);
+        let chat = ChatListUtils.resetChatList(self, self.user, conf.getHostUrl(), MessageTargetType.FRIEND);
         self.$router.push({
           path: '/index/chatBox/',
           query: { chat: chat }
