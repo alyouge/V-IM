@@ -384,7 +384,7 @@
         display: flex;
         flex-direction: column;
         margin-top: 4rem;
-
+        overflow: hidden;
     }
 
     .im-chat-top {
