@@ -1,4 +1,6 @@
 需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
+测试地址：http://101.200.151.183   wangwu 123456
+务必记得点赞哦
 #### V-0.53 (觉得不错，请帮点star，谢谢)
 >   1. 新增功能点：点击用户显示用户信息页面。
 >   2. 修改登录界面，把设置放置到密码下面，原先的右下角的小图标不太容易被看到。
@@ -6,7 +8,7 @@
 >   4. 登录界面美化调整。
 >   5. 其他的几个小问题调整。
 ![图片](doc/img/user-info.png)
-#### V-0.52 (觉得不错，请帮点star，谢谢)
+#### V-0.52 
 >   1. 请更新后台
 >   2. 主动推送消息给用户，新增一个system用户，负责给用户推送消息
 >   3. 语句 ：INSERT INTO `im_user` (`id`, `avatar`, `name`, `sign`, `mobile`, `email`, `password`, `login_name`, `default_group_id`, `create_date`, `create_by`, `update_date`, `update_by`, `remarks`, `del_flag`) VALUES ('system', '/img/icon.png', '系统用户', '我爱吃肉', '13699988999', 'zhangsan@163.com', '{bcrypt}$2a$10$tcoeSq.LUagBuj6WalYUaeJjvXEI86YBDS6LVCQUfYtjoUvhHaUWC', 'system', '1048889640612864002', '2019-07-04 13:17:34', '', '2019-07-04 13:17:44', '', '', '0');
