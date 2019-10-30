@@ -85,7 +85,7 @@
   };
 </script>
 <style lang="scss" scoped>
-    @import '../../../styles/theme';
+    @import '../../../../../static/styles/theme';
 
     .search {
         margin: 0 0 1rem;

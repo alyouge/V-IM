@@ -73,8 +73,8 @@
 };
 </script>
 <style lang="scss">
-@import './../styles/theme.scss';
-@import './../styles/v-im.scss';
+@import '../../../static/styles/theme.scss';
+@import '../../../static/styles/v-im.scss';
 
 .v-im {
   display: flex;

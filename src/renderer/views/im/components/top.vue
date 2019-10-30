@@ -35,7 +35,7 @@
   };
 </script>
 <style lang="scss">
-    @import '../../../styles/theme';
+    @import '../../../../../static/styles/theme';
 
     $top-height: 4rem;
     $color-online: #d1ffe9;

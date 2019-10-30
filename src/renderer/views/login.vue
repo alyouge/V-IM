@@ -170,7 +170,7 @@
 </script>
 
 <style lang="scss" scoped>
-    @import "./../styles/theme.scss";
+    @import "../../../static/styles/theme.scss";
 
     .login {
         height: 100%;

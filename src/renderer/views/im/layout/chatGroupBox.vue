@@ -64,7 +64,7 @@
 };
 </script>
 <style lang="scss" scoped>
-@import '../../../styles/theme';
+@import '../../../../../static/styles/theme';
 
 .ivu-tabs-content {
   height: 100%;
