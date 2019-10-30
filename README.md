@@ -1,6 +1,24 @@
-#### 需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
-#### 测试地址：http://101.200.151.183   wangwu 123456
-#### 务必记得点赞哦
+##需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
+##务必记得点赞哦
+#### 文档
+>   1. 打包好的文件   [下载](v-im Setup 0.5.3.exe)。
+>   2. 打包好的web文件，在dist/web 目标下（运行的时候需要有容器，例如nginx tomcat之类的）。
+>   3. 消息推送接口，调用方式：http://localhost:8080/api/user/sendMsg?access_token=你的token&userId=接收人&msg=我是消息
+>   4. 获取token：http://localhost:8080/oauth/token?client_id=v-client&client_secret=v-client-ppp&grant_type=password&scope=select&username=wangwu&password=123456
+>   5. 测试地址：http://101.200.151.183   wangwu 123456 。
+>   6. 安装依赖命令：yarn 。
+>   7. 开发环境命令：npm run dev 。
+>   8. 打包安装文件：npm run build，打包完成的文件在/build 下。
+>   9. 打包web文件：npm run build:web，打包完成的文件在/dist/web 下。
+
+### 注意事项
+
+> 1. 打包时候项目路径不能有中文，包括你 windows 用户都不能有中文字符，因为npm 缓存都是在用户目录下（如果原先的用户名是中文，再修改成英文也不好用，因为原先的npm包都还在中文目录下，可以新建个window 英文账号，登录新账号打包）。
+> 2. 使用yarn 安装依赖，npm 不是很好用，尝试过，都不能打包成功。如果yarn 不能安装依赖成功，可以多试几次，或者翻墙后再打包！
+> 3. 基于 t-io websocket 协议， 据说能支持百万级并发，但是此项目并没有进行此方面的测试，还请知晓 ！
+
+
+
 #### V-0.53 (觉得不错，请帮点star，谢谢)
 >   1. 新增功能点：点击用户显示用户信息页面。
 >   2. 修改登录界面，把设置放置到密码下面，原先的右下角的小图标不太容易被看到。
@@ -24,11 +42,6 @@
 ### 服务端代码在此
 >   1. https://gitee.com/lele-666/V-IM-Server
 >   2. 测试账号： wangwu/123456  或者可以点注册，自行注册账号。
-### 注意事项
-
-> 1. 打包时候项目路径不能有中文，包括你 windows 用户都不能有中文字符，因为npm 缓存都是在用户目录下（如果原先的用户名是中文，再修改成英文也不好用，因为原先的npm包都还在中文目录下，可以新建个window 英文账号，登录新账号打包）。
-> 2. 使用yarn 安装依赖，npm 不是很好用，尝试过，都不能打包成功。如果yarn 不能安装依赖成功，可以多试几次，或者翻墙后再打包！
-> 3. 基于 t-io websocket 协议， 据说能支持百万级并发，但是此项目并没有进行此方面的测试，还请知晓 ！
 
 
 ### 截图
