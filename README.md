@@ -12,8 +12,8 @@
 >   5. 测试地址：http://101.200.151.183   wangwu 123456 。
 >   6. 安装依赖命令：yarn 。
 >   7. 开发环境命令：npm run serve 和 npm run electron:serve。
->   8. 打包安装文件：npm run electron:build，打包完成的文件在/build 下。
->   9. 打包web文件：npm run build，打包完成的文件在/dist/web 下。
+>   8. 打包安装文件：npm run electron:build，打包完成的文件在/dist_electron 下。
+>   9. 打包web文件：npm run build，打包完成的文件在/dist 下。
 
 ### 注意事项
 
