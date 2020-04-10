@@ -89,7 +89,6 @@ import conf from "./im/conf";
 import RequestUtils from "../utils/RequestUtils";
 import StoreUtils from "../utils/StoreUtils";
 import { ErrorType } from "../utils/ChatUtils";
-const shell = require("electron").shell;
 
 export default {
   name: "login",
@@ -113,7 +112,7 @@ export default {
   },
   methods: {
     open() {
-      shell.openExternal("https://gitee.com/lele-666/V-IM");
+      this.winControl.openURL("https://gitee.com/lele-666/V-IM");
     },
     clickUser() {
       location.reload();

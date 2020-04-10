@@ -10,6 +10,7 @@ Vue.config.productionTip = false;
 Vue.use(iView);
 Vue.prototype.formatDateTime = formatDateTime;
 Vue.prototype.dateStr = dateStr;
+console.log("process.env.VUE_APP_MODE", process.env.VUE_APP_MODE);
 if (process.env.VUE_APP_MODE === "web") {
   Vue.prototype.winControl = require("@/mode/webControl").default;
 } else {

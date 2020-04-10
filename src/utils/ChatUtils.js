@@ -234,7 +234,7 @@ export function transform(content) {
       .replace(/"/g, "&quot;") // XSS
       .replace(/@(\S+)(\s+?|$)/g, '@<a href="javascript:;">$1</a>$2')
 
-      .replace(/face\[([^\s\[\]]+?)]/g, function(face) {
+      .replace(/face\[([^\s\\[\]]+?)]/g, function(face) {
         // 转义表情
         let alt = face.replace(/^face/g, "");
         return (
