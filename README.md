@@ -11,9 +11,9 @@
 >   4. 获取token：http://localhost:8080/oauth/token?client_id=v-client&client_secret=v-client-ppp&grant_type=password&scope=select&username=wangwu&password=123456
 >   5. 测试地址：http://101.200.151.183   wangwu 123456 。
 >   6. 安装依赖命令：yarn 。
->   7. 开发环境命令：npm run dev 。
->   8. 打包安装文件：npm run build，打包完成的文件在/build 下。
->   9. 打包web文件：npm run build:web，打包完成的文件在/dist/web 下。
+>   7. 开发环境命令：npm run serve 和 npm run electron:serve。
+>   8. 打包安装文件：npm run electron:build，打包完成的文件在/build 下。
+>   9. 打包web文件：npm run build，打包完成的文件在/dist/web 下。
 
 ### 注意事项
 
