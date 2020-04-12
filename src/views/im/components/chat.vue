@@ -595,7 +595,7 @@ export default {
             width: 100%;
             white-space: pre-wrap;
             word-break: break-all;
-            img{
+            img {
               display: block;
             }
           }

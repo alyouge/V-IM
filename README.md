@@ -1,9 +1,12 @@
 ### 需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
 ### 务必记得点赞哦
+### tips
+>   1. 如果出现 Parsing error: x-invalid-end-tag  vue/no-parsing-error 类似的错误，可用用 webstorm 右键src 目录 Fix eslint problems，
+>
 ### 0.6.0 发布
 >   1. 放弃 electron-vue 拥抱 vue-cli-plugin-electron-builder，更加容易安装依赖，记得用 yarn。
 >   2. 陆续更新文档：https://my.oschina.net/alyouge/blog/3224771
->   3. electron 版本为6
+>   3. electron 版本为 8
 #### 文档
 >   1. 打包好的文件   [下载](https://gitee.com/lele-666/V-IM/raw/master/v-im%20Setup%200.5.3.exe)。
 >   2. 打包好的web文件，在dist/web 目标下（运行的时候需要有容器，例如nginx tomcat之类的）。
