@@ -21,32 +21,10 @@
 > 2. 使用yarn 安装依赖，npm 不是很好用，尝试过，都不能打包成功。如果yarn 不能安装依赖成功，可以多试几次，或者翻墙后再打包！
 > 3. 基于 t-io websocket 协议， 据说能支持百万级并发，但是此项目并没有进行此方面的测试，还请知晓 ！
 
-
-
-#### V-0.53 (觉得不错，请帮点star，谢谢)
->   1. 新增功能点：点击用户显示用户信息页面。
->   2. 修改登录界面，把设置放置到密码下面，原先的右下角的小图标不太容易被看到。
->   3. 修改搜索用户点击无效的bug。
->   4. 登录界面美化调整。
->   5. 其他的几个小问题调整。
-![图片](doc/img/user-info.png)
-#### V-0.52 
->   1. 请更新后台
->   2. 主动推送消息给用户，新增一个system用户，负责给用户推送消息
->   3. 语句 ：INSERT INTO `im_user` (`id`, `avatar`, `name`, `sign`, `mobile`, `email`, `password`, `login_name`, `default_group_id`, `create_date`, `create_by`, `update_date`, `update_by`, `remarks`, `del_flag`) VALUES ('system', '/img/icon.png', '系统用户', '我爱吃肉', '13699988999', 'zhangsan@163.com', '{bcrypt}$2a$10$tcoeSq.LUagBuj6WalYUaeJjvXEI86YBDS6LVCQUfYtjoUvhHaUWC', 'system', '1048889640612864002', '2019-07-04 13:17:34', '', '2019-07-04 13:17:44', '', '', '0');
->   4. 调用方式：http://localhost:8080/api/user/sendMsg?access_token=你的token&userId=接收人&msg=我是消息
-![图片](doc/img/system.PNG)
-#### V-0.51
->   1. 解决web版本打包问题，直接 npm run build:web 就可以搞定，不用改文件了
->   2. 如不能yarn 安装成功依赖包，请翻墙后再安装。
->   3. 测试地址 http://101.200.151.183   账号：wangwu 123456
- 
-
 ![logo](build/icons/icon.png)
 ### 服务端代码在此
 >   1. https://gitee.com/lele-666/V-IM-Server
 >   2. 测试账号： wangwu/123456  或者可以点注册，自行注册账号。
-
 
 ### 截图
 
@@ -57,22 +35,6 @@
 ![缓存](doc/img/5.PNG)
 ![图片](doc/img/6.PNG)
 
-#### Build Setup
-
-``` bash
-# install dependencies
-yarn
-
-# serve with hot reload at localhost:9080
-npm run dev
-
-# build electron application for production
-npm run build
-
-
-```
-
----
 ### 功能点
 > 1. 文本聊天
 > 2. 聊天表情

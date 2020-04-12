@@ -92,7 +92,6 @@ app.on("window-all-closed", () => {
   }
 });
 
-
 ipcMain.on("min", () => {
   mainWindow.minimize();
 });

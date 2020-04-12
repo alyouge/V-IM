@@ -569,7 +569,7 @@ export default {
           position: relative;
           line-height: 22px;
           margin-top: 25px;
-          padding: 0.8rem 1.5rem;
+          padding: 1rem;
           background-color: #e2e2e2;
           border-radius: 3px;
           color: #333;
@@ -595,6 +595,9 @@ export default {
             width: 100%;
             white-space: pre-wrap;
             word-break: break-all;
+            img{
+              display: block;
+            }
           }
         }
       }
