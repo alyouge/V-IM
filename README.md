@@ -79,8 +79,6 @@
 
 
 ### 交流群
-> 1. QQ群：617853658（新）验证请说明是 V-IM 用户
-> 2. 微信群：![图片](doc/wx.PNG)
-> 3. 如果您觉得好用，可以给点个star!!!，或者给个捐赠。
+> 1. QQ群：617853658 验证请说明 V-IM 
+> 2. 如果您觉得好用，可以给点个star，或者给个捐赠。
 
-This project was generated with [electron-vue](https://gitee.com/lele-666/V-IM/blob/master/v-im%20Setup%200.3.8.exe) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).

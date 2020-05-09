@@ -1,13 +1,13 @@
+import conf from "../views/im/conf/index.js";
+import StoreUtils from "./StoreUtils";
+import WebsocketHeartbeatJs from "./WebsocketHeartbeatJs";
+import { logout } from "./ChatUtils";
 import {
   ErrorType,
   imageLoad,
   MessageInfoType,
   MessageTargetType
 } from "./ChatUtils";
-import conf from "../views/im/conf/index.js";
-import StoreUtils from "./StoreUtils";
-import WebsocketHeartbeatJs from "./WebsocketHeartbeatJs";
-import { logout } from "./ChatUtils";
 
 class RequestUtils {
   constructor() {
