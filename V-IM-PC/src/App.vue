@@ -10,6 +10,9 @@ export default {
 };
 </script>
 <style lang="scss">
+html {
+  font-size: 12px;
+}
 #app {
   position: relative;
 }

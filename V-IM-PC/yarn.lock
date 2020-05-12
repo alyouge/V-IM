@@ -9722,7 +9722,7 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-view-design@^4.0.0:
+view-design@^4.2.0:
   version "4.2.0"
   resolved "https://registry.npm.taobao.org/view-design/download/view-design-4.2.0.tgz#2af4865c956be84b64b25187be073016eab9a748"
   integrity sha1-KvSGXJVr6EtkslGHvgcwFuq5p0g=
