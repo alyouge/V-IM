@@ -1,5 +1,10 @@
 ### 需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
 ### 务必记得点赞哦
+
+### 结构
+>   1. V-IM-PC 是客户端
+>   2. V-IM-Server 是服务端代码
+
 ### tips
 >   1. 如果出现 Parsing error: x-invalid-end-tag  vue/no-parsing-error 类似的错误，可用用 webstorm 右键src 目录 Fix eslint problems，
 >
@@ -25,9 +30,7 @@
 > 3. 基于 t-io websocket 协议， 据说能支持百万级并发，但是此项目并没有进行此方面的测试，还请知晓 ！
 
 ![logo](build/icons/icon.png)
-### 服务端代码在此
->   1. https://gitee.com/lele-666/V-IM-Server
->   2. 测试账号： wangwu/123456  或者可以点注册，自行注册账号。
+
 
 ### 截图
 
