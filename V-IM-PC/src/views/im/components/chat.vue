@@ -189,7 +189,6 @@
 </template>
 
 <script>
-import Button from "iview/src/components/button/button";
 import conf from "../conf";
 import Faces from "./faces.vue";
 import RequestUtils from "../../../utils/RequestUtils";
@@ -204,8 +203,7 @@ const {
 
 export default {
   components: {
-    Faces,
-    Button
+    Faces
   },
   name: "userChat",
   computed: {
