@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.v.im.user.mapper.ImUserFriendMapper">
+    <resultMap id="groupUserMap" type="com.v.im.user.entity.ImGroup">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="userList" ofType="com.v.im.user.entity.ImUser">
+            <result column="u_id" property="id"/>
+            <result column="u_name" property="name"/>
+            <result column="u_avatar" property="avatar"/>
+            <result column="u_sign" property="sign"/>
+            <result column="u_mobile" property="mobile"/>
+            <result column="u_email" property="email"/>
+        </collection>
+    </resultMap>
+    <select id="getUserFriends" resultMap="groupUserMap" parameterType="string">
+        SELECT
+            g.id AS id,
+            g.name AS name,
+            u.id AS u_id,
+            u. NAME AS u_name,
+            u.sign AS u_sign,
+            u.avatar AS u_avatar,
+            u.mobile AS u_mobile,
+            u.email AS u_email
+        FROM
+            (
+                SELECT
+                    friend_id AS user_id,
+                    user_group_id AS group_id
+                FROM
+                    im_user_friend
+                WHERE
+                    user_id = #{userId}
+                UNION ALL
+                SELECT
+                    user_id AS user_id,
+                    friend_group_id AS group_id
+                FROM
+                    im_user_friend
+                WHERE
+                    friend_id = #{userId}
+            ) ug
+                JOIN im_user u ON u.id = ug.user_id
+                JOIN im_group g ON g.id = ug.group_id
+    </select>
+</mapper>

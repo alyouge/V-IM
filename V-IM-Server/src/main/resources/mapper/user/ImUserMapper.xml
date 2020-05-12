@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.v.im.user.mapper.ImUserMapper">
+    <resultMap id="groupUserMap" type="com.v.im.user.entity.ImGroup">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="userList" ofType="com.v.im.user.entity.ImUser">
+            <result column="u_id" property="id"/>
+            <result column="u_name" property="name"/>
+            <result column="u_avatar" property="avatar"/>
+            <result column="u_sign" property="sign"/>
+            <result column="u_mobile" property="mobile"/>
+            <result column="u_email" property="email"/>
+        </collection>
+    </resultMap>
+    <select id="getGroupUsers" resultMap="groupUserMap">
+        SELECT
+            g.id     AS id,
+            g.name   AS name,
+            u.id     AS u_id,
+            u.name   AS u_name,
+            u.sign   AS u_sign,
+            u.avatar AS u_avatar,
+            u.mobile AS u_mobile,
+            u.email  AS u_email
+        FROM
+            im_group g
+            LEFT JOIN im_group_user gu ON g.id = gu.group_id
+            LEFT JOIN im_user u ON u.id = gu.user_id
+        WHERE
+            g.user_id = #{userId}
+    </select>
+    <select id="getUserGroups" parameterType="string" resultType="com.v.im.user.entity.ImChatGroup">
+        SELECT
+            id,
+            name,
+            avatar
+        FROM im_chat_group
+        WHERE id IN (SELECT cg.chat_group_id
+                     FROM im_chat_group_user cg
+                     WHERE cg.user_id = #{userId})
+    </select>
+    <select id="getChatUserList" parameterType="string" resultType="com.v.im.user.entity.ImUser">
+       SELECT
+            id,
+            name,
+            avatar,
+            sign
+        FROM im_user
+        WHERE id IN (SELECT cg.user_id
+                     FROM im_chat_group_user cg
+                     WHERE cg.chat_group_id = #{chatId})
+    </select>
+</mapper>
