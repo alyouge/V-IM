@@ -99,6 +99,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                     .and()
                     .rememberMe()
                     .and()
+                    //如果你只是创建一个非浏览器客户端使用的服务,你可能会想要禁用CSRF保护
                     .csrf()
                     .disable();
         }

@@ -1,5 +1,7 @@
 package com.v.im.common.utils;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  *  封装的信息类型 UTILS
  *
@@ -36,4 +38,10 @@ public class ChatUtils {
      * 消息
      */
     public static final String MSG_MESSAGE = "2";
+
+
+    public static String getHost(HttpServletRequest request) {
+        StringBuffer url = request.getRequestURL();
+        return url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
+    }
 }

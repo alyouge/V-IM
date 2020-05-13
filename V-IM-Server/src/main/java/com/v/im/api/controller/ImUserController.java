@@ -14,6 +14,8 @@ import com.v.im.user.entity.ImUser;
 import com.v.im.user.service.IImUserFriendService;
 import com.v.im.user.service.IImUserService;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,12 +25,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.tio.core.ChannelContext;
 import org.tio.core.Tio;
 import org.tio.server.ServerGroupContext;
-import org.tio.websocket.common.WsPacket;
 import org.tio.websocket.common.WsResponse;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +42,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/user")
 public class ImUserController {
+
+    private final Logger logger = LoggerFactory.getLogger(ImUserController.class);
 
     @Resource
     private StartTioRunner startTioRunner;
@@ -66,15 +68,15 @@ public class ImUserController {
      */
     @RequestMapping("init")
     public Map<String, Object> list(HttpServletRequest request) {
+        logger.debug("init");
         Map<String, Object> objectMap = new HashMap<>();
-
         //获取好友信息
         String username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         ImUser user = imUserService.getByLoginName(username);
         objectMap.put("friends", imUserFriendService.getUserFriends(user.getId()));
 
         //获取本人信息
-        String host = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+        String host = ChatUtils.getHost(request);
         QueryWrapper<ImUser> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("login_name", username);
         user.setAvatar(host + user.getAvatar());
@@ -101,15 +103,15 @@ public class ImUserController {
     /**
      * 发送信息给用户
      * 注意：目前仅支持发送给在线用户
-     * @param userId  接收方id
-     * @param  msg 消息内容
+     *
+     * @param userId 接收方id
+     * @param msg    消息内容
      */
     @PostMapping("sendMsg")
-    public void sendMsg(String userId, String msg,HttpServletRequest request) throws Exception {
-        StringBuffer url = request.getRequestURL();
-        String tempContextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
+    public void sendMsg(String userId, String msg, HttpServletRequest request) throws Exception {
+        String host = ChatUtils.getHost(request);
         ServerGroupContext serverGroupContext = startTioRunner.getAppStarter().getWsServerStarter().getServerGroupContext();
-        ChannelContext cc = WsOnlineContext.getChannelContextByUser(userId);
+
         SendInfo sendInfo = new SendInfo();
         sendInfo.setCode(ChatUtils.MSG_MESSAGE);
         Message message = new Message();
@@ -119,18 +121,21 @@ public class ImUserController {
         message.setMine(false);
         message.setTimestamp(System.currentTimeMillis());
         message.setType(ChatUtils.FRIEND);
-        message.setAvatar(tempContextUrl + "/img/icon.png");
+        message.setAvatar(host + "/img/icon.png");
         message.setUsername("系统消息");
         sendInfo.setMessage(message);
-        if(cc!=null && !cc.isClosed){
+
+        ChannelContext cc = WsOnlineContext.getChannelContextByUser(userId);
+        if (cc != null && !cc.isClosed) {
             WsResponse wsResponse = WsResponse.fromText(new ObjectMapper().writeValueAsString(sendInfo), TioServerConfig.CHARSET);
             Tio.sendToUser(serverGroupContext, userId, wsResponse);
-        }else {
-            saveMessage(message, ChatUtils.UNREAD,userId);
+        } else {
+            saveMessage(message, ChatUtils.UNREAD, userId);
         }
     }
 
-    private void saveMessage(Message message, String readStatus,String userId) {
+
+    private void saveMessage(Message message, String readStatus, String userId) {
         ImMessage imMessage = new ImMessage();
         imMessage.setToId(userId);
         imMessage.setFromId(message.getFromid());

@@ -2,7 +2,7 @@
     <!-- 指定一个文件目录，当EHCache把数据写到硬盘上时，将把数据写到这个文件目录下 -->
     <diskStore path="java.io.tmpdir"/>
     <!-- 设定缓存的默认数据过期策略 -->
-    <cache name="xixi-im" maxElementsInMemory="10000"/>
+    <cache name="v-im" maxElementsInMemory="10000"/>
 
     <defaultCache
             maxElementsInMemory="10000"
