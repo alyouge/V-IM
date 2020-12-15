@@ -4,7 +4,7 @@ package com.v.im.common.exception;
  * @author zkp
  * @since 2020
  */
-public class StkException extends RuntimeException{
+public class VimException extends RuntimeException{
 
     private static final long serialVersionUID = 1L;
 
@@ -17,34 +17,34 @@ public class StkException extends RuntimeException{
      */
     protected String errorMsg;
 
-    public StkException() {
+    public VimException() {
         super();
     }
 
-    public StkException(BaseErrorInfoInterface errorInfoInterface) {
+    public VimException(BaseErrorInfoInterface errorInfoInterface) {
         super(errorInfoInterface.getResultCode());
         this.errorCode = errorInfoInterface.getResultCode();
         this.errorMsg = errorInfoInterface.getResultMsg();
     }
 
-    public StkException(BaseErrorInfoInterface errorInfoInterface, Throwable cause) {
+    public VimException(BaseErrorInfoInterface errorInfoInterface, Throwable cause) {
         super(errorInfoInterface.getResultCode(), cause);
         this.errorCode = errorInfoInterface.getResultCode();
         this.errorMsg = errorInfoInterface.getResultMsg();
     }
 
-    public StkException(String errorMsg) {
+    public VimException(String errorMsg) {
         super(errorMsg);
         this.errorMsg = errorMsg;
     }
 
-    public StkException(String errorCode, String errorMsg) {
+    public VimException(String errorCode, String errorMsg) {
         super(errorCode);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;
     }
 
-    public StkException(String errorCode, String errorMsg, Throwable cause) {
+    public VimException(String errorCode, String errorMsg, Throwable cause) {
         super(errorCode, cause);
         this.errorCode = errorCode;
         this.errorMsg = errorMsg;

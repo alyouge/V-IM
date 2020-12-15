@@ -13,16 +13,16 @@ public class ChatUtils {
     /**
      * 单聊
      */
-    public static final String FRIEND = "0";
+    public static final String MESSAGE_TYPE_FRIEND = "0";
     /**
      * 已读
      */
-    public static final String READED = "0";
+    public static final String READ_TYPE_READ = "0";
 
     /**
      * 未读
      */
-    public static final String UNREAD = "1";
+    public static final String READ_TYPE_UNREAD = "1";
 
     /**
      * 心跳

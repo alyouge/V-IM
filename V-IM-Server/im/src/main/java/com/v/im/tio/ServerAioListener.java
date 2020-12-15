@@ -51,7 +51,7 @@ public class ServerAioListener extends WsServerAioListener {
         WsSessionContext wsSessionContext = (WsSessionContext) channelContext.getAttribute();
         log.debug("channelId:", channelContext.getId());
         if (wsSessionContext.isHandshaked()) {
-            int count = Tio.getAllChannelContexts(channelContext.groupContext).getObj().size();
+            int count = Tio.getAll(channelContext.tioConfig).getObj().size();
             log.info("在线用户数量：" + count);
         }
     }

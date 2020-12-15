@@ -36,7 +36,7 @@ public class ImMessageServiceImpl extends ServiceImpl<ImMessageMapper, ImMessage
         queryWrapper.eq("read_status", "1");
         List<ImMessage> messageList = baseMapper.selectList(queryWrapper);
         for (ImMessage message : messageList) {
-            message.setReadStatus(ChatUtils.READED);
+            message.setReadStatus(ChatUtils.READ_TYPE_READ);
             this.updateById(message);
         }
         return messageList;

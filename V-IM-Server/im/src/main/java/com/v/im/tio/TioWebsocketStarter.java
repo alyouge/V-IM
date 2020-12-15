@@ -1,6 +1,6 @@
 package com.v.im.tio;
 
-import org.tio.server.ServerGroupContext;
+import org.tio.server.ServerTioConfig;
 import org.tio.websocket.server.WsServerStarter;
 
 /**
@@ -12,7 +12,7 @@ import org.tio.websocket.server.WsServerStarter;
 public class TioWebsocketStarter {
 
     private WsServerStarter wsServerStarter;
-    private ServerGroupContext serverGroupContext;
+    private ServerTioConfig serverGroupContext;
 
 
     /**
@@ -21,7 +21,7 @@ public class TioWebsocketStarter {
     public TioWebsocketStarter(int port, TioWsMsgHandler wsMsgHandler) throws Exception {
         wsServerStarter = new WsServerStarter(port, wsMsgHandler);
 
-        serverGroupContext = wsServerStarter.getServerGroupContext();
+        serverGroupContext = wsServerStarter.getServerTioConfig();
         serverGroupContext.setName(TioServerConfig.PROTOCOL_NAME);
         serverGroupContext.setServerAioListener(ServerAioListener.me);
 

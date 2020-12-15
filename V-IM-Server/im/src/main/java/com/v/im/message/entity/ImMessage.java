@@ -36,12 +36,18 @@ public class ImMessage implements Serializable {
      */
     private String fromId;
 
+    /**
+     * 发送时间
+     */
     private Long sendTime;
 
+    /**
+     * 发送内容
+     */
     private String content;
 
     /**
-     * 类型 0单聊 1 群聊
+     * 消息类型 0单聊 1 群聊
      */
     private String type;
 

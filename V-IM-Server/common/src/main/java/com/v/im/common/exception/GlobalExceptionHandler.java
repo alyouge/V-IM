@@ -21,11 +21,11 @@ public class GlobalExceptionHandler {
      * @param e ex
      * @return 错误信息
      */
-    @ExceptionHandler(value = StkException.class)
+    @ExceptionHandler(value = VimException.class)
     @ResponseBody
-    public ResultBody<String> bizExceptionHandler(StkException e){
+    public ResultBody<String> bizExceptionHandler(VimException e){
         logger.error("发生业务异常！原因是：{}",e.getErrorMsg());
-        return new ResultBody<String>().error(e.getErrorCode(),e.getErrorMsg());
+        return new ResultBody<>(e.getErrorCode(), e.getErrorMsg());
     }
 
     /**
@@ -36,8 +36,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value =NullPointerException.class)
     @ResponseBody
     public ResultBody<String> exceptionHandler(NullPointerException e){
-        logger.error("发生空指针异常！原因是:",e);
-        return new ResultBody<String>().error(ResultCodeEnum.BODY_NOT_MATCH);
+        logger.error("发生空指针异常！原因是:",e.getMessage());
+        return new ResultBody<>(ResultCodeEnum.BODY_NOT_MATCH);
     }
 
 
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value =Exception.class)
     @ResponseBody
     public ResultBody<String> exceptionHandler(Exception e){
-        logger.error("未知异常！原因是:",e);
-        return new ResultBody<String>().error(ResultCodeEnum.INTERNAL_SERVER_ERROR);
+        logger.error("未知异常！原因是:",e.getMessage());
+        return new ResultBody<>(ResultCodeEnum.INTERNAL_SERVER_ERROR);
     }
 }

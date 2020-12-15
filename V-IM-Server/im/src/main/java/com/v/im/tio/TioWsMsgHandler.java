@@ -139,20 +139,20 @@ public class TioWsMsgHandler implements IWsMsgHandler {
                 message.setMine(false);
                 WsResponse wsResponse = WsResponse.fromText(objectMapper.writeValueAsString(sendInfo), TioServerConfig.CHARSET);
                 //单聊
-                if (ChatUtils.FRIEND.equals(message.getType())) {
-                    SetWithLock<ChannelContext> channelContextSetWithLock = Tio.getChannelContextsByUserid(channelContext.groupContext, message.getId());
+                if (ChatUtils.MESSAGE_TYPE_FRIEND.equals(message.getType())) {
+                    SetWithLock<ChannelContext> channelContextSetWithLock = Tio.getByUserid(channelContext.tioConfig, message.getId());
                     //用户没有登录，存储到离线文件
                     if (channelContextSetWithLock == null || channelContextSetWithLock.size() == 0) {
-                        saveMessage(message, ChatUtils.UNREAD);
+                        saveMessage(message, ChatUtils.READ_TYPE_UNREAD);
                     } else {
-                        Tio.sendToUser(channelContext.groupContext, message.getId(), wsResponse);
+                        Tio.sendToUser(channelContext.tioConfig, message.getId(), wsResponse);
                         //入库操作
-                        saveMessage(message, ChatUtils.READED);
+                        saveMessage(message, ChatUtils.READ_TYPE_READ);
                     }
                 } else {
-                    Tio.sendToGroup(channelContext.groupContext, message.getId(), wsResponse);
+                    Tio.sendToGroup(channelContext.tioConfig, message.getId(), wsResponse);
                     //入库操作
-                    saveMessage(message, ChatUtils.READED);
+                    saveMessage(message, ChatUtils.READ_TYPE_READ);
                 }
             }
             //准备就绪，需要发送离线消息
@@ -192,7 +192,7 @@ public class TioWsMsgHandler implements IWsMsgHandler {
             sendInfo1.setCode(ChatUtils.MSG_MESSAGE);
             sendInfo1.setMessage(message);
             WsResponse wsResponse = WsResponse.fromText(objectMapper.writeValueAsString(sendInfo1), TioServerConfig.CHARSET);
-            Tio.sendToUser(channelContext.groupContext, message.getId(), wsResponse);
+            Tio.sendToUser(channelContext.tioConfig, message.getId(), wsResponse);
         }
     }
 

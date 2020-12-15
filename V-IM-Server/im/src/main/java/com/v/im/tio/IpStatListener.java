@@ -6,7 +6,7 @@ package com.v.im.tio;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.tio.core.ChannelContext;
-import org.tio.core.GroupContext;
+import org.tio.core.TioConfig;
 import org.tio.core.intf.Packet;
 import org.tio.core.stat.IpStat;
 import org.tio.utils.json.Json;
@@ -30,7 +30,7 @@ public class IpStatListener implements org.tio.core.stat.IpStatListener {
     }
 
     @Override
-    public void onExpired(GroupContext groupContext, IpStat ipStat) {
+    public void onExpired(TioConfig tioConfig, IpStat ipStat) {
         if (log.isInfoEnabled()) {
             log.debug("可以把统计数据入库\r\n{}", Json.toFormatedJson(ipStat));
         }
