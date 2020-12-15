@@ -20,7 +20,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOriginPatterns("*")
                 .allowCredentials(true)
                 .allowedMethods("GET", "POST", "DELETE", "PUT", "OPTIONS")
                 //跨域第一次会发送两个请求，这个配置在此时间内是只发送一次

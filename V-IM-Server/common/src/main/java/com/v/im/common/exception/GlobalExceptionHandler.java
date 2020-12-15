@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value =NullPointerException.class)
     @ResponseBody
     public ResultBody<String> exceptionHandler(NullPointerException e){
-        logger.error("发生空指针异常！原因是:",e.getMessage());
+        logger.error("发生空指针异常！原因是:",e);
         return new ResultBody<>(ResultCodeEnum.BODY_NOT_MATCH);
     }
 
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value =Exception.class)
     @ResponseBody
     public ResultBody<String> exceptionHandler(Exception e){
-        logger.error("未知异常！原因是:",e.getMessage());
+        logger.error("未知异常！原因是:",e);
         return new ResultBody<>(ResultCodeEnum.INTERNAL_SERVER_ERROR);
     }
 }

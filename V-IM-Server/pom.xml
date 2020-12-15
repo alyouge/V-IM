@@ -60,11 +60,13 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.t-io/tio-websocket-server -->
         <dependency>
             <groupId>org.t-io</groupId>
             <artifactId>tio-websocket-server</artifactId>
-            <version>3.5.1.v20190826-RELEASE</version>
+            <version>3.7.0.v20201010-RELEASE</version>
         </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
         <dependency>
             <groupId>com.google.protobuf</groupId>
