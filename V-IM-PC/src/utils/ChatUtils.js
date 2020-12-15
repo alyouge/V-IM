@@ -310,6 +310,7 @@ export const ChatListUtils = {
     if (!str) {
       return [];
     }
+    console.log('getChatList',str)
     return JSON.parse(str);
   },
   //删除聊天会话框
