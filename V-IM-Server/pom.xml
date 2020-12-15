@@ -7,7 +7,12 @@
     <groupId>com.v.im</groupId>
     <artifactId>V-IM-Server</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <modules>
+        <module>common</module>
+        <module>sys</module>
+        <module>im</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <name>v-im-server</name>
     <description>V-IM 服务端</description>
