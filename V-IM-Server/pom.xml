@@ -14,7 +14,7 @@
     </modules>
     <packaging>pom</packaging>
 
-    <name>v-im-server</name>
+    <name>V-IM-server</name>
     <description>V-IM 服务端</description>
 
     <parent>
