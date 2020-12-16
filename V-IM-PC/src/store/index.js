@@ -204,7 +204,8 @@ export default new Vuex.Store({
           1,
           message.content,
           //这里有问题
-          '?','?',
+          "?",
+          "?",
           MessageTargetType.FRIEND
         );
       } else if (
@@ -218,7 +219,7 @@ export default new Vuex.Store({
           conf.getHostUrl() + groupChat.avatar,
           1,
           message.content,
-            //这里有问题
+          //这里有问题
           state.user.mobile,
           state.user.email,
           MessageTargetType.CHAT_GROUP

@@ -121,18 +121,7 @@
         <img :src="chat.avatar" class="img" />
       </p>
       <div v-if="chat.type === '0'">
-        <p class="user-model-item">
-          <label>姓名：</label>
-          <span>{{ chat.name }}</span>
-        </p>
-        <p class="user-model-item">
-          <label>手机：</label>
-          <span>{{ chat.mobile }}</span>
-        </p>
-        <p class="user-model-item">
-          <label>邮箱：</label>
-          <span>{{ chat.email }}</span>
-        </p>
+        <UserModal :userId="chat.id"></UserModal>
       </div>
       <div v-if="chat.type === '1'">
         <p class="user-model-item">
@@ -191,6 +180,7 @@
 <script>
 import conf from "../conf";
 import Faces from "./faces.vue";
+import UserModal from "./userModal.vue";
 import RequestUtils from "../../../utils/RequestUtils";
 import StoreUtils from "../../../utils/StoreUtils";
 import { MessageTargetType } from "../../../utils/ChatUtils";
@@ -203,7 +193,8 @@ const {
 
 export default {
   components: {
-    Faces
+    Faces,
+    UserModal
   },
   name: "userChat",
   computed: {
@@ -464,6 +455,7 @@ export default {
     this.$nextTick(() => {
       imageLoad("message-box");
     });
+    console.log('this.chat',this.chat)
   }
 };
 </script>

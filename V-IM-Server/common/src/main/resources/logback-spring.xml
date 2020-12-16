@@ -172,7 +172,7 @@
 
     <!--开发环境:打印控制台-->
     <springProfile name="dev">
-        <logger name="com.stk.study" level="debug"/>
+        <logger name="com.v.im" level="debug"/>
     </springProfile>
 
     <root level="info">

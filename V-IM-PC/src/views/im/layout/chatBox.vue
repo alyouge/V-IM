@@ -119,7 +119,7 @@ export default {
   },
   mounted: function() {
     RequestUtils.getInstance().webSocketOperation(this);
-    console.log(this.chatList)
+    console.log(this.chatList);
   }
 };
 </script>
