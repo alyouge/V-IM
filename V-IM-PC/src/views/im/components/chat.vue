@@ -455,7 +455,7 @@ export default {
     this.$nextTick(() => {
       imageLoad("message-box");
     });
-    console.log('this.chat',this.chat)
+    console.log("this.chat", this.chat);
   }
 };
 </script>

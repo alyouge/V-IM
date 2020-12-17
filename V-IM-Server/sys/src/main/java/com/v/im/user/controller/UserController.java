@@ -81,7 +81,6 @@ public class UserController {
      * @return ImUser
      */
     @RequestMapping("get")
-    @Cacheable(value = "sys:user:get", key = "#id")
     public ImUser get(String id) {
         return imUserService.getById(id);
     }

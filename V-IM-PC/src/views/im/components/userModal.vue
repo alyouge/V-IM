@@ -1,20 +1,20 @@
 <template>
-   <div>
-     <div>
-       <p class="user-model-item">
-         <label>姓名：</label>
-         <span>{{ user.name }}</span>
-       </p>
-       <p class="user-model-item">
-         <label>手机：</label>
-         <span>{{ user.mobile }}</span>
-       </p>
-       <p class="user-model-item">
-         <label>邮箱：</label>
-         <span>{{ user.email }}</span>
-       </p>
-     </div>
-   </div>
+  <div>
+    <div>
+      <p class="user-model-item">
+        <label>姓名：</label>
+        <span>{{ user.name }}</span>
+      </p>
+      <p class="user-model-item">
+        <label>手机：</label>
+        <span>{{ user.mobile }}</span>
+      </p>
+      <p class="user-model-item">
+        <label>邮箱：</label>
+        <span>{{ user.email }}</span>
+      </p>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -29,32 +29,33 @@ export default {
       user: {}
     };
   },
-  watch:{
-    userId(id){
-      this.getUser(id)
+  watch: {
+    userId(id) {
+      this.getUser(id);
     }
   },
   mounted() {
-    this.getUser(this.userId)
+    this.getUser(this.userId);
   },
-  methods:{
-    getUser(id){
+  methods: {
+    getUser(id) {
       let self = this;
       let param = new FormData();
-      param.set('id',id)
+      param.set("id", id);
 
-      RequestUtils.getInstance().request(conf.getHostUrl()+'/api/user/get',param)
-          .then(response => {
-            return response.json()
-          })
-          .then(json => {
-            console.log(json)
-            self.user = json;
-          })
-          .catch(err => {
-            self.user = {};
-            console.error(err)
-          })
+      RequestUtils.getInstance()
+        .request(conf.getHostUrl() + "/api/user/get", param)
+        .then(response => {
+          return response.json();
+        })
+        .then(json => {
+          console.log(json);
+          self.user = json;
+        })
+        .catch(err => {
+          self.user = {};
+          console.error(err);
+        });
     }
   }
 };
