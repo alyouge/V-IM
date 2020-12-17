@@ -1,25 +1,25 @@
 ### 需要购买的阿里云的同学 请点击支持 [阿里云优惠券2000元](https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)
 ### 务必记得点赞哦
 ### QQ群：617853658 验证请说明 V-IM （并且附上点赞的 gitee 用户名，不点赞不让进哦）
+### Create by  [webstorm and intellij IDEA](https://www.jetbrains.com/?from=V-IM) 
 
 
 ### 结构
 >   1. V-IM-PC 是客户端
 >   2. V-IM-Server 是服务端代码
+>   3. doc 下面有数据库。
+>   4. V-IM-PC/src/views/im/conf/index.js 里面配置端口等信息。
 
-### tips
+### 常见问题
 >   1. 如果出现 Parsing error: x-invalid-end-tag  vue/no-parsing-error 类似的错误，可用用 webstorm 右键src 目录 Fix eslint problems，
->
-### 0.6.0 发布
->   1. 放弃 electron-vue 拥抱 vue-cli-plugin-electron-builder，更加容易安装依赖，记得用 yarn。
->   2. 陆续更新文档：https://my.oschina.net/alyouge/blog/3224771
->   3. electron 版本为 8
+>   2. 安装不成功，请先执行 npm install node-sass。如果还是错误请多重试下！
+
 #### 文档
 >   1. 打包好的文件   [下载](https://gitee.com/lele-666/V-IM/raw/master/v-im%20Setup%200.5.3.exe)。
 >   2. 打包好的web文件，在dist/web 目标下（运行的时候需要有容器，例如nginx tomcat之类的）。
 >   3. 消息推送接口，调用方式：http://localhost:8080/api/user/sendMsg?access_token=你的token&userId=接收人&msg=我是消息
 >   4. 获取token：http://localhost:8080/oauth/token?client_id=v-client&client_secret=v-client-ppp&grant_type=password&scope=select&username=wangwu&password=123456
->   5. 测试地址：http://101.200.151.183   wangwu 123456 。
+>   5. 测试地址：http://101.200.151.183   wangwu/123456   zhangsan/123456。
 >   6. 安装依赖命令：yarn 。
 >   7. 开发环境命令：npm run serve 和 npm run electron:serve。
 >   8. 打包安装文件：npm run electron:build，打包完成的文件在/dist_electron 下。
