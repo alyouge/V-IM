@@ -14,10 +14,10 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication
 @EnableCaching
 @MapperScan("com.v.im")
-public class VServerApplication {
+public class ImApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(VServerApplication.class, args);
+        SpringApplication.run(ImApplication.class, args);
     }
 
 }

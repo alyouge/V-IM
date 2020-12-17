@@ -1,7 +1,7 @@
 export default {
   app_name: "V-IM",
   http_protocol: "http",
-  http_port: 8999,
+  http_port: 8080,
   ws_port: 9326,
   init: "/api/user/init",
   his_url: "/api/message/list",
