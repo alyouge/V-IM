@@ -14,7 +14,6 @@
          <span>{{ user.email }}</span>
        </p>
      </div>
-
    </div>
 </template>
 
@@ -30,18 +29,33 @@ export default {
       user: {}
     };
   },
+  watch:{
+    userId(id){
+      this.getUser(id)
+    }
+  },
   mounted() {
-    console.log(this.userId);
-    let param = new FormData();
-    param.set('id',this.userId)
-    RequestUtils.getInstance().request(conf.getHostUrl()+'/api/user/get',param)
-        .then(response => {
-          return response.json();
-        })
-        .then(json => {
-          console.log(json)
-        })
+    this.getUser(this.userId)
+  },
+  methods:{
+    getUser(id){
+      let self = this;
+      let param = new FormData();
+      param.set('id',id)
 
+      RequestUtils.getInstance().request(conf.getHostUrl()+'/api/user/get',param)
+          .then(response => {
+            return response.json()
+          })
+          .then(json => {
+            console.log(json)
+            self.user = json;
+          })
+          .catch(err => {
+            self.user = {};
+            console.error(err)
+          })
+    }
   }
 };
 </script>

@@ -114,7 +114,7 @@
       class="user-model"
       v-model="modal"
       footer-hide
-      :title="chat.name"
+      title="信息"
       width="300"
     >
       <p class="user-model-img">
