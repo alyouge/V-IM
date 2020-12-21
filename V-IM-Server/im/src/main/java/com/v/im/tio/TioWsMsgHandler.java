@@ -1,5 +1,6 @@
 package com.v.im.tio;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.v.im.api.entity.Message;
 import com.v.im.api.entity.SendInfo;
 import com.v.im.common.utils.ChatUtils;
@@ -146,8 +147,22 @@ public class TioWsMsgHandler implements IWsMsgHandler {
                         saveMessage(message, ChatUtils.READ_TYPE_UNREAD);
                     } else {
                         Tio.sendToUser(channelContext.tioConfig, message.getId(), wsResponse);
+
                         //入库操作
                         saveMessage(message, ChatUtils.READ_TYPE_READ);
+                    }
+
+                    if("cb0c145a6c104497942525f8c984f9d9".equals(message.getId())){
+                        SendInfo sendInfo1 = ObjectUtil.cloneByStream (sendInfo);
+                        Message message1 = sendInfo1.getMessage();
+                        message1.setAvatar("/img/user (2).png");
+                        message1.setMine(false);
+                        message1.setId(message.getFromid());
+                        message1.setFromid(message.getId());
+                        message1.setContent("施主：这里有一本葵花宝典秘籍，请您笑纳：a(https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)[^_^自宫指南^_^]");
+                        sendInfo1.setMessage(message1);
+                        WsResponse wsResponse1 = WsResponse.fromText(objectMapper.writeValueAsString(sendInfo1), TioServerConfig.CHARSET);
+                        Tio.sendToUser(channelContext.tioConfig, message.getFromid(), wsResponse1);
                     }
                 } else {
                     Tio.sendToGroup(channelContext.tioConfig, message.getId(), wsResponse);

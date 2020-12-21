@@ -2,6 +2,8 @@ package com.v.im.api.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * websocket 通讯的json
  *
@@ -9,7 +11,7 @@ import lombok.Data;
  * @since 2018-10-07
  */
 @Data
-public class Message {
+public class Message implements Serializable {
 
     /**
      * 消息来源用户名

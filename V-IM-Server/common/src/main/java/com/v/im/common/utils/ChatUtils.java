@@ -39,6 +39,11 @@ public class ChatUtils {
      */
     public static final String MSG_MESSAGE = "2";
 
+    /**
+     * 消息
+     */
+    public static final String CARD_MESSAGE = "3";
+
 
     public static String getHost(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();

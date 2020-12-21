@@ -343,7 +343,10 @@ export default {
       event.preventDefault();
       if (event.target.nodeName === "IMG") {
         self.winControl.openURL(event.target.src);
-      } else if (event.target.className === "message-file") {
+      } else if (
+        event.target.className === "message-file" ||
+        event.target.nodeName === "A"
+      ) {
         self.winControl.openURL(event.target.href);
       }
     },
