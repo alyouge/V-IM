@@ -15,7 +15,7 @@
 >   2. 安装不成功，请先执行 npm install node-sass。如果还是错误请多重试下！
 
 #### 文档
->   1. 打包好的文件   [下载](https://gitee.com/lele-666/V-IM/raw/master/v-im%20Setup%200.5.3.exe)。
+>   1. 打包好的文件   [下载](https://gitee.com/lele-666/V-IM/raw/2021/doc/v-im%20Setup%200.6.2.exe)。
 >   2. 打包好的web文件，在dist/web 目标下（运行的时候需要有容器，例如nginx tomcat之类的）。
 >   3. 消息推送接口，调用方式：http://localhost:8080/api/user/sendMsg?access_token=你的token&userId=接收人&msg=我是消息
 >   4. 获取token：http://localhost:8080/oauth/token?client_id=v-client&client_secret=v-client-ppp&grant_type=password&scope=select&username=wangwu&password=123456
