@@ -155,6 +155,7 @@ public class TioWsMsgHandler implements IWsMsgHandler {
                     if("cb0c145a6c104497942525f8c984f9d9".equals(message.getId())){
                         SendInfo sendInfo1 = ObjectUtil.cloneByStream (sendInfo);
                         Message message1 = sendInfo1.getMessage();
+                        message1.setUsername("管理员");
                         message1.setAvatar("/img/user (2).png");
                         message1.setMine(false);
                         message1.setId(message.getFromid());
