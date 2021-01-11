@@ -17,12 +17,14 @@
             >
               <div class="im-chat-user">
                 <img :src="item.avatar" alt="头像" />
-                <cite v-if="item.mine"
-                  ><i>{{ item.timestamp }}</i
-                  >{{ item.username }}</cite
+                <cite v-if="item.mine">
+                  <i><Time :time="item.timestamp" /></i>
+                  {{ item.username }}</cite
                 >
-                <cite v-if="!item.mine"
-                  >{{ item.username }}<i>{{ item.timestamp }}</i></cite
+                <cite v-if="!item.mine">
+                  {{ item.username }}
+                  <i><Time :time="item.timestamp" /></i>
+                </cite
                 >
               </div>
               <div class="im-chat-text">
