@@ -422,7 +422,7 @@ export default {
       param.set("fromId", self.$store.state.user.id);
       param.set("pageNo", pageNo);
 
-      let requestApi = RequestUtils.getInstance();
+      let requestApi = RequestUtils;
       requestApi
         .request(conf.getHisUrl(), param)
 
@@ -464,7 +464,7 @@ export default {
       if (self.chat.type === "1") {
         let param = new FormData();
         param.set("chatId", self.chat.id);
-        RequestUtils.getInstance()
+        RequestUtils
           .request(conf.getChatUsersUrl(), param)
           .then(json => {
             self.userList = json;

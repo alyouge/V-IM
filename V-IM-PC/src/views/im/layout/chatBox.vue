@@ -118,7 +118,7 @@ export default {
     });
   },
   mounted: function() {
-    RequestUtils.getInstance().webSocketOperation(this);
+    RequestUtils.webSocketOperation(this);
     console.log(this.chatList);
   }
 };

@@ -309,4 +309,4 @@ class RequestUtils {
   }
 }
 
-export default RequestUtils;
+export default RequestUtils.getInstance();

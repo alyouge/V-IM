@@ -160,7 +160,7 @@ export default {
       param.set("scope", "select");
       param.set("username", self.username.trim());
       param.set("password", self.password.trim());
-      let requestApi = RequestUtils.getInstance();
+      let requestApi = RequestUtils;
       requestApi
         .login(self.username.trim(), self.password.trim(), self)
         .then(token => {
