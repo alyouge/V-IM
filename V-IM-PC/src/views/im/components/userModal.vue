@@ -45,9 +45,6 @@ export default {
 
       RequestUtils.getInstance()
         .request(conf.getHostUrl() + "/api/user/get", param)
-        .then(response => {
-          return response.json();
-        })
         .then(json => {
           console.log(json);
           self.user = json;

@@ -136,9 +136,7 @@ export default {
         },
         body: formData
       })
-        .then(response => {
-          return response.json();
-        })
+
         .then(json => {
           if (json.code) {
             self.$Message.error(json.message);
@@ -170,10 +168,9 @@ export default {
           // 获取当前登录的用户，存入store
           return requestApi.request(conf.getInitUrl(), new FormData());
         })
-        .then(response => {
-          return response.json();
-        })
+
         .then(json => {
+          console.log(json)
           //个人信息
           self.$store.commit("setUser", json.me);
           //好友
@@ -196,6 +193,7 @@ export default {
           });
         })
         .catch(function(error) {
+          console.error(error)
           self.showErr = true;
           if (ErrorType.NET_ERROR === error.toString()) {
             self.err = "服务通讯失败，请检查服务设置";

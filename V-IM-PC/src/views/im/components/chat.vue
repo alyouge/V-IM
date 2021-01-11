@@ -425,9 +425,7 @@ export default {
       let requestApi = RequestUtils.getInstance();
       requestApi
         .request(conf.getHisUrl(), param)
-        .then(response => {
-          return response.json();
-        })
+
         .then(json => {
           let list = json.messageList.map(function(element) {
             element.content = transform(element.content);
@@ -468,9 +466,6 @@ export default {
         param.set("chatId", self.chat.id);
         RequestUtils.getInstance()
           .request(conf.getChatUsersUrl(), param)
-          .then(response => {
-            return response.json();
-          })
           .then(json => {
             self.userList = json;
           });

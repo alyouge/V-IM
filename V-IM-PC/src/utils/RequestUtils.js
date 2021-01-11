@@ -52,10 +52,8 @@ class RequestUtils {
       .then(response => {
         return self.checkStatus(response, url, options);
       })
-      .then(json => {
-        return new Promise(resolve => {
-          resolve(json);
-        });
+      .then(response => {
+        return response.json();
       });
   }
 
