@@ -158,7 +158,7 @@ public class TioWsMsgHandler implements IWsMsgHandler {
                         message1.setAvatar("/img/user (2).png");
                         message1.setMine(false);
                         message1.setId(message.getFromid());
-                        message1.setFromid(message.getId());
+                        message1.setFromid("cb0c145a6c104497942525f8c984f9d9");
                         message1.setContent("施主：这里有一本葵花宝典秘籍，请您笑纳：a(https://chuangke.aliyun.com/invite?userCode=d4l0ykh3)[^_^自宫指南^_^]");
                         sendInfo1.setMessage(message1);
                         WsResponse wsResponse1 = WsResponse.fromText(objectMapper.writeValueAsString(sendInfo1), TioServerConfig.CHARSET);
