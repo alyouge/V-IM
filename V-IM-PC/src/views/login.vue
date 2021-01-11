@@ -153,13 +153,6 @@ export default {
       let self = this;
       localStorage.setItem("host", self.host);
 
-      let param = new FormData();
-      param.set("client_id", "v-client");
-      param.set("client_secret", "v-client-ppp");
-      param.set("grant_type", "password");
-      param.set("scope", "select");
-      param.set("username", self.username.trim());
-      param.set("password", self.password.trim());
       let requestApi = RequestUtils;
       requestApi
         .login(self.username.trim(), self.password.trim(), self)
