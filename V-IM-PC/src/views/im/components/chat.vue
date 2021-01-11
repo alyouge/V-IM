@@ -3,7 +3,7 @@
     <div class="im-chat-top" v-if="chat">
       <span>{{ chat.name }}</span>
       <a href="javascript:;" @click="modal = true" class="pull-right menu">
-        <Icon type="md-menu" />
+        <Icon type="md-menu"/>
       </a>
     </div>
     <div class="im-chat-main">
@@ -11,26 +11,29 @@
         <div class="im-chat-main-box messages" id="message-box">
           <ul>
             <li
-              v-for="(item, index) in messageList"
-              :key="index"
-              :class="{ 'im-chat-mine': item.mine }"
+                v-for="(item, index) in messageList"
+                :key="index"
+                :class="{ 'im-chat-mine': item.mine }"
             >
               <div class="im-chat-user">
-                <img :src="item.avatar" alt="头像" />
-                <cite v-if="item.mine">
-                  <i><Time :time="item.timestamp" /></i>
-                  {{ item.username }}</cite
-                >
-                <cite v-if="!item.mine">
-                  {{ item.username }}
-                  <i><Time :time="item.timestamp" /></i>
-                </cite
-                >
+                <img :src="item.avatar" alt="头像"/>
+                <div class="message-info" v-if="item.mine">
+                  <i>
+                    <Time :time="item.timestamp"/>
+                  </i>
+                  <span>{{ item.username }}</span>
+                </div>
+                <div class="message-info" v-if="!item.mine">
+                  <span>{{ item.username }}</span>
+                  <i>
+                    <Time :time="item.timestamp"/>
+                  </i>
+                </div>
               </div>
               <div class="im-chat-text">
                 <pre
-                  v-html="item.content"
-                  v-on:click="openImageProxy($event)"
+                    v-html="item.content"
+                    v-on:click="openImageProxy($event)"
                 ></pre>
               </div>
             </li>
@@ -40,55 +43,56 @@
           <div class="im-chat-tool">
             <Icon type="ios-happy-outline" @click="showFaceBox()"></Icon>
             <Upload
-              :action="action"
-              name="file"
-              :format="imgFormat"
-              :data="tokenImg"
-              :show-upload-list="false"
-              :headers="headers"
-              :max-size="5120"
-              :with-credentials="true"
-              :before-upload="beforeUpload"
-              :on-progress="handleStart"
-              :on-format-error="handleFormatError"
-              :on-exceeded-size="handleImgMaxSize"
-              :on-success="handleSuccess"
-              :on-error="handleError"
+                :action="action"
+                name="file"
+                :format="imgFormat"
+                :data="tokenImg"
+                :show-upload-list="false"
+                :headers="headers"
+                :max-size="5120"
+                :with-credentials="true"
+                :before-upload="beforeUpload"
+                :on-progress="handleStart"
+                :on-format-error="handleFormatError"
+                :on-exceeded-size="handleImgMaxSize"
+                :on-success="handleSuccess"
+                :on-error="handleError"
             >
               <Icon type="ios-image-outline"></Icon>
             </Upload>
             <Upload
-              :action="action"
-              name="file"
-              :format="fileFormat"
-              :data="tokenFile"
-              :show-upload-list="false"
-              :headers="headers"
-              :max-size="102400"
-              :with-credentials="true"
-              :before-upload="beforeUpload"
-              :on-progress="handleStart"
-              :on-format-error="handleFormatError"
-              :on-exceeded-size="handleFileMaxSize"
-              :on-success="handleSuccess"
-              :on-error="handleError"
+                :action="action"
+                name="file"
+                :format="fileFormat"
+                :data="tokenFile"
+                :show-upload-list="false"
+                :headers="headers"
+                :max-size="102400"
+                :with-credentials="true"
+                :before-upload="beforeUpload"
+                :on-progress="handleStart"
+                :on-format-error="handleFormatError"
+                :on-exceeded-size="handleFileMaxSize"
+                :on-success="handleSuccess"
+                :on-error="handleError"
             >
               <Icon type="ios-folder-open-outline"></Icon>
             </Upload>
             <Faces
-              v-show="showFace"
-              @click="showFace = true"
-              class="faces-box"
-              @insertFace="insertFace"
+                v-show="showFace"
+                @click="showFace = true"
+                class="faces-box"
+                @insertFace="insertFace"
             ></Faces>
             <Button class="history-message-btn" @click="getHistoryMessage()"
-              >聊天记录</Button
+            >聊天记录
+            </Button
             >
           </div>
           <textarea
-            v-model="messageContent"
-            class="textarea"
-            @keyup.enter="mineSend()"
+              v-model="messageContent"
+              class="textarea"
+              @keyup.enter="mineSend()"
           ></textarea>
           <div class="im-chat-send">
             <Button @click="mineSend()">发送</Button>
@@ -98,12 +102,12 @@
       <div v-if="chat.type === '1'" class="im-chat-users">
         <ul class="chat-user-list">
           <li
-            v-for="(item, index) in userList"
-            :key="index"
-            @click="showUser(item)"
+              v-for="(item, index) in userList"
+              :key="index"
+              @click="showUser(item)"
           >
             <span class="im-chat-avatar">
-              <img :src="[host + item.avatar]" alt="" />
+              <img :src="[host + item.avatar]" alt=""/>
             </span>
             {{ item.name }}
           </li>
@@ -111,15 +115,15 @@
       </div>
     </div>
     <Modal
-      closable
-      class="user-model"
-      v-model="modal"
-      footer-hide
-      title="信息"
-      width="300"
+        closable
+        class="user-model"
+        v-model="modal"
+        footer-hide
+        title="信息"
+        width="300"
     >
       <p class="user-model-img">
-        <img :src="chat.avatar" class="img" />
+        <img :src="chat.avatar" class="img"/>
       </p>
       <div v-if="chat.type === '0'">
         <UserModal :userId="chat.id"></UserModal>
@@ -140,7 +144,7 @@
         width="300"
     >
       <p class="user-model-img">
-        <img :src="[host + groupUser.avatar]" class="img" />
+        <img :src="[host + groupUser.avatar]" class="img"/>
       </p>
       <div>
         <UserModal :userId="groupUser.id"></UserModal>
@@ -150,34 +154,35 @@
       </div>
     </Modal>
     <Drawer
-      title="聊天记录"
-      :closable="true"
-      v-model="showHistory"
-      class="history-message"
-      width="60%"
+        title="聊天记录"
+        :closable="true"
+        v-model="showHistory"
+        class="history-message"
+        width="60%"
     >
       <div class="im-chat-main">
         <div class="messages" id="his-chat-message">
           <ul>
             <li
-              v-for="(item, index) in hisMessageList"
-              :key="index"
-              :class="{ 'im-chat-mine': item.mine }"
+                v-for="(item, index) in hisMessageList"
+                :key="index"
+                :class="{ 'im-chat-mine': item.mine }"
             >
               <div class="im-chat-user" id="historyMessageBox">
-                <img :src="[host + item.avatar]" />
-                <cite v-if="item.mine"
-                  ><i>{{ item.timestamp }}</i
-                  >{{ item.username }}</cite
-                >
-                <cite v-if="!item.mine"
-                  >{{ item.username }}<i>{{ item.timestamp }}</i></cite
-                >
+                <img :src="[host + item.avatar]"/>
+                <div class="message-info" v-if="item.mine">
+                  <i>{{ item.timestamp }}</i>
+                  <span>{{ item.username }}</span>
+                </div>
+                <div class="message-info" v-if="!item.mine">
+                  <span>{{ item.username }}</span>
+                  <i>{{ item.timestamp }}</i>
+                </div>
               </div>
               <div class="im-chat-text">
                 <pre
-                  v-html="item.content"
-                  v-on:click="openImageProxy($event)"
+                    v-html="item.content"
+                    v-on:click="openImageProxy($event)"
                 ></pre>
               </div>
             </li>
@@ -185,12 +190,12 @@
         </div>
       </div>
       <Page
-        :total="count"
-        size="small"
-        show-total
-        class="page"
-        :page-size="pageSize"
-        @on-change="getHistoryMessage"
+          :total="count"
+          size="small"
+          show-total
+          class="page"
+          :page-size="pageSize"
+          @on-change="getHistoryMessage"
       />
     </Drawer>
   </div>
@@ -202,7 +207,7 @@ import Faces from "./faces.vue";
 import UserModal from "./userModal.vue";
 import RequestUtils from "../../../utils/RequestUtils";
 import StoreUtils from "../../../utils/StoreUtils";
-import { MessageTargetType } from "../../../utils/ChatUtils";
+import {MessageTargetType} from "../../../utils/ChatUtils";
 
 const {
   imageLoad,
@@ -218,10 +223,10 @@ export default {
   name: "userChat",
   computed: {
     messageList: {
-      get: function() {
+      get: function () {
         return this.$store.state.messageList;
       },
-      set: function(messageList) {
+      set: function (messageList) {
         this.$store.commit("setMessageList", messageList);
       }
     }
@@ -280,10 +285,10 @@ export default {
       let self = this;
       if (user.id !== self.$store.state.user.id) {
         let chat = ChatListUtils.resetChatList(
-          self,
-          user,
-          conf.getHostUrl(),
-          MessageTargetType.FRIEND
+            self,
+            user,
+            conf.getHostUrl(),
+            MessageTargetType.FRIEND
         );
         self.$store.commit("setCurrentChat", JSON.parse(JSON.stringify(chat)));
       } else {
@@ -291,7 +296,7 @@ export default {
       }
       self.groupUserModel = false;
     },
-    showUser: function(user) {
+    showUser: function (user) {
       let self = this;
       self.groupUserModel = true;
       self.groupUser = user;
@@ -306,7 +311,7 @@ export default {
         type: "file"
       };
       return new Promise(resolve => {
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           resolve(true);
         });
       });
@@ -316,10 +321,10 @@ export default {
     openMessage(error) {
       this.$Message.error(error);
     },
-    showFaceBox: function() {
+    showFaceBox: function () {
       this.showFace = !this.showFace;
     },
-    insertFace: function(item) {
+    insertFace: function (item) {
       this.messageContent = this.messageContent + "face" + item;
       this.showFace = false;
     },
@@ -342,13 +347,13 @@ export default {
         let fileName = file.name;
         // 文件后缀
         let suffix = fileName.substring(
-          fileName.lastIndexOf(".") + 1,
-          fileName.length
+            fileName.lastIndexOf(".") + 1,
+            fileName.length
         );
         // 文件
         if (self.imgFormat.indexOf(suffix) === -1) {
           this.messageContent =
-            this.messageContent + "file(" + path + ")[" + fileName + "]";
+              this.messageContent + "file(" + path + ")[" + fileName + "]";
         }
         // 图片
         else {
@@ -359,19 +364,19 @@ export default {
         this.$Message.error("文件上传错误，请重试");
       }
     },
-    handleError: function() {
+    handleError: function () {
       this.$Loading.finish();
       this.$Message.error("上传错误！");
     },
     // 附件和图片点击展开
-    openImageProxy: function(event) {
+    openImageProxy: function (event) {
       let self = this;
       event.preventDefault();
       if (event.target.nodeName === "IMG") {
         self.winControl.openURL(event.target.src);
       } else if (
-        event.target.className === "message-file" ||
-        event.target.nodeName === "A"
+          event.target.className === "message-file" ||
+          event.target.nodeName === "A"
       ) {
         self.winControl.openURL(event.target.href);
       }
@@ -426,32 +431,32 @@ export default {
 
       let requestApi = RequestUtils;
       requestApi
-        .request(conf.getHisUrl(), param)
+          .request(conf.getHisUrl(), param)
 
-        .then(json => {
-          let list = json.messageList.map(function(element) {
-            element.content = transform(element.content);
-            return element;
+          .then(json => {
+            let list = json.messageList.map(function (element) {
+              element.content = transform(element.content);
+              return element;
+            });
+            let tempList = list.map(function (message) {
+              message.timestamp = self.formatDateTime(
+                  new Date(message.timestamp)
+              );
+              return message;
+            });
+            self.hisMessageList = tempList.reverse();
+            self.count = json.count;
+            self.pageSize = json.pageSize;
+            // 每次滚动到最底部
+            self.$nextTick(() => {
+              imageLoad("his-chat-message");
+            });
           });
-          let tempList = list.map(function(message) {
-            message.timestamp = self.formatDateTime(
-              new Date(message.timestamp)
-            );
-            return message;
-          });
-          self.hisMessageList = tempList.reverse();
-          self.count = json.count;
-          self.pageSize = json.pageSize;
-          // 每次滚动到最底部
-          self.$nextTick(() => {
-            imageLoad("his-chat-message");
-          });
-        });
     }
   },
   watch: {
     // 监听每次 user 的变化
-    chat: function() {
+    chat: function () {
       let self = this;
       self.messageList = [];
       // 从内存中取聊天信息
@@ -467,14 +472,14 @@ export default {
         let param = new FormData();
         param.set("chatId", self.chat.id);
         RequestUtils
-          .request(conf.getChatUsersUrl(), param)
-          .then(json => {
-            self.userList = json;
-          });
+            .request(conf.getChatUsersUrl(), param)
+            .then(json => {
+              self.userList = json;
+            });
       }
     }
   },
-  mounted: function() {
+  mounted: function () {
     // 每次滚动到最底部
     this.$nextTick(() => {
       imageLoad("message-box");
@@ -502,6 +507,7 @@ export default {
   font-size: 1.6rem;
   font-weight: bold;
   height: 40px;
+
   .menu {
     color: $color-default;
     display: inline-block;
@@ -562,9 +568,11 @@ export default {
     width: 180px;
     border-left: 1px solid #cccccc;
     overflow-y: scroll;
-    ::-webkit-scrollbar{
-      width:0;
+
+    ::-webkit-scrollbar {
+      width: 0;
     }
+
     .chat-user-list {
       list-style: none;
       margin: 0;
@@ -574,12 +582,14 @@ export default {
         cursor: pointer;
         padding: 5px 2px;
         position: relative;
-        &:hover{
+
+        &:hover {
           background-color: #eeeeee;
-          &:after{
+
+          &:after {
             content: '...';
             position: absolute;
-            right:10px;
+            right: 10px;
             font-weight: bold;
           }
         }
@@ -644,6 +654,7 @@ export default {
             width: 100%;
             white-space: pre-wrap;
             word-break: break-all;
+
             img {
               display: block;
             }
@@ -662,7 +673,7 @@ export default {
       left: 3px;
       right: auto;
 
-      cite {
+      .message-info {
         position: absolute;
         left: 60px;
         top: -2px;
@@ -765,6 +776,7 @@ export default {
     flex: 1;
     resize: none;
     background-color: $color-box-bg !important;
+
     &:focus {
       border: 0;
     }
@@ -816,7 +828,7 @@ export default {
   }
 }
 
-.model-footer{
+.model-footer {
   text-align: right;
   margin: 10px;
 }
