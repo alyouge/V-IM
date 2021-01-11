@@ -1,4 +1,4 @@
-package com.v.im.api.controller;
+package com.v.im.user.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.v.im.common.utils.ChatUtils;

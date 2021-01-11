@@ -136,13 +136,15 @@ export default {
         },
         body: formData
       })
-        .then(response => response.json())
+        .then(response => {
+          return response.json();
+        })
         .then(json => {
-          if ("0" === json.resultCode) {
+          if (json.code) {
+            self.$Message.error(json.message);
+          } else {
             self.$Message.success("注册成功");
             self.showRegister = false;
-          } else {
-            self.$Message.error(json.message);
           }
         })
         .catch(() => {

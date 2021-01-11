@@ -98,7 +98,6 @@
           <li
             v-for="(item, index) in userList"
             :key="index"
-            @dblclick="showChat(item)"
             @click="showUser(item)"
           >
             <span class="im-chat-avatar">
@@ -128,6 +127,24 @@
           <label>群名称：</label>
           <span>{{ chat.name }}</span>
         </p>
+      </div>
+    </Modal>
+    <Modal
+        closable
+        class="user-model"
+        v-model="groupUserModel"
+        footer-hide
+        title="信息"
+        width="300"
+    >
+      <p class="user-model-img">
+        <img :src="[host + groupUser.avatar]" class="img" />
+      </p>
+      <div>
+        <UserModal :userId="groupUser.id"></UserModal>
+      </div>
+      <div class="model-footer">
+        <Button @click="showChat(groupUser)">发送消息</Button>
       </div>
     </Modal>
     <Drawer
@@ -213,6 +230,8 @@ export default {
       count: 0,
       pageSize: 20,
       modal: false,
+      groupUserModel: false,
+      groupUser: {},
       showHistory: false,
       hisMessageList: [],
       // 保存各个聊天记录的map
@@ -268,8 +287,13 @@ export default {
       } else {
         self.$Message.warning("不能给自己说话哦");
       }
+      self.groupUserModel = false;
     },
-    showUser: function() {},
+    showUser: function(user) {
+      let self = this;
+      self.groupUserModel = true;
+      self.groupUser = user;
+    },
     beforeUpload() {
       this.tokenImg = {
         access_token: StoreUtils.getAccessToken(),
@@ -490,7 +514,7 @@ export default {
 
 .user-model {
   .user-model-img {
-    padding: 30px;
+    padding: 15px;
     text-align: center;
 
     img {
@@ -538,9 +562,44 @@ export default {
   }
 
   .im-chat-users {
-    flex: 1;
+    width: 180px;
     border-left: 1px solid #cccccc;
     overflow-y: scroll;
+    ::-webkit-scrollbar{
+      width:0;
+    }
+    .chat-user-list {
+      list-style: none;
+      margin: 0;
+
+      & > li {
+        margin-bottom: 1rem;
+        cursor: pointer;
+        padding: 5px 2px;
+        position: relative;
+        &:hover{
+          background-color: #eeeeee;
+          &:after{
+            content: '...';
+            position: absolute;
+            right:10px;
+            font-weight: bold;
+          }
+        }
+
+        & > .im-chat-avatar {
+          width: 3.2rem;
+          height: 3.2rem;
+          display: inline-block;
+          vertical-align: middle;
+
+          & > img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
   }
 
   .messages {
@@ -760,26 +819,8 @@ export default {
   }
 }
 
-.chat-user-list {
-  list-style: none;
-  margin: 0;
-  padding: 1rem;
-
-  & > li {
-    margin-bottom: 1rem;
-    cursor: pointer;
-
-    & > .im-chat-avatar {
-      width: 3.2rem;
-      height: 3.2rem;
-      display: inline-block;
-      vertical-align: middle;
-
-      & > img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
+.model-footer{
+  text-align: right;
+  margin: 10px;
 }
 </style>

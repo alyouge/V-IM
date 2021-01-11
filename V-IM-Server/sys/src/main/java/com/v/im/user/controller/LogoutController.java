@@ -1,4 +1,4 @@
-package com.v.im.api.controller;
+package com.v.im.user.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;

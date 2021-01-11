@@ -1,7 +1,10 @@
-package com.v.im.api.controller;
+package com.v.im.user.controller;
 
-import com.v.im.api.entity.RegisterResult;
+import com.v.im.common.exception.BaseErrorInfoInterface;
+import com.v.im.common.exception.ResultCodeEnum;
+import com.v.im.common.exception.VimException;
 import com.v.im.user.entity.ImUser;
+import com.v.im.user.entity.RegisterResult;
 import com.v.im.user.service.IImUserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+
 
 /**
  * 注册
@@ -35,11 +39,9 @@ public class RegisterController {
      */
     @ResponseBody
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public RegisterResult register(String name, String password, String phone) {
-        RegisterResult registerResult = new RegisterResult();
+    public boolean register(String name, String password, String phone) {
         if (imUserService.getByLoginName(phone) != null) {
-            registerResult.setResultCode(RegisterResult.ERROR);
-            registerResult.setMessage("手机号码重复");
+            throw new VimException(ResultCodeEnum.SMS_ERROR_REGISTER);
         } else {
             try {
                 ImUser imUser = new ImUser();
@@ -50,13 +52,10 @@ public class RegisterController {
                 imUser.setName(name);
                 imUser.setAvatar("/img/default-user.png");
                 imUserService.registerUser(imUser);
-                registerResult.setResultCode(RegisterResult.SUCCESS);
-                registerResult.setMessage("SUCCESS");
+                return true;
             } catch (Exception e) {
-                registerResult.setResultCode(RegisterResult.ERROR);
-                registerResult.setMessage("保存用户失败");
+                throw new VimException(ResultCodeEnum.SAME_PHONE);
             }
         }
-        return registerResult;
     }
 }
