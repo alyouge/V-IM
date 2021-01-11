@@ -723,7 +723,7 @@ export default {
         left: auto;
         right: 3px;
 
-        cite {
+        .message-info {
           left: auto;
           right: 60px;
           text-align: right;
