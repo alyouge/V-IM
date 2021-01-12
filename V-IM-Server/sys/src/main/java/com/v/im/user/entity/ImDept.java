@@ -1,15 +1,17 @@
 package com.v.im.user.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.v.im.common.BaseEntity;
+import com.v.im.common.TreeEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
- * 群用户关联表
+ * 组织部门
  * </p>
  *
  * @author 乐天
@@ -18,24 +20,26 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ImChatGroupUser implements Serializable {
+public class ImDept extends TreeEntity<ImDept> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 群id
+     * 群名称
      */
-    private String chatGroupId;
+    private String name;
 
     /**
-     * 用户id
+     * 群头像
      */
-    private String userId;
+    private String avatar;
 
     /**
-     * 入群时间
+     * 群主
      */
-    private Date createDate;
+    private String master;
+
+
 
 
 }

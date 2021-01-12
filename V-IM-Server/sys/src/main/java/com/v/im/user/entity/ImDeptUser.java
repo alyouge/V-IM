@@ -1,15 +1,16 @@
 package com.v.im.user.entity;
 
+import com.v.im.common.BaseEntity;
+import com.v.im.common.TreeEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <p>
- * 群用户关联表
+ * 组织部门 用户关联表
  * </p>
  *
  * @author 乐天
@@ -18,24 +19,21 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ImChatGroupUser implements Serializable {
+public class ImDeptUser extends BaseEntity<ImDeptUser> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 群id
+     * 部门id
      */
-    private String chatGroupId;
+    private String deptId;
 
     /**
      * 用户id
      */
     private String userId;
 
-    /**
-     * 入群时间
-     */
-    private Date createDate;
+
 
 
 }

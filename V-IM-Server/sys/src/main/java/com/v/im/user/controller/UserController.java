@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,7 +41,7 @@ public class UserController {
      * @param request request
      * @return json
      */
-    @RequestMapping("init")
+    @GetMapping("init")
     public Map<String, Object> list(HttpServletRequest request) {
         logger.debug("init");
         Map<String, Object> objectMap = new HashMap<>();
@@ -69,7 +70,7 @@ public class UserController {
      * @param chatId 群组id
      * @return 用户List
      */
-    @RequestMapping("chatUserList")
+    @GetMapping("chatUserList")
     public List<ImUser> chatUserList(String chatId) {
         return imUserService.getChatUserList(chatId);
     }
@@ -80,7 +81,7 @@ public class UserController {
      * @param id userId
      * @return ImUser
      */
-    @RequestMapping("get")
+    @GetMapping("get")
     public ImUser get(String id) {
         return imUserService.getById(id);
     }

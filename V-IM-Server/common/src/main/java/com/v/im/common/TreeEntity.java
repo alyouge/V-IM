@@ -1,5 +1,6 @@
 package com.v.im.common;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 /**
@@ -8,6 +9,8 @@ import lombok.Data;
 @Data
 public class TreeEntity<T> extends BaseEntity<T> {
 
+
+    @TableId
     private String id;
 
     /**
@@ -20,8 +23,5 @@ public class TreeEntity<T> extends BaseEntity<T> {
      */
     protected String parentId;
 
-    /**
-     * 机构名称
-     */
-    protected String name;
+
 }

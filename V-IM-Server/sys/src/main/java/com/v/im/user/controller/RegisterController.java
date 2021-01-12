@@ -1,10 +1,8 @@
 package com.v.im.user.controller;
 
-import com.v.im.common.exception.BaseErrorInfoInterface;
 import com.v.im.common.exception.ResultCodeEnum;
 import com.v.im.common.exception.VimException;
 import com.v.im.user.entity.ImUser;
-import com.v.im.user.entity.RegisterResult;
 import com.v.im.user.service.IImUserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
