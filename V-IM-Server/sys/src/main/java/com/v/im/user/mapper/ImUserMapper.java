@@ -22,13 +22,6 @@ import java.util.List;
 public interface ImUserMapper extends BaseMapper<ImUser> {
 
     /**
-     * 根据用户id 获取好友的分组
-     * @param userId id
-     * @return List<ImGroup>
-     */
-    List<ImGroup> getGroupUsers(String userId);
-
-    /**
      * 根据用户id 获取群组
      * @param userId id
      * @return List<ImGroup>

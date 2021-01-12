@@ -22,12 +22,7 @@ public interface IImUserService extends IService<ImUser> {
      */
     ImUser getByLoginName(String loginName);
 
-    /**
-     * 获取用户分组信息
-     * @param userId 用户id
-     * @return ImGroup
-     */
-    List<ImGroup> getGroupUsers(String userId);
+
 
     /**
      * 根据用户id 获取用户所有的群
