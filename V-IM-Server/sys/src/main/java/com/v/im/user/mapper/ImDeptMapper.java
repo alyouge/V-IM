@@ -1,7 +1,7 @@
 package com.v.im.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.v.im.user.entity.ImGroup;
+import com.v.im.user.entity.ImDept;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.v.im.user.entity.ImGroup;
  * @author 乐天
  * @since 2018-10-23
  */
-public interface ImGroupMapper extends BaseMapper<ImGroup> {
+public interface ImDeptMapper extends BaseMapper<ImDept> {
 
 }

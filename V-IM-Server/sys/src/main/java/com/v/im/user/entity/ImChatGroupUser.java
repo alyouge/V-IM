@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * <p>
- * 群
+ * 群用户关联表
  * </p>
  *
  * @author 乐天

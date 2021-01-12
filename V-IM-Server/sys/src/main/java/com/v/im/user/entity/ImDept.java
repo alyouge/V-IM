@@ -1,7 +1,8 @@
 package com.v.im.user.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.v.im.common.BaseEntity;
+import com.v.im.common.TreeEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -9,28 +10,35 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * 好友实体
+ * <p>
+ * 组织部门
+ * </p>
  *
  * @author 乐天
- * @since 2018-12-31
+ * @since 2018-10-28
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("im_user_friend")
-public class ImUserFriend extends BaseEntity<ImUserFriend> implements Serializable  {
+public class ImDept extends TreeEntity<ImDept> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 用户ID
+     * 群名称
      */
-    private String userId;
+    private String name;
 
     /**
-     * 好友ID
+     * 群头像
      */
-    private String friendId;
+    private String avatar;
+
+    /**
+     * 群主
+     */
+    private String master;
+
 
 
 

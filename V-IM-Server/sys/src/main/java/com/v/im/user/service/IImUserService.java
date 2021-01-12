@@ -2,7 +2,6 @@ package com.v.im.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.v.im.user.entity.ImChatGroup;
-import com.v.im.user.entity.ImGroup;
 import com.v.im.user.entity.ImUser;
 
 import java.util.List;
@@ -22,12 +21,7 @@ public interface IImUserService extends IService<ImUser> {
      */
     ImUser getByLoginName(String loginName);
 
-    /**
-     * 获取用户分组信息
-     * @param userId 用户id
-     * @return ImGroup
-     */
-    List<ImGroup> getGroupUsers(String userId);
+
 
     /**
      * 根据用户id 获取用户所有的群

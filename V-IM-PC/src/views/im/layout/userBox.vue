@@ -3,28 +3,13 @@
     <div class="user-box-list">
       <Search class="search-box" @showChat="showChat"></Search>
       <div class="group-box">
-        <ul class="group-list">
-          <li v-for="(group, index) in userFriendList" :key="index">
-            <h5 v-on:click="group.expansion = !group.expansion">
-              <Icon type="ios-arrow-forward" />
-              <span>{{ group.name }} </span>
-              <span class="count">({{ group.userList.length }})</span>
-            </h5>
-            <transition name="fade">
-              <ul class="userList" v-if="group.expansion">
-                <li
-                  class="user"
-                  v-for="(user, index) in group.userList"
-                  :key="index"
-                >
-                  <a href="javascript:;" @click="showUser(user)">
-                    <img :src="host + user.avatar" />
-                    <b>{{ user.name }}</b>
-                    <p>{{ user.sign }}</p>
-                  </a>
-                </li>
-              </ul>
-            </transition>
+        <ul class="user-list">
+          <li class="user" v-for="(user, index) in userFriendList" :key="index">
+            <a href="javascript:;" @click="showUser(user)">
+              <img :src="host + user.avatar" />
+              <b>{{ user.name }}</b>
+              <p>{{ user.sign }}</p>
+            </a>
           </li>
         </ul>
       </div>
@@ -151,9 +136,7 @@ export default {
       overflow-y: scroll;
       flex: 1;
 
-      .group-list {
-        margin: 0 1rem;
-
+      .user-list {
         .count {
           color: #aaaaaa;
         }
@@ -182,7 +165,7 @@ export default {
             border-radius: 50%;
             position: absolute;
             top: 0.4rem;
-            left: 2.5rem;
+            left: 1.5rem;
           }
 
           .outline {
@@ -225,7 +208,7 @@ export default {
         }
 
         > li:hover {
-          /*background-color: #efefef;*/
+          background-color: #ddd;
         }
 
         > li > ul {

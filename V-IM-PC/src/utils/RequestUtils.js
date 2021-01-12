@@ -274,7 +274,7 @@ class RequestUtils {
             self.$store.commit("addUnreadMessage", message);
           }
         }
-        console.log('currentChat',self.$store.state.currentChat)
+        console.log("currentChat", self.$store.state.currentChat);
         self.winControl.flashFrame();
         self.$store.commit("setLastMessage", message);
         // 每次滚动到最底部
