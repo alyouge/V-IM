@@ -3,7 +3,7 @@ import Router from "vue-router";
 import UserBox from "../views/im/layout/userBox.vue";
 import ChatBox from "../views/im/layout/chatBox.vue";
 import ChatGroupBox from "../views/im/layout/chatGroupBox.vue";
-import Dept from "../views/im/layout/dept.vue";
+import DeptBox from "../views/im/layout/deptBox.vue";
 
 Vue.use(Router);
 
@@ -32,7 +32,7 @@ export default new Router({
         {
           path: "dept",
           name: "dept",
-          component: Dept
+          component: DeptBox
         },
         {
           path: "chatGroupBox",
