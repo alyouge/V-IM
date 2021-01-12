@@ -30,7 +30,7 @@ public class DeptController {
     private final Logger logger = LoggerFactory.getLogger(DeptController.class);
 
     @Resource
-    @Qualifier(value = "iImDeptService")
+    @Qualifier(value = "imDeptService")
     private IImDeptService iImDeptService;
 
 

@@ -53,10 +53,6 @@ public class ImUserServiceImpl extends ServiceImpl<ImUserMapper, ImUser> impleme
         return baseMapper.selectOne(queryWrapper);
     }
 
-    @Override
-    public List<ImGroup> getGroupUsers(String userId){
-        return baseMapper.getGroupUsers(userId);
-    }
 
     @Override
     public List<ImChatGroup> getChatGroups(String userId) {
@@ -89,10 +85,8 @@ public class ImUserServiceImpl extends ServiceImpl<ImUserMapper, ImUser> impleme
             imUserFriend.preInsert();
             imUserFriend.setUserId(imUser.getId());
             imUserFriend.setFriendId(adminId);
-            imUserFriend.setUserGroupId(imGroup.getId());
             //默认好友的分组
             ImUser friend = getById(adminId);
-            imUserFriend.setFriendGroupId(friend.getDefaultGroupId());
             imUserFriendService.save(imUserFriend);
 
             //添加默认群

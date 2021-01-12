@@ -32,15 +32,6 @@ public class ImUserFriend extends BaseEntity<ImUserFriend> implements Serializab
      */
     private String friendId;
 
-    /**
-     * 用户分组
-     */
-    private String userGroupId;
-
-    /**
-     * 好友分组
-     */
-    private String friendGroupId;
 
 
 }

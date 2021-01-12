@@ -2,6 +2,7 @@ package com.v.im.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.v.im.user.entity.ImGroup;
+import com.v.im.user.entity.ImUser;
 import com.v.im.user.entity.ImUserFriend;
 
 import java.util.List;
@@ -22,5 +23,5 @@ public interface IImUserFriendService extends IService<ImUserFriend> {
      * @param userId 用户ID
      * @return 好友分组的列表
      */
-    List<ImGroup> getUserFriends(String userId);
+    List<ImUser> getUserFriends(String userId);
 }
