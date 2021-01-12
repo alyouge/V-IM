@@ -16,6 +16,11 @@
           </router-link>
         </li>
         <li>
+          <router-link v-bind:to="'/index/dept'">
+            <Icon type="ios-home-outline" />
+          </router-link>
+        </li>
+        <li>
           <router-link v-bind:to="'/index/chatGroupBox'">
             <Icon type="ios-contacts-outline" />
           </router-link>

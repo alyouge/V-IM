@@ -18,14 +18,13 @@
               <div class="im-chat-user">
                 <img :src="item.avatar" alt="头像" />
                 <cite v-if="item.mine">
-                  <i><Time :time="item.timestamp" /></i>
+                  <i><Time :time="item.timestamp"/></i>
                   {{ item.username }}</cite
                 >
                 <cite v-if="!item.mine">
                   {{ item.username }}
-                  <i><Time :time="item.timestamp" /></i>
-                </cite
-                >
+                  <i><Time :time="item.timestamp"/></i>
+                </cite>
               </div>
               <div class="im-chat-text">
                 <pre
@@ -132,12 +131,12 @@
       </div>
     </Modal>
     <Modal
-        closable
-        class="user-model"
-        v-model="groupUserModel"
-        footer-hide
-        title="信息"
-        width="300"
+      closable
+      class="user-model"
+      v-model="groupUserModel"
+      footer-hide
+      title="信息"
+      width="300"
     >
       <p class="user-model-img">
         <img :src="[host + groupUser.avatar]" class="img" />
@@ -466,11 +465,9 @@ export default {
       if (self.chat.type === "1") {
         let param = new FormData();
         param.set("chatId", self.chat.id);
-        RequestUtils
-          .request(conf.getChatUsersUrl(), param)
-          .then(json => {
-            self.userList = json;
-          });
+        RequestUtils.request(conf.getChatUsersUrl(), param).then(json => {
+          self.userList = json;
+        });
       }
     }
   },
@@ -562,8 +559,8 @@ export default {
     width: 180px;
     border-left: 1px solid #cccccc;
     overflow-y: scroll;
-    ::-webkit-scrollbar{
-      width:0;
+    ::-webkit-scrollbar {
+      width: 0;
     }
     .chat-user-list {
       list-style: none;
@@ -574,12 +571,12 @@ export default {
         cursor: pointer;
         padding: 5px 2px;
         position: relative;
-        &:hover{
+        &:hover {
           background-color: #eeeeee;
-          &:after{
-            content: '...';
+          &:after {
+            content: "...";
             position: absolute;
-            right:10px;
+            right: 10px;
             font-weight: bold;
           }
         }
@@ -816,7 +813,7 @@ export default {
   }
 }
 
-.model-footer{
+.model-footer {
   text-align: right;
   margin: 10px;
 }

@@ -43,8 +43,7 @@ export default {
       let param = new FormData();
       param.set("id", id);
 
-      RequestUtils
-        .request(conf.getHostUrl() + "/api/user/get", param)
+      RequestUtils.request(conf.getHostUrl() + "/api/user/get", param)
         .then(json => {
           console.log(json);
           self.user = json;

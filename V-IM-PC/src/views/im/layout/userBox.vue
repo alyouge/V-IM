@@ -4,11 +4,7 @@
       <Search class="search-box" @showChat="showChat"></Search>
       <div class="group-box">
         <ul class="user-list">
-          <li
-              class="user"
-              v-for="(user, index) in userFriendList"
-              :key="index"
-          >
+          <li class="user" v-for="(user, index) in userFriendList" :key="index">
             <a href="javascript:;" @click="showUser(user)">
               <img :src="host + user.avatar" />
               <b>{{ user.name }}</b>
@@ -141,7 +137,6 @@ export default {
       flex: 1;
 
       .user-list {
-
         .count {
           color: #aaaaaa;
         }
