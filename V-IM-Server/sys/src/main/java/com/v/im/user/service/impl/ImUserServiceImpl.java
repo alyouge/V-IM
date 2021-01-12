@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.v.im.user.entity.*;
 import com.v.im.user.mapper.ImUserMapper;
 import com.v.im.user.service.IImChatGroupUserService;
-import com.v.im.user.service.IImGroupService;
 import com.v.im.user.service.IImUserFriendService;
 import com.v.im.user.service.IImUserService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -33,9 +32,6 @@ public class ImUserServiceImpl extends ServiceImpl<ImUserMapper, ImUser> impleme
     @Value("${v.im.default.chat.id}")
     private String defaultChatId;
 
-    @Resource
-    @Qualifier(value = "imGroupService")
-    private IImGroupService iImGroupService;
 
 
     @Resource
@@ -69,16 +65,6 @@ public class ImUserServiceImpl extends ServiceImpl<ImUserMapper, ImUser> impleme
     public void registerUser(ImUser imUser) {
         try {
             save(imUser);
-            //添加默认用户分组 我的好友
-            ImGroup imGroup = new ImGroup();
-            imGroup.preInsert();
-            imGroup.setName("我的好友");
-            imGroup.setUserId(imUser.getId());
-            iImGroupService.save(imGroup);
-
-            //更新默认的用户组
-            imUser.setDefaultGroupId(imGroup.getId());
-            updateById(imUser);
 
             //保存用户好友，默认管理员
             ImUserFriend imUserFriend = new ImUserFriend();

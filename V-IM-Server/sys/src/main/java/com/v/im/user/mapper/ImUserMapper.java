@@ -2,7 +2,6 @@ package com.v.im.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.v.im.user.entity.ImChatGroup;
-import com.v.im.user.entity.ImGroup;
 import com.v.im.user.entity.ImUser;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

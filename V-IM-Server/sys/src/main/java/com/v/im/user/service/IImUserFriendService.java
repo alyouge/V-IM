@@ -1,7 +1,6 @@
 package com.v.im.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.v.im.user.entity.ImGroup;
 import com.v.im.user.entity.ImUser;
 import com.v.im.user.entity.ImUserFriend;
 

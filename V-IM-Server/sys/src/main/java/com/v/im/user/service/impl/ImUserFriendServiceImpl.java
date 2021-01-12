@@ -1,8 +1,6 @@
 package com.v.im.user.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.v.im.user.entity.ImGroup;
 import com.v.im.user.entity.ImUser;
 import com.v.im.user.entity.ImUserFriend;
 import com.v.im.user.mapper.ImUserFriendMapper;
@@ -25,10 +23,6 @@ import java.util.List;
 @Service
 @Qualifier(value = "imUserFriendService")
 public class ImUserFriendServiceImpl extends ServiceImpl<ImUserFriendMapper, ImUserFriend> implements IImUserFriendService {
-
-    @Resource
-    @Qualifier(value = "imUserService")
-    private IImUserService imUserService;
 
     /**
      * 根据用户的ID 获取 用户好友(双向用户关系)

@@ -1,7 +1,6 @@
 package com.v.im.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.v.im.user.entity.ImGroup;
 import com.v.im.user.entity.ImUser;
 import com.v.im.user.entity.ImUserFriend;
 

@@ -2,7 +2,6 @@ package com.v.im.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.v.im.user.entity.ImDept;
-import com.v.im.user.entity.ImGroup;
 
 /**
  * <p>
