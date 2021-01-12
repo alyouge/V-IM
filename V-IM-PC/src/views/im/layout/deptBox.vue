@@ -2,7 +2,11 @@
   <div class="panel-box">
     <div class="panel-box-list">
       <div class="dept-box">
-        <Tree :data="data1" class="demo-tree-render"></Tree>
+        <Tree
+          :data="treeData"
+          @on-select-change="change"
+          class="demo-tree-render"
+        ></Tree>
       </div>
     </div>
     <div class="chat-box">
@@ -21,6 +25,34 @@ import Top from "../components/top.vue";
 import Welcome from "../components/welcome.vue";
 import UserInfo from "../components/userInfo.vue";
 import conf from "../conf";
+import RequestUtils from "../../../utils/RequestUtils";
+import Tools from "../../../utils/Tools";
+
+const render = (h, { data }) => {
+  return h(
+    "span",
+    {
+      style: {
+        display: "inline-block",
+        width: "100%"
+      }
+    },
+    [
+      h("span", [
+        h("Icon", {
+          props: {
+            type: "md-home"
+          },
+          style: {
+            marginRight: "8px",
+            fontSize: "18px"
+          }
+        }),
+        h("span", data.title)
+      ])
+    ]
+  );
+};
 
 export default {
   components: {
@@ -37,14 +69,17 @@ export default {
       host: conf.getHostUrl(),
       userFriends: [],
       first: true,
-      data1: [
+      treeData: [
         {
-          title: "大连AMD信息技术有限公司",
+          id: "aaa",
+          title: "AMD信息技术有限公司",
           expand: true,
+          render: render,
           children: [
             {
-              title: "parent 1-1",
+              title: "技术部",
               expand: true,
+              render: render,
               children: [
                 {
                   title: "leaf 1-1-1"
@@ -57,6 +92,7 @@ export default {
             {
               title: "parent 1-2",
               expand: true,
+              render: render,
               children: [
                 {
                   title: "leaf 1-2-1"
@@ -72,7 +108,27 @@ export default {
     };
   },
 
-  methods: {}
+  methods: {
+    change(data) {
+      console.log(data);
+    }
+  },
+
+  mounted() {
+    let self = this;
+    let param = new FormData();
+    param.set("parentId", "0");
+
+    RequestUtils.request(conf.getHostUrl() + "/api/dept/list", param)
+      .then(json => {
+        console.log(json)
+        self.treeData = Tools.list2tree(json, "0",render);
+        console.log(self.treeData)
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
 };
 </script>
 <style lang="scss" scoped>

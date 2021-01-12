@@ -56,11 +56,11 @@ public class DeptController {
      * @param parentId 父id
      * @return ImDeptList
      */
-    @GetMapping("list")
+    @PostMapping("list")
     public List<ImDept> list(String parentId) {
         QueryWrapper<ImDept> wrapper = new QueryWrapper<>();
         if (StrUtil.isNotBlank(parentId)) {
-            wrapper.eq("parent_id", parentId);
+            wrapper.like("parent_ids", parentId+",%");
         }
         wrapper.orderByAsc("parent_ids");
         return iImDeptService.list(wrapper);
@@ -73,7 +73,7 @@ public class DeptController {
      * @param id deptId
      * @return ImDept
      */
-    @GetMapping("get")
+    @PostMapping("get")
     public ImDept get(String id) {
         return iImDeptService.getById(id);
     }
@@ -84,7 +84,7 @@ public class DeptController {
      * @param id deptId
      * @return boolean
      */
-    @GetMapping("delete")
+    @PostMapping("delete")
     public boolean delete(String id) {
         logger.debug("delete dept :" + id);
         return iImDeptService.removeById(id);

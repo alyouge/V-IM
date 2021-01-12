@@ -16,7 +16,6 @@
                 :class="{ 'im-chat-mine': item.mine }"
             >
               <div class="im-chat-user">
-<<<<<<< HEAD
                 <img :src="item.avatar" alt="头像"/>
                 <div class="message-info" v-if="item.mine">
                   <i>
@@ -30,17 +29,6 @@
                     <Time :time="item.timestamp"/>
                   </i>
                 </div>
-=======
-                <img :src="item.avatar" alt="头像" />
-                <cite v-if="item.mine">
-                  <i><Time :time="item.timestamp"/></i>
-                  {{ item.username }}</cite
-                >
-                <cite v-if="!item.mine">
-                  {{ item.username }}
-                  <i><Time :time="item.timestamp"/></i>
-                </cite>
->>>>>>> a948cf88a888b19f033f9210765fe9ed007867dd
               </div>
               <div class="im-chat-text">
                 <pre
@@ -148,12 +136,12 @@
       </div>
     </Modal>
     <Modal
-      closable
-      class="user-model"
-      v-model="groupUserModel"
-      footer-hide
-      title="信息"
-      width="300"
+        closable
+        class="user-model"
+        v-model="groupUserModel"
+        footer-hide
+        title="信息"
+        width="300"
     >
       <p class="user-model-img">
         <img :src="[host + groupUser.avatar]" class="img"/>
@@ -483,17 +471,11 @@ export default {
       if (self.chat.type === "1") {
         let param = new FormData();
         param.set("chatId", self.chat.id);
-<<<<<<< HEAD
         RequestUtils
             .request(conf.getChatUsersUrl(), param)
             .then(json => {
               self.userList = json;
             });
-=======
-        RequestUtils.request(conf.getChatUsersUrl(), param).then(json => {
-          self.userList = json;
-        });
->>>>>>> a948cf88a888b19f033f9210765fe9ed007867dd
       }
     }
   },
@@ -586,10 +568,7 @@ export default {
     width: 180px;
     border-left: 1px solid #cccccc;
     overflow-y: scroll;
-<<<<<<< HEAD
 
-=======
->>>>>>> a948cf88a888b19f033f9210765fe9ed007867dd
     ::-webkit-scrollbar {
       width: 0;
     }
@@ -603,19 +582,12 @@ export default {
         cursor: pointer;
         padding: 5px 2px;
         position: relative;
-<<<<<<< HEAD
 
         &:hover {
           background-color: #eeeeee;
 
           &:after {
             content: '...';
-=======
-        &:hover {
-          background-color: #eeeeee;
-          &:after {
-            content: "...";
->>>>>>> a948cf88a888b19f033f9210765fe9ed007867dd
             position: absolute;
             right: 10px;
             font-weight: bold;
@@ -751,7 +723,7 @@ export default {
         left: auto;
         right: 3px;
 
-        .message-info {
+        cite {
           left: auto;
           right: 60px;
           text-align: right;
