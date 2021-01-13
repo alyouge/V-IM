@@ -20,16 +20,14 @@
         FROM
             (
                 SELECT
-                    friend_id AS user_id,
-                    user_group_id AS group_id
+                    friend_id AS user_id
                 FROM
                     im_user_friend
                 WHERE
                     user_id = #{userId}
                 UNION ALL
                 SELECT
-                    user_id AS user_id,
-                    friend_group_id AS group_id
+                    user_id AS user_id
                 FROM
                     im_user_friend
                 WHERE

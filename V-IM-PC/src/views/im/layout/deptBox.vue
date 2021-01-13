@@ -166,9 +166,9 @@ export default {
     .dept-user-box {
       height: 100%;
       overflow-y: scroll;
-
+      margin-top: 4rem;
       .dept-user-list {
-        margin-top: 40px;
+
         display: flex;
         flex-wrap: wrap;
         justify-content: left;
