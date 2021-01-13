@@ -36,14 +36,14 @@ class RequestUtils {
   request(url, options) {
     let self = this;
     let access_token = StoreUtils.getAccessToken();
-    options.set("access_token", access_token);
     return self
       .timeoutFetch(
         fetch(url, {
           method: "POST",
           model: "cros", //跨域
           headers: {
-            Accept: "application/json"
+            Accept: "application/json",
+            Authorization: "bearer " + access_token
           },
           body: options
         }),

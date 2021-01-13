@@ -1,6 +1,9 @@
 <template>
   <div>
     <div>
+      <p class="text-center">
+        <img :src="[host + user.avatar]" class="img" />
+      </p>
       <p class="user-model-item">
         <label>姓名：</label>
         <span>{{ user.name }}</span>
@@ -13,6 +16,7 @@
         <label>邮箱：</label>
         <span>{{ user.email }}</span>
       </p>
+
     </div>
   </div>
 </template>
@@ -26,6 +30,7 @@ export default {
   data() {
     return {
       title: "",
+      host: conf.getHostUrl(),
       user: {}
     };
   },
@@ -38,6 +43,7 @@ export default {
     this.getUser(this.userId);
   },
   methods: {
+
     getUser(id) {
       let self = this;
       let param = new FormData();
@@ -45,7 +51,6 @@ export default {
 
       RequestUtils.request(conf.getHostUrl() + "/api/user/get", param)
         .then(json => {
-          console.log(json);
           self.user = json;
         })
         .catch(err => {

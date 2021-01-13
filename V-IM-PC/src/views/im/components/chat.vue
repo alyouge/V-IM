@@ -143,12 +143,7 @@
         title="信息"
         width="300"
     >
-      <p class="user-model-img">
-        <img :src="[host + groupUser.avatar]" class="img"/>
-      </p>
-      <div>
-        <UserModal :userId="groupUser.id"></UserModal>
-      </div>
+      <UserModal :userId="groupUser.id" :show-send="false"></UserModal>
       <div class="model-footer">
         <Button @click="showChat(groupUser)">发送消息</Button>
       </div>

@@ -11,106 +11,93 @@
     </div>
     <div class="chat-box">
       <Top></Top>
-      <Welcome v-if="first"></Welcome>
-      <UserInfo
-        class="panel-box-view"
-        v-if="!first"
-        v-bind:user="user"
-      ></UserInfo>
+      <div class="dept-user-box">
+        <ul class="dept-user-list">
+          <li
+            v-for="(user, index) in userList"
+            :key="index"
+            @click="showUser(user)"
+          >
+            <img :src="[host + user.avatar]" />
+            <div>{{ user.name }}</div>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    <Modal
+      closable
+      class="user-model"
+      v-model="model"
+      footer-hide
+      title="用户信息"
+      width="300"
+    >
+      <div>
+        <UserModal :userId="user.id" :show-send="true"></UserModal>
+      </div>
+      <div class="model-footer">
+        <Button @click="showChat(user)">发送消息</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 <script>
 import Top from "../components/top.vue";
-import Welcome from "../components/welcome.vue";
-import UserInfo from "../components/userInfo.vue";
 import conf from "../conf";
 import RequestUtils from "../../../utils/RequestUtils";
 import Tools from "../../../utils/Tools";
-
-const render = (h, { data }) => {
-  return h(
-    "span",
-    {
-      style: {
-        display: "inline-block",
-        width: "100%"
-      }
-    },
-    [
-      h("span", [
-        h("Icon", {
-          props: {
-            type: "md-home"
-          },
-          style: {
-            marginRight: "8px",
-            fontSize: "18px"
-          }
-        }),
-        h("span", data.title)
-      ])
-    ]
-  );
-};
-
+import UserModal from "../components/userModal.vue";
+import { ChatListUtils, MessageTargetType } from "@/utils/ChatUtils";
 export default {
   components: {
     Top,
-    Welcome,
-    UserInfo
+    UserModal
   },
 
   data() {
     return {
-      chat: {},
       user: {},
-      currentUser: {},
+      model: false,
       host: conf.getHostUrl(),
-      userFriends: [],
-      first: true,
-      treeData: [
-        {
-          id: "aaa",
-          title: "AMD信息技术有限公司",
-          expand: true,
-          render: render,
-          children: [
-            {
-              title: "技术部",
-              expand: true,
-              render: render,
-              children: [
-                {
-                  title: "leaf 1-1-1"
-                },
-                {
-                  title: "leaf 1-1-2"
-                }
-              ]
-            },
-            {
-              title: "parent 1-2",
-              expand: true,
-              render: render,
-              children: [
-                {
-                  title: "leaf 1-2-1"
-                },
-                {
-                  title: "leaf 1-2-1"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+      treeData: [],
+      userList: []
     };
   },
 
   methods: {
+    showUser(user) {
+      this.user = user;
+      this.model = true;
+    },
+    showChat(user) {
+      let self = this;
+      self.model = false;
+      self.$router.push({
+        path: "/index/chatBox/",
+        query: {
+          chat: ChatListUtils.resetChatList(
+            self,
+            user,
+            conf.getHostUrl(),
+            MessageTargetType.FRIEND
+          )
+        }
+      });
+    },
     change(data) {
-      console.log(data);
+      let self = this;
+      if (data[0]) {
+        let param = new FormData();
+        param.set("deptId", data[0].id);
+        RequestUtils.request(conf.getHostUrl() + "/api/dept/users", param)
+          .then(json => {
+            self.userList = json;
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
     }
   },
 
@@ -119,11 +106,35 @@ export default {
     let param = new FormData();
     param.set("parentId", "0");
 
+    const render = (h, { data }) => {
+      return h(
+        "span",
+        {
+          style: {
+            display: "inline-block",
+            width: "100%"
+          }
+        },
+        [
+          h("span", [
+            h("Icon", {
+              props: {
+                type: "md-home"
+              },
+              style: {
+                marginRight: "8px",
+                fontSize: "18px"
+              }
+            }),
+            h("span", data.title)
+          ])
+        ]
+      );
+    };
+
     RequestUtils.request(conf.getHostUrl() + "/api/dept/list", param)
       .then(json => {
-        console.log(json)
-        self.treeData = Tools.list2tree(json, "0",render);
-        console.log(self.treeData)
+        self.treeData = Tools.list2tree(json, "0", render);
       })
       .catch(err => {
         console.error(err);
@@ -152,11 +163,31 @@ export default {
     flex-direction: column;
     position: relative;
 
-    .panel-box-view {
-      position: absolute;
-      width: 100%;
-      top: 40px;
-      padding: 100px;
+    .dept-user-box {
+      height: 100%;
+      overflow-y: scroll;
+
+      .dept-user-list {
+        margin-top: 40px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+
+        > li {
+          width: 120px;
+          list-style: none;
+          display: block;
+          padding: 10px;
+          margin: 10px;
+          border: 1px solid #eeeeee;
+          text-align: center;
+          cursor: pointer;
+
+          &:hover {
+            border: 1px solid #ddd;
+          }
+        }
+      }
     }
   }
 

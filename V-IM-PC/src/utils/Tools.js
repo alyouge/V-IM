@@ -24,7 +24,6 @@ class Tools {
         menuObj[item.parentId].render = render;
         menuObj[item.parentId].expand = false;
         menuObj[item.parentId].children.push(item);
-        console.log("menuObj[item.parentId]", menuObj[item.parentId]);
         return false;
       }
       return true;

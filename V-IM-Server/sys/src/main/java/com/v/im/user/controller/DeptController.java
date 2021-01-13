@@ -3,14 +3,13 @@ package com.v.im.user.controller;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.v.im.user.entity.ImDept;
+import com.v.im.user.entity.ImUser;
 import com.v.im.user.service.IImDeptService;
+import com.v.im.user.service.IImUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,6 +31,10 @@ public class DeptController {
     @Resource
     @Qualifier(value = "imDeptService")
     private IImDeptService iImDeptService;
+
+    @Resource
+    @Qualifier(value = "imUserService")
+    private IImUserService iImUserService;
 
 
     /**
@@ -76,6 +79,19 @@ public class DeptController {
     @PostMapping("get")
     public ImDept get(String id) {
         return iImDeptService.getById(id);
+    }
+
+    /**
+     * 单个部门
+     *
+     * @param deptId deptId
+     * @return ImDept
+     */
+    @PostMapping("users")
+    public List<ImUser> users(String deptId) {
+        QueryWrapper<ImUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("dept_id",deptId);
+        return iImUserService.list(queryWrapper);
     }
 
     /**
