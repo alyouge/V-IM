@@ -122,13 +122,13 @@
         title="信息"
         width="300"
     >
-      <p class="user-model-img">
-        <img :src="chat.avatar" class="img"/>
-      </p>
       <div v-if="chat.type === '0'">
         <UserModal :userId="chat.id"></UserModal>
       </div>
       <div v-if="chat.type === '1'">
+        <p class="user-model-img">
+          <img :src="chat.avatar" class="img"/>
+        </p>
         <p class="user-model-item">
           <label>群名称：</label>
           <span>{{ chat.name }}</span>
