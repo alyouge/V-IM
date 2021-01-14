@@ -17,13 +17,16 @@
         </li>
         <li>
           <router-link v-bind:to="'/index/dept'">
-            <Icon type="ios-home-outline" />
+            <Icon type="ios-list-box-outline" />
           </router-link>
         </li>
         <li>
           <router-link v-bind:to="'/index/chatGroupBox'">
             <Icon type="ios-contacts-outline" />
           </router-link>
+        </li>
+        <li class="logout" @click="myLogout">
+          <Icon type="ios-power-outline" />
         </li>
       </ul>
     </div>
@@ -93,8 +96,10 @@ export default {
     width: 6rem;
     height: 100%;
     ul {
-      margin: 3rem 1.2rem 1.2rem 1.2rem;
+      padding: 3rem 1.2rem 1.2rem 1.2rem;
       list-style: none;
+      height: 100%;
+      position: relative;
       li {
         -webkit-app-region: no-drag;
         display: block;
@@ -117,6 +122,10 @@ export default {
             color: $color-write;
           }
         }
+      }
+      .logout{
+        bottom: 0;
+        position: absolute;
       }
       .userPhoto {
         margin-bottom: 2rem;
