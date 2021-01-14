@@ -42,6 +42,7 @@
 ![分组](doc/img/4.PNG)
 ![缓存](doc/img/5.PNG)
 ![图片](doc/img/6.PNG)
+![图片](doc/img/7.PNG)
 
 ### 功能点
 > 1. 文本聊天
