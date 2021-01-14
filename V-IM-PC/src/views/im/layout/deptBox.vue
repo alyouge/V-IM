@@ -30,7 +30,7 @@
       class="user-model"
       v-model="model"
       footer-hide
-      title="用户信息"
+      title="信息"
       width="300"
     >
       <div>
