@@ -11,7 +11,7 @@
 >   2. 陆续更新文档：https://my.oschina.net/alyouge/blog/3224771
 >   3. electron 版本为 8
 #### 文档
->   1. 打包好的文件   [下载](https://gitee.com/lele-666/V-IM/raw/master/v-im%20Setup%200.5.3.exe)。
+>   1. 打包好的文件   [下载](doc/v-im Setup 0.6.4)。
 >   2. 打包好的web文件，在dist/web 目标下（运行的时候需要有容器，例如nginx tomcat之类的）。
 >   3. 消息推送接口，调用方式：http://localhost:8080/api/message/sendMsg?access_token=你的token&userId=接收人&msg=我是消息
 >   4. 获取token：http://localhost:8080/oauth/token?client_id=v-client&client_secret=v-client-ppp&grant_type=password&scope=select&username=wangwu&password=123456
@@ -60,7 +60,7 @@
 > 1. 测试服务器IP:101.200.151.183,在登录界面右下角有设置的地址，默认的是本地（没有服务不好用），请知晓。
 > 2. 自己可以注册个用户进行测试，默认。
 > 3. 没有提供在线添加好友和管理群组的功能，后续开发，好友关系维护都在后台服务里。
-> 4. 打包好的测试文件-->[下载exe安装文件 64位](https://gitee.com/lele-666/V-IM/blob/master/v-im%20Setup%200.3.9.exe)。
+> 4. 打包好的测试文件-->[下载exe安装文件 64位](doc/v-im Setup 0.6.4)。
 
 
 ### 参考项目及技术
